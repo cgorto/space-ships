@@ -1,7 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://bsd7eynfdxon4"]
+[gd_scene load_steps=8 format=3 uid="uid://bsd7eynfdxon4"]
 
 [ext_resource type="PackedScene" uid="uid://c8ps4kffu7ucb" path="res://scenes/game_object/ship/ship.tscn" id="1_45yrv"]
+[ext_resource type="Script" path="res://scenes/test_scene.gd" id="1_iuwce"]
 [ext_resource type="PackedScene" uid="uid://diw52h5jif8v2" path="res://scenes/game_object/ship_camera/camera_rig.tscn" id="2_mr3ih"]
+[ext_resource type="PackedScene" uid="uid://yl7uwjkjbml" path="res://scenes/csg_mesh_3d.tscn" id="4_u7a81"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_evedt"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,30 +18,8 @@ sky = SubResource("Sky_ksuv2")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_uguy1"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iw1kg"]
-noise = SubResource("FastNoiseLite_uguy1")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dullo"]
-albedo_texture = SubResource("NoiseTexture2D_iw1kg")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_lhxeq"]
-noise_type = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xj1k3"]
-width = 3427
-height = 4277
-noise = SubResource("FastNoiseLite_lhxeq")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ee4rn"]
-albedo_texture = SubResource("NoiseTexture2D_xj1k3")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_6b0un"]
-material = SubResource("StandardMaterial3D_ee4rn")
-size = Vector2(1000, 1000)
-
 [node name="TestScene" type="Node3D"]
+script = ExtResource("1_iuwce")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -48,19 +28,13 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_f7duf")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -1)
-size = Vector3(99, 1, 99)
-material = SubResource("StandardMaterial3D_dullo")
-
 [node name="Ship" parent="." instance=ExtResource("1_45yrv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.945, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_6b0un")
 
 [node name="CameraRig" parent="." node_paths=PackedStringArray("ship") instance=ExtResource("2_mr3ih")]
 ship = NodePath("../Ship")
 fancy_cam = true
+
+[node name="CSGMesh3D" parent="." instance=ExtResource("4_u7a81")]
 
 [editable path="CameraRig"]

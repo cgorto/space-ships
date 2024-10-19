@@ -9,8 +9,10 @@ class_name CameraRig extends Node3D
 @export var vertical_turn_up_angle: float = deg_to_rad(60)
 @export var vertical_turn_down_angle: float = deg_to_rad(45)
 
-@onready var camera: Node3D = $LookAheadRig/MainCamera
+@onready var camera: Node3D = $LookAheadRig/MainCamera/Camera3D
 @onready var look_ahead_rig: Node3D = $LookAheadRig
+
+var counter:float = 0
 
 func _physics_process(delta: float) -> void:
 	move_camera(delta)
@@ -42,11 +44,14 @@ func look_ahead(delta:float) -> void:
 	var target_rotation: Basis = Basis.from_euler(Vector3(-vertical,-horizontal,0))
 	look_ahead_rig.basis = look_ahead_rig.basis.slerp(target_rotation, smooth_speed * delta)
 
-	var up: Vector3 = transform.basis.y
+	var up: Vector3 = global_transform.basis.y
 
-	if (mouse_screen.x < (screen_size.x * .6) and (mouse_screen.x > screen_size.x * .6)):
-		up = ship.basis.y
 
-	var lookahead_pos: Vector3 = to_local(ship.global_position -ship.global_transform.basis.z * 100)
-	#camera.look_at(camera.to_local(lookahead_pos,look_ahead_rig.global_transform.basis.y))
-	camera.transform.basis = camera.transform.basis.looking_at(lookahead_pos, up)
+	var lookahead_pos: Vector3 = ship.global_position-(ship.global_transform.basis.z * 100)
+	counter += delta
+	if counter > 1:
+		print("Look ahead: " + str(-ship.global_transform.basis.z * 100))
+		print("THIS ONE" + str(lookahead_pos))
+		counter = 0
+	#camera.look_at(camera.to_local(lookahead_pos))
+	camera.global_basis = camera.transform.basis.looking_at(lookahead_pos, up)
