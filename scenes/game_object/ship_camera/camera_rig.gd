@@ -42,6 +42,6 @@ func look_ahead(delta:float) -> void:
 	var target_rotation: Basis = Basis.from_euler(Vector3(-vertical,-horizontal,0))
 	look_ahead_rig.basis = look_ahead_rig.basis.slerp(target_rotation, smooth_speed * delta)
 
-	var lookahead_pos: Vector3 = -ship.global_transform.basis.z * 100
-	#camera.look_at(lookahead_pos,look_ahead_rig.global_transform.basis.y)
-	camera.transform.basis = camera.transform.basis.looking_at(lookahead_pos, look_ahead_rig.transform.basis.y)
+	var lookahead_pos: Vector3 = to_local(ship.global_position -ship.global_transform.basis.z * 100)
+	#camera.look_at(camera.to_local(lookahead_pos,look_ahead_rig.global_transform.basis.y))
+	camera.transform.basis = camera.transform.basis.looking_at(lookahead_pos, transform.basis.y)

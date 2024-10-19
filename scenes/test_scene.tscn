@@ -56,9 +56,11 @@ material = SubResource("StandardMaterial3D_dullo")
 [node name="Ship" parent="." instance=ExtResource("1_45yrv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.945, 0)
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_6b0un")
+
 [node name="CameraRig" parent="." node_paths=PackedStringArray("ship") instance=ExtResource("2_mr3ih")]
 ship = NodePath("../Ship")
 fancy_cam = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_6b0un")
+[editable path="CameraRig"]
