@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://diw52h5jif8v2"]
+
+[ext_resource type="Script" path="res://scenes/game_object/ship_camera/camera_rig.gd" id="1_shvuj"]
+
+[node name="CameraRig" type="Node3D"]
+script = ExtResource("1_shvuj")
+
+[node name="LookAheadRig" type="Node3D" parent="."]
+
+[node name="MainCamera" type="Node3D" parent="LookAheadRig"]
+
+[node name="Camera3D" type="Camera3D" parent="LookAheadRig/MainCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.73, 26.42)
+current = true
+fov = 60.0
+near = 1.0
+far = 10000.0

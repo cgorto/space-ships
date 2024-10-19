@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://fsyy7f8h42iq"
+path="res://.godot/imported/player_ship.obj-13b8c3dc2f85e81d6362c0048205c559.mesh"
+
+[deps]
+
+files=["res://.godot/imported/player_ship.obj-13b8c3dc2f85e81d6362c0048205c559.mesh"]
+
+source_file="res://assets/player_ship.obj"
+dest_files=["res://.godot/imported/player_ship.obj-13b8c3dc2f85e81d6362c0048205c559.mesh", "res://.godot/imported/player_ship.obj-13b8c3dc2f85e81d6362c0048205c559.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

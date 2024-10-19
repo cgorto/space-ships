@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8ps4kffu7ucb"]
+
+[ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="1_h3ck2"]
+[ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
+[ext_resource type="Script" path="res://scenes/game_object/ship/ship_input.gd" id="3_44wn0"]
+[ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1ua5q"]
+radius = 0.636094
+height = 3.5097
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2x1uj"]
+size = Vector2(5, 5)
+
+[node name="Ship" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mass = 100.0
+gravity_scale = 0.0
+freeze_mode = 1
+linear_damp = 2.0
+angular_damp = 5.0
+script = ExtResource("1_i8rlt")
+
+[node name="Visual" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = ExtResource("1_h3ck2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0.522375)
+shape = SubResource("CapsuleShape3D_1ua5q")
+
+[node name="ShipPhysics" type="Node" parent="." node_paths=PackedStringArray("rigid_body")]
+script = ExtResource("3_fcr5x")
+rigid_body = NodePath("..")
+
+[node name="ShipInput" type="Node3D" parent="."]
+script = ExtResource("3_44wn0")
+
+[node name="RayCast3D" type="RayCast3D" parent="ShipInput"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="ShipInput"]
+follow_viewport_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ShipInput/CanvasLayer"]
+texture = SubResource("PlaceholderTexture2D_2x1uj")
+
+[node name="Label" type="Label" parent="ShipInput/CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
