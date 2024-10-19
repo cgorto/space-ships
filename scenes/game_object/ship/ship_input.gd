@@ -36,13 +36,12 @@ func _physics_process(delta: float) -> void:
 func auto_pilot(delta:float) -> void:
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	#var world_pos: Vector3 = camera.project_position(mouse_pos, 1000)
 	var world_pos: Vector3 = camera.project_position(mouse_pos, 1000)
 	
 	sprite.position = mouse_pos
 	label.text = "Mouse coord: " + str(get_mouse_pos())
 	turn_towards_point(world_pos, delta)
-	bank_ship_relative_to_up(mouse_pos,camera.basis.y, delta)
+	bank_ship_relative_to_up(mouse_pos,camera.global_basis.y, delta)
 	
 func bank_ship_relative_to_up(mouse_pos: Vector2, up: Vector3, delta:float) -> void:
 	var bank_influence: float = (mouse_pos.x - (get_viewport().size.x * 0.5)) / (get_viewport().size.x * 0.5)
