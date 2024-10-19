@@ -29,7 +29,6 @@ func move_camera(delta:float) -> void:
 	if fancy_cam:
 		look_ahead(delta)
 
-
 func look_ahead(delta:float) -> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var screen_size: Vector2 = get_viewport().size
