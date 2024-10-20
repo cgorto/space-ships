@@ -48,10 +48,11 @@ func look_ahead(delta:float) -> void:
 
 
 	var lookahead_pos: Vector3 = ship.global_position-(ship.global_transform.basis.z * 100)
+	$LookAheadRig/MainCamera/Camera3D/RayCast3D.target_position = camera.to_local(lookahead_pos)
 	counter += delta
 	if counter > 1:
 		print("Look ahead: " + str(-ship.global_transform.basis.z * 100))
 		print("THIS ONE" + str(lookahead_pos))
 		counter = 0
-	#camera.look_at(camera.to_local(lookahead_pos))
-	camera.global_basis = camera.transform.basis.looking_at(lookahead_pos, up)
+	camera.look_at(lookahead_pos)
+	#camera.basis = camera.basis.looking_at(lookahead_pos, up)
