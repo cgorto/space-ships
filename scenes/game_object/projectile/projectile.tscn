@@ -26,6 +26,7 @@ material_override = SubResource("StandardMaterial3D_bbner")
 mesh = SubResource("SphereMesh_4p6qv")
 
 [node name="Hitbox" parent="." instance=ExtResource("4_5ovbm")]
+damage = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("SphereShape3D_s6lec")
