@@ -4,11 +4,23 @@
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_input.gd" id="3_44wn0"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
-[ext_resource type="Script" path="res://scenes/game_object/ship/csg_mesh_3d.gd" id="3_g316e"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_3sdwg"]
 radius = 5.0
 height = 10.0
+
+[sub_resource type="GDScript" id="GDScript_n80v5"]
+script/source = "extends CSGMesh3D
+
+var counter: float = 0
+
+func _physics_process(delta: float) -> void:
+	counter += delta
+	
+	if counter > 1:
+		print(global_position)
+		counter = 0
+"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1ua5q"]
 radius = 0.636094
@@ -37,7 +49,7 @@ target_position = Vector3(0, 0, -100)
 [node name="CSGMesh3D" type="CSGMesh3D" parent="Visual"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100)
 mesh = SubResource("SphereMesh_3sdwg")
-script = ExtResource("3_g316e")
+script = SubResource("GDScript_n80v5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.634606)
