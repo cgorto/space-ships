@@ -22,6 +22,8 @@ func update(set_point: float, actual: float, delta: float) -> float:
 	var present: float = set_point - actual
 	if is_zero_approx(present):
 		present = 0
+	if !(last_error * present > 1):
+		integral *= 0.5
 	integral += present * delta
 	var deriv: float = (present - last_error) / delta
 	last_error = present
