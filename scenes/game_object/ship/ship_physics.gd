@@ -6,7 +6,7 @@ var linear_force: Vector3 = Vector3(100,100,100)
 var angular_force: Vector3 = Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100))
 
 var reverse_multiplier: float = 1
-var force_multiplier: float = 100
+var force_multiplier: float = 300
 
 var applied_linear_force: Vector3 = Vector3.ZERO
 var applied_angular_force: Vector3 = Vector3.ZERO

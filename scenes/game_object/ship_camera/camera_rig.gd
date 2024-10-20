@@ -1,13 +1,13 @@
 class_name CameraRig extends Node3D
 
 @export var ship: Node3D #Ship to follow
-@export var smooth_speed: float = 5
+@export var smooth_speed: float = 10
 @export var fancy_cam: bool
 
 @export_category("Lookahead Values")
-@export var horizontal_turn_angle: float = deg_to_rad(30)
-@export var vertical_turn_up_angle: float = deg_to_rad(10)
-@export var vertical_turn_down_angle: float = deg_to_rad(30)
+@export var horizontal_turn_angle: float = deg_to_rad(40)
+@export var vertical_turn_up_angle: float = deg_to_rad(15)
+@export var vertical_turn_down_angle: float = deg_to_rad(40)
 
 @onready var camera: Node3D = $LookAheadRig/MainCamera
 @onready var look_ahead_rig: Node3D = $LookAheadRig
@@ -16,8 +16,7 @@ class_name CameraRig extends Node3D
 
 func _physics_process(delta: float) -> void:
 	move_camera(delta)
-	if Input.is_action_just_pressed("ui_focus_next"):
-		fancy_cam = not fancy_cam
+
 
 
 func move_camera(delta:float) -> void:
@@ -27,7 +26,8 @@ func move_camera(delta:float) -> void:
 	global_position = ship.global_position
 	var target_rig_rotation: Quaternion = Util.qt_look_at(ship.global_transform.basis.z, global_transform.basis.y)
 	#quaternion = Util.qt_damp(quaternion,target_rig_rotation, smooth_speed, delta)
-	global_transform.basis = Basis(global_transform.basis.get_rotation_quaternion().slerp(target_rig_rotation, smooth_speed * delta))
+	
+	global_transform.basis = Basis(Util.qt_damp(global_transform.basis.get_rotation_quaternion(),target_rig_rotation,smooth_speed, delta))
 	
 	if fancy_cam:
 		look_ahead(delta)

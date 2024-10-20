@@ -12,9 +12,9 @@ class_name ShipInput extends Node3D
 @export_range(0,1) var throttle: float
 
 
-var pitch_pid: PID = PID.new(2, 0, 0)
-var yaw_pid: PID = PID.new(1.5, 0, 0)
-var roll_pid: PID = PID.new(1.5, 0, 0)
+var pitch_pid: PID = PID.new(2.5, 0, 0.5)
+var yaw_pid: PID = PID.new(2.5, 0, 0.5)
+var roll_pid: PID = PID.new(3, 0, 1)
 
 @export var throttle_speed: float = 0.5
 
@@ -26,7 +26,7 @@ var roll_pid: PID = PID.new(1.5, 0, 0)
 @onready var roll_lab: Label = $CanvasLayer/VBoxContainer/Roll
 @onready var pitch_lab: Label = $CanvasLayer/VBoxContainer/Pitch
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	strafe = Input.get_axis("move_left","move_right")
 	
 	auto_pilot(delta)

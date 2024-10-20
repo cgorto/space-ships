@@ -14,6 +14,9 @@ func _init(_p_factor: float, _i_factor: float, _d_factor: float) -> void:
 	i_factor = _i_factor
 	d_factor = _d_factor
 	
+	
+#Sort of big issue with I, if you turn in one direction for a long time, your I will add up such that if you turn in a different direction, you will still be turning towards the
+#previous direction for a while. Maybe reset I if the sign of the error is different than the last error?
 
 func update(set_point: float, actual: float, delta: float) -> float:
 	var present: float = set_point - actual
