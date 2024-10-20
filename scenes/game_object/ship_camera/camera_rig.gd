@@ -5,12 +5,13 @@ class_name CameraRig extends Node3D
 @export var fancy_cam: bool
 
 @export_category("Lookahead Values")
-@export var horizontal_turn_angle: float = deg_to_rad(90)
-@export var vertical_turn_up_angle: float = deg_to_rad(90)
-@export var vertical_turn_down_angle: float = deg_to_rad(60)
+@export var horizontal_turn_angle: float = deg_to_rad(15)
+@export var vertical_turn_up_angle: float = deg_to_rad(5)
+@export var vertical_turn_down_angle: float = deg_to_rad(15)
 
 @onready var camera: Node3D = $LookAheadRig/MainCamera/Camera3D
 @onready var look_ahead_rig: Node3D = $LookAheadRig
+@onready var debug_cam: Node3D = $CanvasLayer/SubViewportContainer/SubViewport/Cam
 
 var counter:float = 0
 
@@ -23,11 +24,10 @@ func move_camera(delta:float) -> void:
 		return
 	
 	position = ship.position
-	#This basis is not orthogonal.
-
-	var target_rig_rotation: Basis = Basis.looking_at(-ship.transform.basis.z, transform.basis.y)
-	#camera.transform.basis = camera.transform.basis.slerp(target_rig_rotation, smooth_speed * delta).orthonormalized()
-	transform.basis = transform.basis.slerp(target_rig_rotation, smooth_speed * delta).orthonormalized()
+	debug_cam.position = position
+	
+	var target_rig_rotation: Quaternion = Util.qt_look_at(ship.transform.basis.z, transform.basis.y)
+	quaternion = Util.qt_damp(quaternion,target_rig_rotation, smooth_speed, delta)
 	
 	if fancy_cam:
 		look_ahead(delta)
@@ -36,36 +36,19 @@ func move_camera(delta:float) -> void:
 func look_ahead(delta:float) -> void:
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var screen_size: Vector2 = get_viewport().size
-	
 	var mouse_screen: Vector2 = (mouse_pos - (screen_size * 0.5)) / (screen_size * 0.5)
 	mouse_screen = mouse_screen.clampf(-1,1)
 
 	var horizontal: float = horizontal_turn_angle * mouse_screen.x
-	var hor_dir: Vector3 = Vector3.BACK
+	var vertical: float = vertical_turn_down_angle * mouse_screen.y
+	if mouse_screen.y > 0.0:
+		vertical_turn_up_angle * mouse_screen.y
 	
-	if mouse_screen.x < 0:
-		hor_dir = Vector3.FORWARD
+	var target_rotation: Quaternion = Quaternion.from_euler(Vector3(-vertical, - horizontal , 0))
+	look_ahead_rig.quaternion = Util.qt_damp(-look_ahead_rig.quaternion,target_rotation, smooth_speed, delta)
 
-
-	var vertical: float = vertical_turn_down_angle * mouse_screen.y if mouse_screen.y < 0.0 else vertical_turn_up_angle * mouse_screen.y
-	var ver_dir: Vector3 = Vector3.RIGHT
-	
-	if mouse_screen.y < 0:
-		ver_dir = Vector3.LEFT
-	var target_rotation: Basis = look_ahead_rig.basis
-	target_rotation.rotated(ver_dir, vertical)
-	target_rotation.rotated(hor_dir, horizontal)
-	look_ahead_rig.basis = look_ahead_rig.basis.slerp(target_rotation, smooth_speed * delta)
-
-	var up: Vector3 = global_transform.basis.y
-
-	var lookahead_pos: Vector3 = ship.global_position-(ship.global_transform.basis.z * 100)
+	var lookahead_pos: Vector3 = ship.global_position+(ship.global_transform.basis.z * 100)
 	$LookAheadRig/MainCamera/Camera3D/RayCast3D.target_position = camera.to_local(lookahead_pos)
-	counter += delta
-	if counter > .5:
-		look_ahead_rig.basis = look_ahead_rig.basis.orthonormalized()
-		counter=0.0
 
-	#camera.look_at(lookahead_pos, camera.basis.y)
-	camera.look_at(lookahead_pos, look_ahead_rig.basis.y)
-	#camera.basis = camera.basis.looking_at(lookahead_pos, global_basis.y)
+	#camera.look_at(lookahead_pos, look_ahead_rig.basis.y)
+	camera.quaternion = Util.qt_look_at(lookahead_pos, look_ahead_rig.basis.y)

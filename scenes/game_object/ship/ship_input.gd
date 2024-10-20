@@ -59,17 +59,17 @@ func bank_ship_relative_to_up(mouse_pos: Vector2, up: Vector3, delta:float) -> v
 
 
 func turn_towards_point(to: Vector3, delta: float) -> void:
+	# ============= v SHOULD HAVE PARITY v =======================
 	var local_to: Vector3 = to_local(to).normalized()
 	#var local_to: Vector3 = global_transform.inverse() * (to - global_position)
 	debug_ray.target_position = local_to * 1000
 	
-	var pitch_angle: float = atan2(-local_to.y, -local_to.z)
-	var yaw_angle: float = atan2(-local_to.x, -local_to.z)
-	pitch = clampf(pitch_pid.update(0, pitch_angle, delta), -1, 1)
-	yaw = -clampf(yaw_pid.update(0, yaw_angle, delta), -1,1)
+	
+	pitch = clampf(pitch_pid.update(0, -local_to.y, delta), -1, 1)
+	yaw = -clampf(yaw_pid.update(0, local_to.x, delta), -1,1)
 	pitch_lab.text ="Pitch: " + str(pitch)
 	yaw_lab.text = "Yaw: " + str(yaw)
-	
+	# ============= ^ SHOULD HAVE PARITY ^ =======================
 	
 func update_throttle(delta: float) -> void:
 	var target: float = throttle
