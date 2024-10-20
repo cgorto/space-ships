@@ -11,7 +11,7 @@ func _ready() -> void:
 		new_box.position = Vector3(box_scale *randf() -box_scale*0.5, box_scale *randf() -box_scale*0.5, box_scale *randf() -box_scale*0.5)
 		add_child(new_box)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	debug_cam.position = $Ship.position
 	debug_cam.quaternion = Util.qt_look_at($Ship.transform.basis.x, transform.basis.y)
 

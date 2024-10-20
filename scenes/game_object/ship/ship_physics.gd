@@ -13,9 +13,9 @@ var applied_angular_force: Vector3 = Vector3.ZERO
 
 @export var rigid_body: RigidBody3D
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if rigid_body != null:
-		rigid_body.apply_force(rigid_body.transform.basis * (applied_linear_force * force_multiplier))
+		rigid_body.apply_central_force(rigid_body.transform.basis * (applied_linear_force * force_multiplier))
 		rigid_body.apply_torque(rigid_body.transform.basis * (applied_angular_force * force_multiplier))
 
 func set_physics_input(linear_input: Vector3, angular_input: Vector3) -> void:

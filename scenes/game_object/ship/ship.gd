@@ -5,7 +5,7 @@ extends RigidBody3D
 
 var velocity: Vector3
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	ship_physics.set_physics_input(
 		Vector3(
 			ship_input.strafe, 

@@ -50,19 +50,7 @@ func look_ahead(delta:float) -> void:
 
 	var lookahead_pos: Vector3 = ship.global_position-(ship.global_transform.basis.z * 100)
 	$LookAheadRig/MainCamera/Camera3D/RayCast3D.target_position = camera.to_local(lookahead_pos)
-	#var camera_rotation: Quaternion = Util.qt_look_at(lookahead_pos - camera.global_position, look_ahead_rig.global_transform.basis.y)
-	var camera_rotation: Quaternion = Util.qt_look_at(camera.to_local(lookahead_pos), look_ahead_rig.global_transform.basis.y)
-	#double localizing it???
-	
-	
 	camera.look_at(lookahead_pos, look_ahead_rig.global_transform.basis.y)
-	#camera.global_transform.basis = Basis(camera_rotation)
-
-
-
-
-
-#.look_at source:
 
 #void Node3D::look_at(const Vector3 &p_target, const Vector3 &p_up, bool p_use_model_front) {
 	#ERR_THREAD_GUARD;
