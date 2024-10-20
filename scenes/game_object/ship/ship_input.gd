@@ -9,7 +9,7 @@ class_name ShipInput extends Node3D
 @export_range(-1,1) var yaw: float
 @export_range(-1,1) var roll: float
 @export_range(-1,1) var strafe: float
-@export_range(0,1) var throttle: float
+@export_range(-0.2,1) var throttle: float
 
 
 var pitch_pid: PID = PID.new(1.5, 1, 0.5)
@@ -76,7 +76,7 @@ func update_throttle(delta: float) -> void:
 	if Input.is_action_pressed("move_forward"):
 		target = 1
 	elif Input.is_action_pressed("move_backward"):
-		target = 0
+		target = -.2
 	
 	throttle = move_toward(throttle, target, throttle_speed * delta)
 	throt.value = throttle
