@@ -9,9 +9,8 @@ class_name CameraRig extends Node3D
 @export var vertical_turn_up_angle: float = deg_to_rad(5)
 @export var vertical_turn_down_angle: float = deg_to_rad(15)
 
-@onready var camera: Node3D = $LookAheadRig/MainCamera/Camera3D
+@onready var camera: Node3D = $LookAheadRig/MainCamera
 @onready var look_ahead_rig: Node3D = $LookAheadRig
-@onready var debug_cam: Node3D = $CanvasLayer/SubViewportContainer/SubViewport/Cam
 
 var counter:float = 0
 
@@ -24,7 +23,6 @@ func move_camera(delta:float) -> void:
 		return
 	
 	position = ship.position
-	debug_cam.position = position
 	
 	var target_rig_rotation: Quaternion = Util.qt_look_at(ship.transform.basis.z, transform.basis.y)
 	quaternion = Util.qt_damp(quaternion,target_rig_rotation, smooth_speed, delta)
