@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8ps4kffu7ucb"]
+[gd_scene load_steps=11 format=3 uid="uid://c8ps4kffu7ucb"]
 
 [ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="1_h3ck2"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
+[ext_resource type="PackedScene" uid="uid://gep8kx3gilo" path="res://scenes/component/bullet_spawner.tscn" id="2_3q2ub"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_input.gd" id="3_44wn0"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
+[ext_resource type="PackedScene" uid="uid://biqgfh3vefxmj" path="res://scenes/game_object/projectile/projectile.tscn" id="3_k4ve6"]
 [ext_resource type="Texture2D" uid="uid://26yo4d5if34g" path="res://assets/Crosshair.png" id="3_mosj5"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_3sdwg"]
@@ -26,6 +28,9 @@ angular_damp = 5.0
 script = ExtResource("1_i8rlt")
 
 [node name="Visual" type="Node3D" parent="."]
+
+[node name="BulletSpawner" parent="Visual" instance=ExtResource("2_3q2ub")]
+projectile_scene = ExtResource("3_k4ve6")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(-2.97, 0, -4.48458e-07, 0, 2.97, 0, 4.48458e-07, 0, -2.97, 0, -1.445, 0)

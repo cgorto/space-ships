@@ -1,7 +1,29 @@
-[gd_scene load_steps=2 format=3 uid="uid://yl7uwjkjbml"]
+[gd_scene load_steps=7 format=3 uid="uid://yl7uwjkjbml"]
+
+[ext_resource type="Script" path="res://scenes/csg_mesh_3d.gd" id="1_wtcaj"]
+[ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="2_yrf08"]
+[ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="3_siugq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_e5rhn"]
 size = Vector3(5, 5, 5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mfajj"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v4o1e"]
+size = Vector3(5, 5, 5)
+
 [node name="CSGMesh3D" type="CSGMesh3D"]
 mesh = SubResource("BoxMesh_e5rhn")
+material = SubResource("StandardMaterial3D_mfajj")
+script = ExtResource("1_wtcaj")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_yrf08")]
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_siugq")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+shape = SubResource("BoxShape3D_v4o1e")
+
+[connection signal="hit" from="Hurtbox" to="." method="_on_hurtbox_hit"]

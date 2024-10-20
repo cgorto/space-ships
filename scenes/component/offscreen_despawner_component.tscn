@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://ej01lxfiew2b"]
+
+[ext_resource type="Script" path="res://scenes/component/offscreen_despawner_component.gd" id="1_6hdqm"]
+
+[node name="OffscreenDespawnerComponent" type="VisibleOnScreenNotifier3D"]
+script = ExtResource("1_6hdqm")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="screen_exited" from="." to="." method="_on_screen_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

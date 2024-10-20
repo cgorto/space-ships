@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://biqgfh3vefxmj"]
+
+[ext_resource type="PackedScene" uid="uid://ej01lxfiew2b" path="res://scenes/component/offscreen_despawner_component.tscn" id="1_1mi5j"]
+[ext_resource type="Script" path="res://scenes/game_object/projectile/projectile.gd" id="1_ys1lj"]
+[ext_resource type="PackedScene" uid="uid://d14um02htlksm" path="res://scenes/component/velocity_component.tscn" id="2_plbux"]
+[ext_resource type="PackedScene" uid="uid://b6ccgjx8qg12h" path="res://scenes/component/hitbox.tscn" id="4_5ovbm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbner"]
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4p6qv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s6lec"]
+
+[node name="Projectile" type="Node3D"]
+script = ExtResource("1_ys1lj")
+
+[node name="OffscreenDespawnerComponent" parent="." instance=ExtResource("1_1mi5j")]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("2_plbux")]
+max_speed = 1000
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_bbner")
+mesh = SubResource("SphereMesh_4p6qv")
+
+[node name="Hitbox" parent="." instance=ExtResource("4_5ovbm")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("SphereShape3D_s6lec")
+
+[connection signal="hit" from="Hitbox" to="." method="_on_hitbox_hit"]
