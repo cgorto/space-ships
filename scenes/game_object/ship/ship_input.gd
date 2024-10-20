@@ -66,7 +66,7 @@ func turn_towards_point(to: Vector3, delta: float) -> void:
 	
 	
 	pitch = clampf(pitch_pid.update(0, -local_to.y, delta), -1, 1)
-	yaw = -clampf(yaw_pid.update(0, local_to.x, delta), -1,1)
+	yaw = clampf(yaw_pid.update(0, local_to.x, delta), -1,1)
 	pitch_lab.text ="Pitch: " + str(pitch)
 	yaw_lab.text = "Yaw: " + str(yaw)
 	# ============= ^ SHOULD HAVE PARITY ^ =======================

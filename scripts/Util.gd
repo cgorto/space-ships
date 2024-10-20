@@ -41,26 +41,26 @@ static func qt_look_at(forward: Vector3, up: Vector3) -> Quaternion:
 		q.x = (m12 - m21) * s
 		q.y = (m20 - m02) * s
 		q.z = (m01 - m10) * s
-		return q
+		return q.normalized()
 	elif ((m00 >= m11) && (m00 >= m22)):
 		var s: float = 2 * sqrt(1 + m00 - m11 - m22)
 		q.x = 0.25 * s
 		q.y = (m01 + m10) / s
 		q.z = (m02 + m20) /s
 		q.w = (m12 - m21) / s
-		return q
+		return q.normalized()
 	elif (m11 > m22):
 		var s: float = 2* sqrt(1 + m11 - m00 - m22)
 		q.x = (m10 + m01) / s
 		q.y = 0.25 * s
 		q.z = (m21 + m12) / s
 		q.w = (m20 - m02) / s
-		return q
+		return q.normalized()
 	else:
 		var s: float = 2 * sqrt(1 + m22 - m00 - m11)
 		q.x = (m20 + m02) / s
 		q.y = (m21 + m12) / s
 		q.z = 0.25 * s
 		q.w = (m01 - m10) / s
-		return q
+		return q.normalized()
 		

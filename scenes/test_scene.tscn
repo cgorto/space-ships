@@ -35,21 +35,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 34.945, 0)
 ship = NodePath("../Ship")
 fancy_cam = true
 
-[node name="RayCast3D2" type="RayCast3D" parent="CameraRig/LookAheadRig/MainCamera/Camera3D" index="1"]
-target_position = Vector3(5, 0, 0)
-debug_shape_custom_color = Color(0.584502, 0.549035, 5.77569e-07, 1)
-debug_shape_thickness = 5
-
-[node name="RayCast3D3" type="RayCast3D" parent="CameraRig/LookAheadRig/MainCamera/Camera3D" index="2"]
-target_position = Vector3(0, 5, 0)
-debug_shape_custom_color = Color(0.584502, 0.549035, 5.77569e-07, 1)
-debug_shape_thickness = 5
-
-[node name="RayCast3D4" type="RayCast3D" parent="CameraRig/LookAheadRig/MainCamera/Camera3D" index="3"]
-target_position = Vector3(0, 0, 5)
-debug_shape_custom_color = Color(0.584502, 0.549035, 5.77569e-07, 1)
-debug_shape_thickness = 5
-
 [node name="RayCast3D" type="RayCast3D" parent="CameraRig/LookAheadRig/MainCamera" index="1"]
 target_position = Vector3(5, 0, 0)
 debug_shape_custom_color = Color(0.225711, 0.616674, 0.463903, 1)
@@ -62,7 +47,7 @@ debug_shape_thickness = 5
 
 [node name="RayCast3D3" type="RayCast3D" parent="CameraRig/LookAheadRig/MainCamera" index="3"]
 target_position = Vector3(0, 0, 5)
-debug_shape_custom_color = Color(0.225711, 0.616674, 0.463903, 1)
+debug_shape_custom_color = Color(1, 0.274737, 0.509547, 1)
 debug_shape_thickness = 5
 
 [node name="RayCast3D" type="RayCast3D" parent="CameraRig/LookAheadRig" index="1"]
