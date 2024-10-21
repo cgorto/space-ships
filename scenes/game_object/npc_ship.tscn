@@ -41,7 +41,7 @@ rigid_body = NodePath("..")
 
 [node name="ShipInput" type="Node3D" parent="."]
 script = ExtResource("2_se0ns")
-throttle = 0.6
+throttle = 0.3
 
 [node name="Visuals" type="Node3D" parent="."]
 

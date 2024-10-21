@@ -61,6 +61,7 @@ script = ExtResource("3_fcr5x")
 rigid_body = NodePath("..")
 
 [node name="ShipInput" type="Node3D" parent="."]
+visible = false
 script = ExtResource("3_44wn0")
 
 [node name="RayCast3D" type="RayCast3D" parent="ShipInput"]

@@ -1,9 +1,6 @@
 class_name ShipInput extends Node3D
 
 @export var bank_limit: float = deg_to_rad(50)
-@export var pitch_sensitivity: float = 2.5
-@export var yaw_sensitivity: float = 2.5
-@export var roll_sensivity: float = 1
 
 @export_range(-1,1) var pitch: float
 @export_range(-1,1) var yaw: float

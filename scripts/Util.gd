@@ -64,3 +64,23 @@ static func qt_look_at(forward: Vector3, up: Vector3) -> Quaternion:
 		q.w = (m01 - m10) / s
 		return q.normalized()
 		
+
+static func calculate_lead(from: RigidBody3D, to: RigidBody3D, muzzle_velocity: float) -> Vector3:
+	var own_predicted_pos: Vector3 = from.global_position + from.linear_velocity
+	var target_predicted_pos: Vector3 = to.global_position + to.linear_velocity
+	
+	var range_to_target: float = own_predicted_pos.distance_to(target_predicted_pos)
+	var time_to_hit: float = range_to_target / muzzle_velocity
+	
+	var lead: Vector3 = (from.linear_velocity - to.linear_velocity) * time_to_hit + to.global_position
+	return lead
+
+static func uniform_random_vector() -> Vector3:
+	var phi: float = randf_range(0,TAU)
+	var costheta: float = randf_range(-1,1)
+	var theta: float = acos(costheta)
+	return Vector3(
+		sin(theta) * cos(phi),
+		sin(theta) * sin(phi),
+		cos(theta)
+		)
