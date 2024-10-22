@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt2e2yt546nhh"]
+
+[ext_resource type="Script" path="res://scenes/component/pilot/pilot.gd" id="1_gv36t"]
+
+[node name="Pilot" type="Node3D" groups=["target"]]
+script = ExtResource("1_gv36t")

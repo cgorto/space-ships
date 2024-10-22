@@ -1,12 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://c8ps4kffu7ucb"]
+[gd_scene load_steps=10 format=3 uid="uid://c8ps4kffu7ucb"]
 
 [ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="1_h3ck2"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
 [ext_resource type="PackedScene" uid="uid://gep8kx3gilo" path="res://scenes/component/bullet_spawner.tscn" id="2_3q2ub"]
-[ext_resource type="Script" path="res://scenes/game_object/ship/ship_input.gd" id="3_44wn0"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
 [ext_resource type="PackedScene" uid="uid://biqgfh3vefxmj" path="res://scenes/game_object/projectile/projectile.tscn" id="3_k4ve6"]
 [ext_resource type="Texture2D" uid="uid://26yo4d5if34g" path="res://assets/Crosshair.png" id="3_mosj5"]
+[ext_resource type="PackedScene" uid="uid://rjscsifxkuxr" path="res://scenes/component/pilot/player_pilot.tscn" id="7_0qwhp"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_3sdwg"]
 radius = 5.0
@@ -15,9 +15,6 @@ height = 10.0
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1ua5q"]
 radius = 0.636094
 height = 3.5097
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_2x1uj"]
-size = Vector2(5, 5)
 
 [node name="Ship" type="RigidBody3D"]
 mass = 100.0
@@ -47,9 +44,11 @@ mesh = SubResource("SphereMesh_3sdwg")
 
 [node name="Sprite3D" type="Sprite3D" parent="Visual"]
 transform = Transform3D(0.165, 0, 0, 0, 0.165, 0, 0, 0, 0.165, 0, 0, -1000)
-sorting_offset = 1000.0
+layers = 2
 billboard = 1
+no_depth_test = true
 fixed_size = true
+texture_filter = 0
 texture = ExtResource("3_mosj5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -60,42 +59,5 @@ shape = SubResource("CapsuleShape3D_1ua5q")
 script = ExtResource("3_fcr5x")
 rigid_body = NodePath("..")
 
-[node name="ShipInput" type="Node3D" parent="."]
-visible = false
-script = ExtResource("3_44wn0")
-
-[node name="RayCast3D" type="RayCast3D" parent="ShipInput"]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="ShipInput"]
-follow_viewport_enabled = true
-
-[node name="Sprite2D" type="Sprite2D" parent="ShipInput/CanvasLayer"]
-texture = SubResource("PlaceholderTexture2D_2x1uj")
-
-[node name="Label" type="Label" parent="ShipInput/CanvasLayer"]
-offset_left = 860.0
-offset_top = 119.0
-offset_right = 900.0
-offset_bottom = 142.0
-
-[node name="ProgressBar" type="ProgressBar" parent="ShipInput/CanvasLayer"]
-offset_left = 612.0
-offset_top = 628.0
-offset_right = 686.0
-offset_bottom = 655.0
-max_value = 1.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ShipInput/CanvasLayer"]
-offset_left = 1037.0
-offset_top = 310.0
-offset_right = 1077.0
-offset_bottom = 387.0
-
-[node name="Yaw" type="Label" parent="ShipInput/CanvasLayer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Roll" type="Label" parent="ShipInput/CanvasLayer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Pitch" type="Label" parent="ShipInput/CanvasLayer/VBoxContainer"]
-layout_mode = 2
+[node name="Pilot" parent="." node_paths=PackedStringArray("own_ship") instance=ExtResource("7_0qwhp")]
+own_ship = NodePath("..")

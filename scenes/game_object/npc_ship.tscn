@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://scenes/game_object/npc_ship.gd" id="1_0nu02"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="1_rto4w"]
 [ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="2_d72rs"]
-[ext_resource type="Script" path="res://scenes/game_object/node_3d.gd" id="2_se0ns"]
 [ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="3_0kruw"]
 [ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="3_0s5s2"]
+[ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_47h1e"]
 size = Vector3(10, 10, 10)
@@ -19,6 +19,7 @@ emission_energy_multiplier = 5.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_6dk2n"]
 
 [node name="NpcShip" type="RigidBody3D"]
+collision_layer = 0
 mass = 100.0
 gravity_scale = 0.0
 freeze_mode = 1
@@ -39,10 +40,6 @@ shape = SubResource("BoxShape3D_47h1e")
 script = ExtResource("1_rto4w")
 rigid_body = NodePath("..")
 
-[node name="ShipInput" type="Node3D" parent="."]
-script = ExtResource("2_se0ns")
-throttle = 0.3
-
 [node name="Visuals" type="Node3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals"]
@@ -52,3 +49,7 @@ surface_material_override/1 = SubResource("StandardMaterial3D_k0pcp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_6dk2n")
+
+[node name="Pilot" parent="." node_paths=PackedStringArray("own_ship") instance=ExtResource("6_abf6t")]
+faction = 1
+own_ship = NodePath("..")

@@ -32,6 +32,10 @@ project/assembly_name="Space"
 
 movie_writer/movie_file="F:/GameDev/fleetsurvivors/movie/test.avi"
 
+[global_group]
+
+target="Every Pilot belongs to this group"
+
 [input]
 
 move_left={

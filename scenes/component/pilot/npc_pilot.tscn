@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://skf788cyrcng"]
+
+[ext_resource type="Script" path="res://scenes/component/pilot/npc_pilot.gd" id="1_c1qid"]
+
+[node name="NpcPilot" type="Node3D" groups=["target"]]
+script = ExtResource("1_c1qid")
