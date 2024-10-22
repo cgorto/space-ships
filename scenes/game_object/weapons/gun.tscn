@@ -8,6 +8,7 @@
 script = ExtResource("1_kthce")
 
 [node name="BulletSpawner" parent="." instance=ExtResource("2_whqxq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
 projectile_scene = ExtResource("3_w4j8y")
 
 [node name="AttackCooldown" type="Timer" parent="."]

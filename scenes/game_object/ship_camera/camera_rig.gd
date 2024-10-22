@@ -49,7 +49,6 @@ func look_ahead(delta:float) -> void:
 	look_ahead_rig.transform.basis = Basis(Util.qt_damp(look_ahead_rig.quaternion,target_rotation, smooth_speed, delta))
 
 	var lookahead_pos: Vector3 = ship.global_position-(ship.global_transform.basis.z * 100)
-	$LookAheadRig/MainCamera/Camera3D/RayCast3D.target_position = camera.to_local(lookahead_pos)
 	camera.look_at(lookahead_pos, look_ahead_rig.global_transform.basis.y)
 
 #void Node3D::look_at(const Vector3 &p_target, const Vector3 &p_up, bool p_use_model_front) {
