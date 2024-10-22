@@ -7,11 +7,14 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bbner"]
 emission_enabled = true
-emission = Color(1, 0, 0, 1)
+emission = Color(1, 0.945098, 0, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_4p6qv"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_pp8ng"]
+radius = 0.25
+height = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_s6lec"]
+radius = 1.0
 
 [node name="Projectile" type="Node3D"]
 script = ExtResource("1_ys1lj")
@@ -22,8 +25,9 @@ script = ExtResource("1_ys1lj")
 max_speed = 1000
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_bbner")
-mesh = SubResource("SphereMesh_4p6qv")
+mesh = SubResource("CapsuleMesh_pp8ng")
 
 [node name="Hitbox" parent="." instance=ExtResource("4_5ovbm")]
 damage = 10

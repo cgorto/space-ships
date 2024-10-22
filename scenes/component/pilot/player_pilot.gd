@@ -10,6 +10,8 @@ func _process(delta: float) -> void:
 	
 	auto_pilot(delta)
 	update_throttle(delta)
+	if Input.is_action_pressed("shoot"):
+		weapon.shoot()
 
 
 func auto_pilot(delta:float) -> void:

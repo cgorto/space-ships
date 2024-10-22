@@ -19,6 +19,8 @@ func _process(delta: float) -> void:
 	think_counter +=delta
 	run_targeting()
 	dogfight(delta)
+	if is_firing:
+		weapon.shoot()
 	
 func is_fire_allowed() -> bool:
 	var noise_value: float = (noise.get_noise_1d(seed + (Time.get_unix_time_from_system() / 10)) + 1) / 2
@@ -27,6 +29,7 @@ func is_fire_allowed() -> bool:
 func dogfight(delta: float) -> void:
 	if target == null:
 		return
+	$RayCast3D.target_position = to_local(target.global_position)
 	var distance: float = global_position.distance_to(target.global_position)
 	if distance < 100:
 		turn_towards_point(target.global_position + preferred_avoid, delta)
@@ -34,13 +37,14 @@ func dogfight(delta: float) -> void:
 	else:
 		#THIS NEEDS TO BE CHANGED, PILOT PROBABLY NEEDS A REFERENCE TO EITHER OWN SHIP OR OWN WEAPONS
 		var target_point:Vector3 = Util.calculate_lead(own_ship,target.own_ship,100)
-		var value: float = noise.get_noise_1d(seed + (Time.get_unix_time_from_system() / 10))
-		turn_towards_point(target_point, delta)
+		var turn_strength: float = noise.get_noise_1d(seed + (Time.get_unix_time_from_system() / 10))
+		turn_towards_point(target_point, delta, turn_strength)
 		var angle_to_target: float = -global_basis.z.angle_to(target_point)
 		
 		is_firing = angle_to_target < 5 && is_fire_allowed() && distance < 300
 		if (-global_basis.z).angle_to(-target.global_basis.z) < 90:
-			throttle = remap(distance,50,250,.33,.8)
+			#throttle = remap(distance,50,250,.33,.8)
+			throttle = 0.6
 		else:
 			throttle = 0.85
 

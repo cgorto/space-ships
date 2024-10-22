@@ -18,6 +18,7 @@ var roll_pid: PID = PID.new(0.3, 1.0, 1.0)
 enum FACTION {FRIENDLY, ENEMY}
 @export var faction: FACTION
 @export var own_ship: Node3D
+@export var weapon: Node3D
 
 var is_firing: bool = false
 
@@ -36,8 +37,8 @@ func bank_ship_relative_to_up(mouse_pos: Vector2, up: Vector3, delta:float) -> v
 
 
 
-func turn_towards_point(to: Vector3, delta: float) -> void:
+func turn_towards_point(to: Vector3, delta: float, turn_strength: float = 1) -> void:
     var local_to: Vector3 = to_local(to).normalized()
     
-    pitch = clampf(pitch_pid.update(0, -local_to.y, delta), -1, 1)
-    yaw = clampf(yaw_pid.update(0, local_to.x, delta), -1,1)
+    pitch = clampf(pitch_pid.update(0, -local_to.y, delta), -1, 1) * turn_strength
+    yaw = clampf(yaw_pid.update(0, local_to.x, delta), -1,1) * turn_strength

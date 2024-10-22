@@ -4,3 +4,5 @@
 
 [node name="NpcPilot" type="Node3D" groups=["target"]]
 script = ExtResource("1_c1qid")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]

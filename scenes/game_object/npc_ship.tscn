@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxkwdhwvmgfxv"]
+[gd_scene load_steps=11 format=3 uid="uid://cxkwdhwvmgfxv"]
 
 [ext_resource type="Script" path="res://scenes/game_object/npc_ship.gd" id="1_0nu02"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="1_rto4w"]
 [ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="2_d72rs"]
 [ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="3_0kruw"]
 [ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="3_0s5s2"]
+[ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="5_alaf8"]
 [ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_47h1e"]
-size = Vector3(10, 10, 10)
+size = Vector3(30.7853, 10, 19.7432)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k0pcp"]
 albedo_color = Color(1, 0, 0, 1)
@@ -34,6 +35,7 @@ max_health = 50
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.107483, 0, -4.87158)
 shape = SubResource("BoxShape3D_47h1e")
 
 [node name="ShipPhysics" type="Node" parent="." node_paths=PackedStringArray("rigid_body")]
@@ -42,14 +44,17 @@ rigid_body = NodePath("..")
 
 [node name="Visuals" type="Node3D" parent="."]
 
+[node name="Gun" parent="Visuals" instance=ExtResource("5_alaf8")]
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals"]
-transform = Transform3D(-4, 0, -3.49691e-07, 0, 4, 0, 3.49691e-07, 0, -4, 0, 0, 0)
+transform = Transform3D(-7, 0, -1.05697e-06, 0, 7, 0, 1.05697e-06, 0, -7, 0, -3.5, 0)
 mesh = ExtResource("3_0kruw")
 surface_material_override/1 = SubResource("StandardMaterial3D_k0pcp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_6dk2n")
 
-[node name="Pilot" parent="." node_paths=PackedStringArray("own_ship") instance=ExtResource("6_abf6t")]
+[node name="Pilot" parent="." node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("6_abf6t")]
 faction = 1
 own_ship = NodePath("..")
+weapon = NodePath("../Visuals/Gun")
