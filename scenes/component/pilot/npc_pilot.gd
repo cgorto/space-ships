@@ -15,7 +15,7 @@ var noise: FastNoiseLite = FastNoiseLite.new()
 func _ready() -> void:
 	noise.seed = seed
 	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	think_counter +=delta
 	run_targeting()
 	dogfight(delta)

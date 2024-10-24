@@ -41,4 +41,5 @@ fancy_cam = true
 [node name="CSGMesh3D" parent="." instance=ExtResource("4_u7a81")]
 material = SubResource("StandardMaterial3D_wf82s")
 
+[editable path="Ship"]
 [editable path="CameraRig"]

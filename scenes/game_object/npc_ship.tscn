@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cxkwdhwvmgfxv"]
+[gd_scene load_steps=13 format=3 uid="uid://cxkwdhwvmgfxv"]
 
 [ext_resource type="Script" path="res://scenes/game_object/npc_ship.gd" id="1_0nu02"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="1_rto4w"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="3_0s5s2"]
 [ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="5_alaf8"]
 [ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
+[ext_resource type="PackedScene" uid="uid://3bf61opumyhg" path="res://scenes/component/target_area.tscn" id="8_g7kfv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_47h1e"]
 size = Vector3(14.8996, 10, 10)
@@ -16,6 +17,9 @@ albedo_color = Color(1, 0, 0, 1)
 emission_energy_multiplier = 5.0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6dk2n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_k8xgg"]
+radius = 50.0
 
 [node name="NpcShip" type="RigidBody3D"]
 collision_layer = 0
@@ -56,5 +60,14 @@ shape = SubResource("BoxShape3D_6dk2n")
 faction = 1
 own_ship = NodePath("..")
 weapon = NodePath("../Visuals/Gun")
+
+[node name="TargetArea" parent="." node_paths=PackedStringArray("ship") instance=ExtResource("8_g7kfv")]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+ship = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetArea"]
+shape = SubResource("SphereShape3D_k8xgg")
 
 [editable path="Visuals/Gun"]
