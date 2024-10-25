@@ -1,8 +1,9 @@
 class_name PlayerPilot extends Pilot
 
 @onready var throt: ProgressBar = $CanvasLayer/ProgressBar
-@onready var target_indicator: NinePatchRect = $CanvasLayer/NinePatchRect
 @onready var target_cast: RayCast3D = $RayCast3D
+@onready var target_indicator: Sprite3D = $TargetIndicator
+@onready var lead_crosshair: Sprite3D = $TargetIndicator/LeadCrosshair
 var target: Node3D = null
 
 
@@ -27,13 +28,13 @@ func auto_pilot(delta:float) -> void:
 		find_target(world_pos)
 
 func update_throttle(delta: float) -> void:
-	var target: float = throttle
+	var throttle_target: float = throttle
 	if Input.is_action_pressed("move_forward"):
-		target = 1
+		throttle_target = 1
 	elif Input.is_action_pressed("move_backward"):
-		target = -.2
+		throttle_target = -.2
 	
-	throttle = move_toward(throttle, target, throttle_speed * delta)
+	throttle = move_toward(throttle, throttle_target, throttle_speed * delta)
 	throt.value = throttle
 
 func find_target(mouse_direction: Vector3) -> void:
@@ -42,8 +43,11 @@ func find_target(mouse_direction: Vector3) -> void:
 	if target_cast.is_colliding():
 		target = (target_cast.get_collider() as TargetArea).ship
 		
-		
 func update_target_indicator() -> void:
 	if target != null:
-		target_indicator.visible = not get_viewport().get_camera_3d().is_position_behind(global_transform.origin)
-		target_indicator.position = get_viewport().get_camera_3d().unproject_position(target.global_transform.origin)
+		#target_indicator.visible = not get_viewport().get_camera_3d().is_position_behind(global_transform.origin)
+		target_indicator.global_position = target.global_position
+		target_indicator.visible = true
+		lead_crosshair.global_position = Util.calculate_lead(own_ship,target,-weapon.bullet_spawner.proj_speed)
+	else:
+		target_indicator.visible = false
