@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/component/hitbox.gd" id="1_34xm6"]
 
 [node name="Hitbox" type="Area3D"]
+monitoring = false
 script = ExtResource("1_34xm6")
 
 [connection signal="hit" from="." to="." method="_on_hit"]

@@ -14,10 +14,10 @@ func accelerate_in_direction(direction: Vector3) -> void:
 func decelerate() -> void:
 	accelerate_in_direction(Vector3.ZERO)
 
-func move(to_move: Node3D) -> void:
+func move(to_move: Node3D, delta: float) -> void:
 	if to_move is CharacterBody3D:
 		to_move.velocity = velocity
 		to_move.move_and_slide()
 		velocity = to_move.velocity
 	else:
-		to_move.position += velocity * get_physics_process_delta_time()
+		to_move.position += velocity * delta

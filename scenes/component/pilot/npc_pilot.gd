@@ -2,7 +2,7 @@ class_name NPCPilot extends Pilot
 
 var think_counter: float = 0
 var think_delay: float
-@export var fire_chance: float = 0.7
+@export var fire_chance: float = 0.3
 
 @onready var preferred_avoid: Vector3 = Util.uniform_random_vector() * 200
 @onready var seed: float = randf_range(0,1000)
@@ -15,7 +15,7 @@ var noise: FastNoiseLite = FastNoiseLite.new()
 func _ready() -> void:
 	noise.seed = seed
 	
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	think_counter +=delta
 	run_targeting()
 	dogfight(delta)
@@ -40,7 +40,7 @@ func dogfight(delta: float) -> void:
 		turn_towards_point(target_point, delta, turn_strength)
 		var angle_to_target: float = -global_basis.z.angle_to(target_point)
 		
-		is_firing = angle_to_target < 5 && is_fire_allowed() && distance < 300
+		is_firing = angle_to_target < 0.1 && is_fire_allowed() && distance < 300
 		if (-global_basis.z).angle_to(-target.global_basis.z) < 90:
 			#throttle = remap(distance,50,250,.33,.8)
 			throttle = 0.8
@@ -60,4 +60,4 @@ func get_target() -> Pilot:
 		var current_target: Pilot = tar as Pilot
 		if current_target.faction != faction:
 			potential_targets.append(current_target)
-	return potential_targets.pick_random()
+	return potential_targets.pick_random() if potential_targets.size() > 0 else null

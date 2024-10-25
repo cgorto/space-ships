@@ -22,7 +22,6 @@ emission_energy_multiplier = 5.0
 radius = 50.0
 
 [node name="NpcShip" type="RigidBody3D"]
-collision_layer = 0
 mass = 100.0
 gravity_scale = 0.0
 freeze_mode = 1

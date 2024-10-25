@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scenes/component/hurtbox.gd" id="1_emwd2"]
 
 [node name="Hurtbox" type="Area3D"]
+monitorable = false
 script = ExtResource("1_emwd2")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
