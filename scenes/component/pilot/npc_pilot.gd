@@ -35,7 +35,7 @@ func dogfight(delta: float) -> void:
 		throttle = 0.4
 	else:
 		#THIS NEEDS TO BE CHANGED, PILOT PROBABLY NEEDS A REFERENCE TO EITHER OWN SHIP OR OWN WEAPONS
-		var target_point:Vector3 = Util.calculate_lead(own_ship,target.own_ship,100)
+		var target_point:Vector3 = Util.calculate_lead(own_ship,target.own_ship,-weapon.bullet_spawner.proj_speed)
 		var turn_strength: float = (noise.get_noise_1d(seed + (Time.get_unix_time_from_system() / 10)) + 1) / 2
 		turn_towards_point(target_point, delta, turn_strength)
 		var angle_to_target: float = -global_basis.z.angle_to(target_point)
