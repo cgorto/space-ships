@@ -28,3 +28,10 @@ func update(set_point: float, actual: float, delta: float) -> float:
 	var deriv: float = (present - last_error) / delta
 	last_error = present
 	return present * p_factor + integral * i_factor + deriv * d_factor
+
+func set_p(new_p:float) -> void:
+	p_factor = new_p
+func set_i(new_i:float) -> void:
+	i_factor = new_i
+func set_d(new_d:float) -> void:
+	d_factor = new_d

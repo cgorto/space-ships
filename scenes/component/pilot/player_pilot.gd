@@ -1,18 +1,29 @@
 class_name PlayerPilot extends Pilot
 
 @onready var throt: ProgressBar = $CanvasLayer/ProgressBar
+@onready var dash_bar: ProgressBar = $CanvasLayer/ProgressBar2
 @onready var target_cast: RayCast3D = $RayCast3D
 @onready var target_indicator: Sprite3D = $TargetIndicator
 @onready var lead_crosshair: Sprite3D = $TargetIndicator/LeadCrosshair
+@onready var enemy_hp: ProgressBar = $SubViewport/EnemyHPBar
 var target: Node3D = null
+var dash_meter: float = 1
+var dash_rate: float = 0.5
+var dash_speed: float = 1.5
+enum STATE {BASE,DASHING,DRIFT}
+var current_state: STATE = STATE.BASE
 
-
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	strafe = Input.get_axis("move_left","move_right")
 	
 	auto_pilot(delta)
 	update_throttle(delta)
+	dash(delta)
+	fast_turn(delta)
 	update_target_indicator()
+	if current_state == STATE.BASE:
+		dash_meter = move_toward(dash_meter,1,0.5 * dash_rate * delta)
+	dash_bar.value = dash_meter
 
 
 func auto_pilot(delta:float) -> void:
@@ -47,7 +58,31 @@ func update_target_indicator() -> void:
 	if target != null:
 		#target_indicator.visible = not get_viewport().get_camera_3d().is_position_behind(global_transform.origin)
 		target_indicator.global_position = target.global_position
+		enemy_hp.value = target.hp.get_health_percent()
 		target_indicator.visible = true
 		lead_crosshair.global_position = Util.calculate_lead(own_ship,target,-weapon.bullet_spawner.proj_speed)
 	else:
 		target_indicator.visible = false
+		
+func dash(delta: float) -> void:
+	if not Input.is_action_pressed("dash") or current_state == STATE.DRIFT or dash_meter == 0:
+		if not current_state == STATE.DRIFT:
+			current_state = STATE.BASE
+		if throttle > 1.0:
+			throttle = move_toward(throttle,1.0,delta * throttle_speed)
+		return
+	current_state = STATE.DASHING
+	throttle = move_toward(throttle,dash_speed,throttle_speed * delta)
+	dash_meter = move_toward(dash_meter,0,dash_rate * delta)
+	
+func fast_turn(delta: float) -> void:
+	if not Input.is_action_pressed("drift") or current_state == STATE.DASHING or dash_meter == 0:
+		if not current_state == STATE.DASHING:
+			current_state = STATE.BASE
+		if own_ship.ship_physics.angular_force.length() > Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100)).length():
+			own_ship.ship_physics.angular_force = own_ship.ship_physics.angular_force.lerp(Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100)),dash_speed * delta)
+		return
+
+	current_state = STATE.DRIFT
+	own_ship.ship_physics.angular_force = own_ship.ship_physics.angular_force.lerp(Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100)) * dash_speed,dash_rate * delta)
+	dash_meter = move_toward(dash_meter,0,dash_rate * delta)

@@ -5,7 +5,7 @@ var think_delay: float
 @export var fire_chance: float = 0.3
 
 @onready var preferred_avoid: Vector3 = Util.uniform_random_vector() * 200
-@onready var seed: float = randf_range(0,1000)
+@onready var seed: int = randi_range(0,1000)
 
 var target: Pilot
 var potential_targets: Array[Node3D] = []
@@ -23,27 +23,27 @@ func _process(delta: float) -> void:
 		weapon.shoot()
 	
 func is_fire_allowed() -> bool:
-	var noise_value: float = (noise.get_noise_1d(seed + (Time.get_unix_time_from_system() / 10)) + 1) / 2
+	var noise_value: float = (noise.get_noise_1d(seed + Time.get_ticks_msec()) + 1) / 2
 	return noise_value < fire_chance
 
 func dogfight(delta: float) -> void:
 	if target == null:
+		is_firing = false
 		return
 	var distance: float = global_position.distance_to(target.global_position)
 	if distance < 100:
 		turn_towards_point(target.global_position + preferred_avoid, delta)
 		throttle = 0.4
 	else:
-		#THIS NEEDS TO BE CHANGED, PILOT PROBABLY NEEDS A REFERENCE TO EITHER OWN SHIP OR OWN WEAPONS
 		var target_point:Vector3 = Util.calculate_lead(own_ship,target.own_ship,-weapon.bullet_spawner.proj_speed)
-		var turn_strength: float = (noise.get_noise_1d(seed + (Time.get_unix_time_from_system() / 10)) + 1) / 2
+		var turn_strength: float = (noise.get_noise_1d(seed + Time.get_ticks_msec()) + 1) / 2
 		turn_towards_point(target_point, delta, turn_strength)
 		var angle_to_target: float = -global_basis.z.angle_to(target_point)
 		
 		is_firing = angle_to_target < 0.1 && is_fire_allowed() && distance < 300
 		if (-global_basis.z).angle_to(-target.global_basis.z) < 90:
-			#throttle = remap(distance,50,250,.33,.8)
-			throttle = 0.8
+			throttle = clamp(remap(distance,50,1500,6,.8),.33,.9)
+			#throttle = 0.8
 		else:
 			throttle = 0.85
 

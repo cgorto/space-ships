@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://rjscsifxkuxr"]
+[gd_scene load_steps=6 format=3 uid="uid://rjscsifxkuxr"]
 
 [ext_resource type="Script" path="res://scenes/component/pilot/player_pilot.gd" id="1_eqnf8"]
 [ext_resource type="Texture2D" uid="uid://n75bdovhlcod" path="res://assets/fantasy-ui-borders.svg" id="2_s66tq"]
@@ -7,6 +7,9 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_vtn8y"]
 atlas = ExtResource("2_s66tq")
 region = Rect2(674, 102, 48, 48)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3jldp"]
+viewport_path = NodePath("SubViewport")
 
 [node name="PlayerPilot" type="Node3D" groups=["target"]]
 script = ExtResource("1_eqnf8")
@@ -37,6 +40,13 @@ layout_mode = 2
 [node name="Pitch" type="Label" parent="CanvasLayer/VBoxContainer"]
 layout_mode = 2
 
+[node name="ProgressBar2" type="ProgressBar" parent="CanvasLayer"]
+offset_left = 583.0
+offset_top = 732.0
+offset_right = 714.0
+offset_bottom = 759.0
+max_value = 1.0
+
 [node name="RayCast3D" type="RayCast3D" parent="."]
 enabled = false
 target_position = Vector3(0, 0, 0)
@@ -53,3 +63,17 @@ texture = SubResource("AtlasTexture_vtn8y")
 [node name="LeadCrosshair" type="Sprite3D" parent="TargetIndicator"]
 billboard = 1
 texture = ExtResource("3_66vtr")
+
+[node name="Sprite3D" type="Sprite3D" parent="TargetIndicator"]
+billboard = 1
+fixed_size = true
+texture = SubResource("ViewportTexture_3jldp")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="EnemyHPBar" type="ProgressBar" parent="SubViewport"]
+offset_right = 256.0
+offset_bottom = 128.0
+max_value = 1.0
+value = 1.0
