@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpto3ymq6nwb4"]
+
+[ext_resource type="Script" path="res://scenes/component/random_stream_player_component.gd" id="1_7dc5x"]
+
+[node name="RandomStreamPlayerComponent" type="AudioStreamPlayer3D"]
+bus = &"sfx"
+doppler_tracking = 2
+script = ExtResource("1_7dc5x")

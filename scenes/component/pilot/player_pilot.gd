@@ -5,15 +5,15 @@ class_name PlayerPilot extends Pilot
 @onready var target_cast: RayCast3D = $RayCast3D
 @onready var target_indicator: Sprite3D = $TargetIndicator
 @onready var lead_crosshair: Sprite3D = $TargetIndicator/LeadCrosshair
-@onready var enemy_hp: ProgressBar = $SubViewport/EnemyHPBar
+
 var target: Node3D = null
 var dash_meter: float = 1
 var dash_rate: float = 0.5
-var dash_speed: float = 1.5
+var dash_speed: float = 2
 enum STATE {BASE,DASHING,DRIFT}
 var current_state: STATE = STATE.BASE
 
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	strafe = Input.get_axis("move_left","move_right")
 	
 	auto_pilot(delta)
@@ -34,7 +34,7 @@ func auto_pilot(delta:float) -> void:
 	turn_towards_point(world_pos, delta)
 	bank_ship_relative_to_up(mouse_pos,camera.global_basis.y, delta)
 	if Input.is_action_pressed("shoot"):
-		weapon.shoot_towards(world_pos)
+		shoot(mouse_pos)
 	if Input.is_action_just_pressed("target"):
 		find_target(world_pos)
 
@@ -58,7 +58,6 @@ func update_target_indicator() -> void:
 	if target != null:
 		#target_indicator.visible = not get_viewport().get_camera_3d().is_position_behind(global_transform.origin)
 		target_indicator.global_position = target.global_position
-		enemy_hp.value = target.hp.get_health_percent()
 		target_indicator.visible = true
 		lead_crosshair.global_position = Util.calculate_lead(own_ship,target,-weapon.bullet_spawner.proj_speed)
 	else:
@@ -86,3 +85,11 @@ func fast_turn(delta: float) -> void:
 	current_state = STATE.DRIFT
 	own_ship.ship_physics.angular_force = own_ship.ship_physics.angular_force.lerp(Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100)) * dash_speed,dash_rate * delta)
 	dash_meter = move_toward(dash_meter,0,dash_rate * delta)
+
+func shoot(mouse_pos: Vector2) -> void:
+	var camera: Camera3D = get_viewport().get_camera_3d()
+	var aim_distance: int = 1000
+	if target != null:
+		aim_distance = camera.global_position.distance_to(target.global_position)
+	var world_pos: Vector3 = camera.project_position(mouse_pos, aim_distance)
+	weapon.shoot_towards(world_pos)

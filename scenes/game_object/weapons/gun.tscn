@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://duhryesqv6mm8"]
+[gd_scene load_steps=6 format=3 uid="uid://duhryesqv6mm8"]
 
 [ext_resource type="Script" path="res://scenes/game_object/weapons/gun.gd" id="1_kthce"]
 [ext_resource type="PackedScene" uid="uid://gep8kx3gilo" path="res://scenes/component/bullet_spawner.tscn" id="2_whqxq"]
 [ext_resource type="PackedScene" uid="uid://biqgfh3vefxmj" path="res://scenes/game_object/projectile/projectile.tscn" id="3_w4j8y"]
+[ext_resource type="PackedScene" uid="uid://cpto3ymq6nwb4" path="res://scenes/component/random_stream_player_component.tscn" id="4_yvxb7"]
+[ext_resource type="AudioStream" uid="uid://4ejbwm66smx0" path="res://assets/sounds/gun1.mp3" id="5_1qx13"]
 
 [node name="Gun" type="Node3D"]
 script = ExtResource("1_kthce")
@@ -13,3 +15,9 @@ projectile_scene = ExtResource("3_w4j8y")
 
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
+
+[node name="RandomStreamPlayerComponent" parent="." instance=ExtResource("4_yvxb7")]
+doppler_tracking = 0
+streams = Array[AudioStream]([ExtResource("5_1qx13")])
+min_pitch = 0.8
+max_pitch = 1.2

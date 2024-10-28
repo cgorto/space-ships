@@ -5,16 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://diw52h5jif8v2" path="res://scenes/game_object/ship_camera/camera_rig.tscn" id="2_mr3ih"]
 [ext_resource type="PackedScene" uid="uid://yl7uwjkjbml" path="res://scenes/csg_mesh_3d.tscn" id="4_u7a81"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_evedt"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74fem"]
 
-[sub_resource type="Sky" id="Sky_ksuv2"]
-sky_material = SubResource("ProceduralSkyMaterial_evedt")
+[sub_resource type="Sky" id="Sky_a213p"]
+sky_material = SubResource("ProceduralSkyMaterial_74fem")
 
 [sub_resource type="Environment" id="Environment_f7duf"]
 background_mode = 2
-sky = SubResource("Sky_ksuv2")
+sky = SubResource("Sky_a213p")
 tonemap_mode = 2
 glow_enabled = true
 

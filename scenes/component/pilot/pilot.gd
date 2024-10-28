@@ -41,3 +41,8 @@ func turn_towards_point(to: Vector3, delta: float, turn_strength: float = 1) -> 
 	var local_to: Vector3 = to_local(to).normalized()
 	pitch = clampf(pitch_pid.update(0, -local_to.y, delta), -1, 1) * turn_strength
 	yaw = clampf(yaw_pid.update(0, local_to.x, delta), -1,1) * turn_strength
+
+
+func set_faction(new_faction: FACTION) -> void:
+	faction = new_faction
+	

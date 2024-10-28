@@ -2,10 +2,10 @@ class_name NPCPilot extends Pilot
 
 var think_counter: float = 0
 var think_delay: float
-@export var fire_chance: float = 0.3
+@export var fire_chance: float = 0.4
 
 @onready var preferred_avoid: Vector3 = Util.uniform_random_vector() * 200
-@onready var seed: int = randi_range(0,1000)
+@onready var rand_seed: int = randi_range(0,1000)
 
 var target: Pilot
 var potential_targets: Array[Node3D] = []
@@ -13,7 +13,8 @@ var potential_targets: Array[Node3D] = []
 var noise: FastNoiseLite = FastNoiseLite.new()
 
 func _ready() -> void:
-	noise.seed = seed
+	noise.seed = rand_seed
+	noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	
 func _process(delta: float) -> void:
 	think_counter +=delta
@@ -23,7 +24,7 @@ func _process(delta: float) -> void:
 		weapon.shoot()
 	
 func is_fire_allowed() -> bool:
-	var noise_value: float = (noise.get_noise_1d(seed + Time.get_ticks_msec()) + 1) / 2
+	var noise_value: float = (noise.get_noise_1d(rand_seed + Time.get_ticks_msec()) + 1) / 2
 	return noise_value < fire_chance
 
 func dogfight(delta: float) -> void:
@@ -34,13 +35,14 @@ func dogfight(delta: float) -> void:
 	if distance < 100:
 		turn_towards_point(target.global_position + preferred_avoid, delta)
 		throttle = 0.4
+		is_firing = false
 	else:
 		var target_point:Vector3 = Util.calculate_lead(own_ship,target.own_ship,-weapon.bullet_spawner.proj_speed)
-		var turn_strength: float = (noise.get_noise_1d(seed + Time.get_ticks_msec()) + 1) / 2
+		var turn_strength: float = (noise.get_noise_1d(rand_seed + Time.get_ticks_msec()) + 1) / 2
 		turn_towards_point(target_point, delta, turn_strength)
 		var angle_to_target: float = -global_basis.z.angle_to(target_point)
 		
-		is_firing = angle_to_target < 0.1 && is_fire_allowed() && distance < 300
+		is_firing = angle_to_target < 0.1 && is_fire_allowed() && distance < 400
 		if (-global_basis.z).angle_to(-target.global_basis.z) < 90:
 			throttle = clamp(remap(distance,50,1500,6,.8),.33,.9)
 			#throttle = 0.8

@@ -1,7 +1,7 @@
 extends Node
 class_name HealthComponent
 
-signal died(thing_died: Node2D)
+signal died(thing_died: Node)
 signal health_changed
 signal health_decreased
 
