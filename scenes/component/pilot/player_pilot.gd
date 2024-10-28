@@ -5,7 +5,9 @@ class_name PlayerPilot extends Pilot
 @onready var target_cast: RayCast3D = $RayCast3D
 @onready var target_indicator: Sprite3D = $TargetIndicator
 @onready var lead_crosshair: Sprite3D = $TargetIndicator/LeadCrosshair
-
+@onready var target_cam: Node3D = $CanvasLayer/Control/Control/SubViewportContainer/SubViewport/TargetCam
+@onready var target_cam_pivot: Node3D = $CanvasLayer/Control/Control/SubViewportContainer/SubViewport/TargetCam/Pivot
+@onready var target_hp_bar: ProgressBar =$CanvasLayer/Control/Control/TargetHPBar
 var target: Node3D = null
 var dash_meter: float = 1
 var dash_rate: float = 0.5
@@ -52,15 +54,31 @@ func find_target(mouse_direction: Vector3) -> void:
 	target_cast.target_position = to_local(mouse_direction)
 	target_cast.force_raycast_update()
 	if target_cast.is_colliding():
+		if target != null:
+			(target.mesh as MeshInstance3D).set_layer_mask_value(2, true)
+			(target.mesh as MeshInstance3D).set_layer_mask_value(3, false)
 		target = (target_cast.get_collider() as TargetArea).ship
+		(target.mesh as MeshInstance3D).set_layer_mask_value(3, true)
 		
 func update_target_indicator() -> void:
 	if target != null:
 		#target_indicator.visible = not get_viewport().get_camera_3d().is_position_behind(global_transform.origin)
+		target_hp_bar.value = target.hp.get_health_percent()
 		target_indicator.global_position = target.global_position
 		target_indicator.visible = true
 		lead_crosshair.global_position = Util.calculate_lead(own_ship,target,-weapon.bullet_spawner.proj_speed)
+		
+		
+		
+		target_cam.global_position = target.global_position
+		var camera: Camera3D = get_viewport().get_camera_3d()
+		target_cam_pivot.position = (camera.global_position - target_cam.global_position).normalized() * 20
+		target_cam_pivot.look_at(target_cam.global_position,camera.global_basis.y)
+		
+		
+		
 	else:
+		target_hp_bar.value = 0
 		target_indicator.visible = false
 		
 func dash(delta: float) -> void:

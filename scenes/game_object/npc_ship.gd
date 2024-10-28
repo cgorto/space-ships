@@ -4,6 +4,7 @@ class_name NPCShip extends RigidBody3D
 @onready var pilot: Pilot = $Pilot
 @onready var hp: HealthComponent = $HealthComponent
 @onready var hit_sound: RandomStreamPlayerComponent = $RandomStreamPlayerComponent
+@onready var mesh: MeshInstance3D = $Visuals/MeshInstance3D
 
 var velocity: Vector3
 

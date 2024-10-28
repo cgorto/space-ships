@@ -11,7 +11,7 @@ var throttle: float
 
 var pitch_pid: PID = PID.new(1.5, 1, 0.5)
 var yaw_pid: PID = PID.new(1.5, 1, 0.5)
-var roll_pid: PID = PID.new(0.3, 1.0, 1.0)
+var roll_pid: PID = PID.new(0.7, 0.5, 1.0)
 
 @export var throttle_speed: float = 0.5
 

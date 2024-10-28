@@ -1,0 +1,83 @@
+[gd_scene load_steps=16 format=3 uid="uid://cxkwdhwvmgfxv"]
+
+[ext_resource type="Script" path="res://scenes/game_object/npc_ship.gd" id="1_0nu02"]
+[ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="1_rto4w"]
+[ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="2_d72rs"]
+[ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="3_0kruw"]
+[ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="3_0s5s2"]
+[ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="5_alaf8"]
+[ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
+[ext_resource type="PackedScene" uid="uid://3bf61opumyhg" path="res://scenes/component/target_area.tscn" id="8_g7kfv"]
+[ext_resource type="PackedScene" uid="uid://cpto3ymq6nwb4" path="res://scenes/component/random_stream_player_component.tscn" id="9_g7q7u"]
+[ext_resource type="AudioStream" uid="uid://ckkg510k6na7l" path="res://assets/sounds/zapsplat_foley_paper_sheet_a4_flat_hit_impact_003_99124.mp3" id="10_wgpdu"]
+[ext_resource type="PackedScene" uid="uid://42ed8d4svbt3" path="res://scenes/component/on_death_component.tscn" id="11_0d6px"]
+[ext_resource type="PackedScene" uid="uid://jdtu4m2snino" path="res://scenes/game_object/vfx/death_explosion.tscn" id="12_sxuen"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_47h1e"]
+size = Vector3(14.8996, 10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6dk2n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_k8xgg"]
+radius = 50.0
+
+[node name="NpcShip" type="RigidBody3D"]
+mass = 100.0
+gravity_scale = 0.0
+freeze_mode = 1
+linear_damp = 2.0
+angular_damp = 5.0
+script = ExtResource("1_0nu02")
+
+[node name="HealthComponent" parent="." instance=ExtResource("2_d72rs")]
+max_health = 50
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_0s5s2")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0924459, 0, 2.00272e-05)
+shape = SubResource("BoxShape3D_47h1e")
+
+[node name="ShipPhysics" type="Node" parent="." node_paths=PackedStringArray("rigid_body")]
+script = ExtResource("1_rto4w")
+rigid_body = NodePath("..")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="Gun" parent="Visuals" instance=ExtResource("5_alaf8")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(-3.745, 0, -5.65479e-07, 0, 3.745, 0, 5.65479e-07, 0, -3.745, 0, -3.5, 0)
+layers = 2
+mesh = ExtResource("3_0kruw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6dk2n")
+
+[node name="Pilot" parent="." node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("6_abf6t")]
+faction = 1
+own_ship = NodePath("..")
+weapon = NodePath("../Visuals/Gun")
+
+[node name="TargetArea" parent="." node_paths=PackedStringArray("ship") instance=ExtResource("8_g7kfv")]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+ship = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetArea"]
+shape = SubResource("SphereShape3D_k8xgg")
+
+[node name="RandomStreamPlayerComponent" parent="." instance=ExtResource("9_g7q7u")]
+volume_db = 2.0
+unit_size = 50.02
+max_distance = 1500.0
+max_polyphony = 2
+streams = Array[AudioStream]([ExtResource("10_wgpdu")])
+
+[node name="OnDeathComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("11_0d6px")]
+health_component = NodePath("../HealthComponent")
+on_death_scene = ExtResource("12_sxuen")
+
+[editable path="Visuals/Gun"]
