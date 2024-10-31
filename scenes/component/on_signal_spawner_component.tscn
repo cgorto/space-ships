@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://l5w22dde6bj4"]
+
+[ext_resource type="Script" path="res://scenes/component/on_signal_spawner_component.gd" id="1_opgqq"]
+
+[node name="OnSignalSpawnerComponent" type="Node3D"]
+script = ExtResource("1_opgqq")

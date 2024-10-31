@@ -48,6 +48,8 @@ func update_throttle(delta: float) -> void:
 		throttle_target = -.2
 	
 	throttle = move_toward(throttle, throttle_target, throttle_speed * delta)
+	if Input.is_action_just_pressed("cut_throttle"):
+		throttle = 0
 	throt.value = throttle
 
 func find_target(mouse_direction: Vector3) -> void:
@@ -67,7 +69,6 @@ func update_target_indicator() -> void:
 		target_indicator.global_position = target.global_position
 		target_indicator.visible = true
 		lead_crosshair.global_position = Util.calculate_lead(own_ship,target,-weapon.bullet_spawner.proj_speed)
-		
 		
 		
 		target_cam.global_position = target.global_position
@@ -106,8 +107,8 @@ func fast_turn(delta: float) -> void:
 
 func shoot(mouse_pos: Vector2) -> void:
 	var camera: Camera3D = get_viewport().get_camera_3d()
-	var aim_distance: int = 1000
+	var aim_distance: float = 1000
 	if target != null:
-		aim_distance = camera.global_position.distance_to(target.global_position)
+		aim_distance = camera.global_position.distance_to(lead_crosshair.global_position)
 	var world_pos: Vector3 = camera.project_position(mouse_pos, aim_distance)
 	weapon.shoot_towards(world_pos)

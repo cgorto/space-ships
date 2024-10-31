@@ -74,6 +74,11 @@ static func calculate_lead(from: RigidBody3D, to: RigidBody3D, muzzle_velocity: 
 	
 	var lead: Vector3 = (from.linear_velocity - to.linear_velocity) * time_to_hit + to.global_position
 	return lead
+	
+
+
+
+
 
 static func uniform_random_vector() -> Vector3:
 	var phi: float = randf_range(0,TAU)

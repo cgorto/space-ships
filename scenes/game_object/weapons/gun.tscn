@@ -6,11 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://cpto3ymq6nwb4" path="res://scenes/component/random_stream_player_component.tscn" id="4_yvxb7"]
 [ext_resource type="AudioStream" uid="uid://4ejbwm66smx0" path="res://assets/sounds/gun1.mp3" id="5_1qx13"]
 
-[node name="Gun" type="Node3D"]
+[node name="Gun" type="Node3D" node_paths=PackedStringArray("firing_points")]
 script = ExtResource("1_kthce")
+firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
 
 [node name="BulletSpawner" parent="." instance=ExtResource("2_whqxq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
+fire_rate = 0.3
 projectile_scene = ExtResource("3_w4j8y")
 
 [node name="AttackCooldown" type="Timer" parent="."]
@@ -21,3 +23,9 @@ doppler_tracking = 0
 streams = Array[AudioStream]([ExtResource("5_1qx13")])
 min_pitch = 0.8
 max_pitch = 1.2
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.51015, 0, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51, 0, 0)

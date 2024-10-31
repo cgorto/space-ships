@@ -5,16 +5,27 @@
 [ext_resource type="PackedScene" uid="uid://diw52h5jif8v2" path="res://scenes/game_object/ship_camera/camera_rig.tscn" id="2_mr3ih"]
 [ext_resource type="PackedScene" uid="uid://yl7uwjkjbml" path="res://scenes/csg_mesh_3d.tscn" id="4_u7a81"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74fem"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wpg4i"]
+sky_top_color = Color(0.0627451, 0.0470588, 0.109804, 1)
+sky_horizon_color = Color(0.0627451, 0.0470588, 0.109804, 1)
+sky_curve = 0.15529
+ground_bottom_color = Color(0.0627451, 0.0470588, 0.109804, 1)
+ground_horizon_color = Color(0.0627451, 0.0470588, 0.109804, 1)
+ground_curve = 223.812
+sun_angle_max = 32.02
+sun_curve = 0.197926
 
 [sub_resource type="Sky" id="Sky_a213p"]
-sky_material = SubResource("ProceduralSkyMaterial_74fem")
+sky_material = SubResource("ProceduralSkyMaterial_wpg4i")
 
 [sub_resource type="Environment" id="Environment_f7duf"]
 background_mode = 2
 sky = SubResource("Sky_a213p")
+reflected_light_source = 1
 tonemap_mode = 2
-glow_enabled = true
+sdfgi_use_occlusion = true
+fog_mode = 1
+fog_density = 1.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wf82s"]
 resource_local_to_scene = true
@@ -40,4 +51,5 @@ fancy_cam = true
 material = SubResource("StandardMaterial3D_wf82s")
 
 [editable path="Ship"]
+[editable path="Ship/Visual/Gun"]
 [editable path="CameraRig"]

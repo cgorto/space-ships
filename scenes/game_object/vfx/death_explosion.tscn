@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://jdtu4m2snino"]
+[gd_scene load_steps=32 format=3 uid="uid://jdtu4m2snino"]
 
 [ext_resource type="Script" path="res://scenes/game_object/vfx/death_explosion.gd" id="1_mya8q"]
 [ext_resource type="PackedScene" uid="uid://cpto3ymq6nwb4" path="res://scenes/component/random_stream_player_component.tscn" id="2_q2oi1"]
@@ -59,16 +59,12 @@ scale_curve = SubResource("CurveTexture_r8ik6")
 color = Color(0.364099, 0.357332, 0.357333, 1)
 alpha_curve = SubResource("CurveTexture_050th")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a7xdt"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_22b4h"]
 transparency = 1
 vertex_color_use_as_albedo = true
 
-[sub_resource type="SphereMesh" id="SphereMesh_6l654"]
-material = SubResource("StandardMaterial3D_a7xdt")
-radius = 2.5
-height = 5.0
-radial_segments = 8
-rings = 4
+[sub_resource type="BoxMesh" id="BoxMesh_0t7va"]
+material = SubResource("StandardMaterial3D_22b4h")
 
 [sub_resource type="Gradient" id="Gradient_1rwrm"]
 offsets = PackedFloat32Array(0, 0.592105, 1)
@@ -107,6 +103,43 @@ color = Color(0.960784, 0.741176, 0, 1)
 color_ramp = SubResource("GradientTexture1D_3de4i")
 emission_curve = SubResource("CurveTexture_mdokw")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tfx3g"]
+transparency = 1
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_x2yd1"]
+material = SubResource("StandardMaterial3D_tfx3g")
+
+[sub_resource type="Curve" id="Curve_c8f6w"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.156626, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_tdrfd"]
+curve = SubResource("Curve_c8f6w")
+
+[sub_resource type="Curve" id="Curve_npgre"]
+_data = [Vector2(0, 0.0581949), 0.0, 0.0, 0, 0, Vector2(0.0481928, 1), 0.0, 0.0, 0, 0, Vector2(0.246988, 0), 0.0, 0.0, 0, 0, Vector2(0.349398, 0.614014), 0.0, 0.0, 0, 0, Vector2(0.521084, 0), 0.0, 0.0, 0, 0, Vector2(0.653614, 0.243468), 0.0, 0.0, 0, 0, Vector2(0.834337, 0.119953), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 8
+
+[sub_resource type="CurveTexture" id="CurveTexture_efude"]
+curve = SubResource("Curve_npgre")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1hfe5"]
+gravity = Vector3(0, 0, 0)
+scale_min = 52.63
+scale_max = 101.53
+scale_curve = SubResource("CurveTexture_efude")
+alpha_curve = SubResource("CurveTexture_tdrfd")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uhxjd"]
+transparency = 1
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xrdvy"]
+material = SubResource("StandardMaterial3D_uhxjd")
+
 [node name="DeathExplosion" type="Node3D"]
 script = ExtResource("1_mya8q")
 
@@ -128,7 +161,7 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_gkaim")
-draw_pass_1 = SubResource("SphereMesh_6l654")
+draw_pass_1 = SubResource("BoxMesh_0t7va")
 
 [node name="Fire" type="GPUParticles3D" parent="."]
 emitting = false
@@ -137,7 +170,15 @@ one_shot = true
 explosiveness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_tt5vt")
-draw_pass_1 = SubResource("SphereMesh_6l654")
+draw_pass_1 = SubResource("BoxMesh_x2yd1")
+
+[node name="Shockwave" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 1
+one_shot = true
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_1hfe5")
+draw_pass_1 = SubResource("SphereMesh_xrdvy")
 
 [node name="RandomStreamPlayerComponent" parent="." instance=ExtResource("2_q2oi1")]
 volume_db = 3.0

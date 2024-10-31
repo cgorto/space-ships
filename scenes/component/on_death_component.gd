@@ -6,7 +6,7 @@ extends Node3D
 func _ready() -> void:
 	health_component.died.connect(on_death)
 	
-func on_death(thing: Node) -> void:
+func on_death(_thing: Node) -> void:
 	if on_death_scene == null:
 		return
 	var to_add: Node3D = on_death_scene.instantiate()
