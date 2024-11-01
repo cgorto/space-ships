@@ -17,7 +17,7 @@ var roll_pid: PID = PID.new(0.7, 0.5, 1.0)
 
 enum FACTION {FRIENDLY, ENEMY}
 @export var faction: FACTION
-@export var own_ship: Node3D
+@export var own_ship: RigidBody3D
 @export var weapon: Node3D
 
 var is_firing: bool = false

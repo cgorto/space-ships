@@ -37,7 +37,11 @@ func dogfight(delta: float) -> void:
 		throttle = 0.4
 		is_firing = false
 	else:
-		var target_point:Vector3 = Util.calculate_lead(own_ship,target.own_ship,-weapon.bullet_spawner.proj_speed)
+		var relative_pos: Vector3 = own_ship.global_position - target.own_ship.global_position
+		var relative_vel: Vector3 = own_ship.linear_velocity - target.own_ship.linear_velocity
+		var lead_time: float = Util.calculate_lead(relative_pos,relative_vel,-weapon.bullet_spawner.proj_speed)
+		var target_point: Vector3 = target.global_position + (target.own_ship.linear_velocity * lead_time)
+
 		var turn_strength: float = (noise.get_noise_1d(rand_seed + Time.get_ticks_msec()) + 1) / 2
 		turn_towards_point(target_point, delta, turn_strength)
 		var angle_to_target: float = -global_basis.z.angle_to(target_point)

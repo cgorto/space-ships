@@ -8,24 +8,24 @@ class_name PlayerPilot extends Pilot
 @onready var target_cam: Node3D = $CanvasLayer/Control/Control/SubViewportContainer/SubViewport/TargetCam
 @onready var target_cam_pivot: Node3D = $CanvasLayer/Control/Control/SubViewportContainer/SubViewport/TargetCam/Pivot
 @onready var target_hp_bar: ProgressBar =$CanvasLayer/Control/Control/TargetHPBar
-var target: Node3D = null
+
+var target: RigidBody3D = null
 var dash_meter: float = 1
 var dash_rate: float = 0.5
 var dash_speed: float = 2
 enum STATE {BASE,DASHING,DRIFT}
 var current_state: STATE = STATE.BASE
 
+@export var crosshair_radius: float = 50
+@export var crosshair_hit: bool = false
+
 func _process(delta: float) -> void:
 	strafe = Input.get_axis("move_left","move_right")
 	
 	auto_pilot(delta)
 	update_throttle(delta)
-	dash(delta)
-	fast_turn(delta)
 	update_target_indicator()
-	if current_state == STATE.BASE:
-		dash_meter = move_toward(dash_meter,1,0.5 * dash_rate * delta)
-	dash_bar.value = dash_meter
+
 
 
 func auto_pilot(delta:float) -> void:
@@ -36,7 +36,7 @@ func auto_pilot(delta:float) -> void:
 	turn_towards_point(world_pos, delta)
 	bank_ship_relative_to_up(mouse_pos,camera.global_basis.y, delta)
 	if Input.is_action_pressed("shoot"):
-		shoot(mouse_pos)
+		shoot()
 	if Input.is_action_just_pressed("target"):
 		find_target(world_pos)
 
@@ -68,47 +68,44 @@ func update_target_indicator() -> void:
 		target_hp_bar.value = target.hp.get_health_percent()
 		target_indicator.global_position = target.global_position
 		target_indicator.visible = true
-		lead_crosshair.global_position = Util.calculate_lead(own_ship,target,-weapon.bullet_spawner.proj_speed)
+		
+		var relative_pos: Vector3 = own_ship.global_position - target.global_position
+		var relative_vel: Vector3 = own_ship.linear_velocity - target.linear_velocity
+		var lead_time: float = Util.calculate_lead(relative_pos,relative_vel,-weapon.bullet_spawner.proj_speed)
+		var world_pos: Vector3 = target.global_position + (target.linear_velocity * lead_time)
+		lead_crosshair.global_position = world_pos
 		
 		
 		target_cam.global_position = target.global_position
 		var camera: Camera3D = get_viewport().get_camera_3d()
 		target_cam_pivot.position = (camera.global_position - target_cam.global_position).normalized() * 20
 		target_cam_pivot.look_at(target_cam.global_position,camera.global_basis.y)
-		
-		
-		
 	else:
 		target_hp_bar.value = 0
 		target_indicator.visible = false
-		
-func dash(delta: float) -> void:
-	if not Input.is_action_pressed("dash") or current_state == STATE.DRIFT or dash_meter == 0:
-		if not current_state == STATE.DRIFT:
-			current_state = STATE.BASE
-		if throttle > 1.0:
-			throttle = move_toward(throttle,1.0,delta * throttle_speed)
-		return
-	current_state = STATE.DASHING
-	throttle = move_toward(throttle,dash_speed,throttle_speed * delta)
-	dash_meter = move_toward(dash_meter,0,dash_rate * delta)
-	
-func fast_turn(delta: float) -> void:
-	if not Input.is_action_pressed("drift") or current_state == STATE.DASHING or dash_meter == 0:
-		if not current_state == STATE.DASHING:
-			current_state = STATE.BASE
-		if own_ship.ship_physics.angular_force.length() > Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100)).length():
-			own_ship.ship_physics.angular_force = own_ship.ship_physics.angular_force.lerp(Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100)),dash_speed * delta)
-		return
 
-	current_state = STATE.DRIFT
-	own_ship.ship_physics.angular_force = own_ship.ship_physics.angular_force.lerp(Vector3(deg_to_rad(100),deg_to_rad(100),deg_to_rad(100)) * dash_speed,dash_rate * delta)
-	dash_meter = move_toward(dash_meter,0,dash_rate * delta)
+func shoot() -> void:
+	var aim_point: Vector3 = get_aim_point()
+	weapon.shoot_towards(aim_point)
 
-func shoot(mouse_pos: Vector2) -> void:
+func get_screen_position(world_pos: Vector3) -> Vector2:
 	var camera: Camera3D = get_viewport().get_camera_3d()
-	var aim_distance: float = 1000
+	return camera.unproject_position(world_pos)
+	
+func is_within_crosshair(screen_pos: Vector2, mouse_pos: Vector2) -> bool:
+	return screen_pos.distance_to(mouse_pos) < crosshair_radius
+	
+func get_aim_point() -> Vector3:
+	var camera: Camera3D = get_viewport().get_camera_3d()
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+	var aim_distance: float = 400
+	crosshair_hit = false
+	
 	if target != null:
-		aim_distance = camera.global_position.distance_to(lead_crosshair.global_position)
-	var world_pos: Vector3 = camera.project_position(mouse_pos, aim_distance)
-	weapon.shoot_towards(world_pos)
+		var lead_screen_pos: Vector2 = get_screen_position(lead_crosshair.global_position)
+		
+		if is_within_crosshair(lead_screen_pos, mouse_pos):
+			crosshair_hit = true
+			return lead_crosshair.global_position
+			
+	return camera.project_position(mouse_pos, aim_distance)
