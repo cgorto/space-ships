@@ -56,11 +56,11 @@ func find_target(mouse_direction: Vector3) -> void:
 	target_cast.target_position = to_local(mouse_direction)
 	target_cast.force_raycast_update()
 	if target_cast.is_colliding():
-		if target != null:
-			(target.mesh as MeshInstance3D).set_layer_mask_value(2, true)
-			(target.mesh as MeshInstance3D).set_layer_mask_value(3, false)
+		#if target != null:
+			#(target.mesh as MeshInstance3D).set_layer_mask_value(2, true)
+			#(target.mesh as MeshInstance3D).set_layer_mask_value(3, false)
 		target = (target_cast.get_collider() as TargetArea).ship
-		(target.mesh as MeshInstance3D).set_layer_mask_value(3, true)
+
 		
 func update_target_indicator() -> void:
 	if target != null:
@@ -69,11 +69,12 @@ func update_target_indicator() -> void:
 		target_indicator.global_position = target.global_position
 		target_indicator.visible = true
 		
-		var relative_pos: Vector3 = own_ship.global_position - target.global_position
-		var relative_vel: Vector3 = own_ship.linear_velocity - target.linear_velocity
-		var lead_time: float = Util.calculate_lead(relative_pos,relative_vel,-weapon.bullet_spawner.proj_speed)
-		var world_pos: Vector3 = target.global_position + (target.linear_velocity * lead_time)
-		lead_crosshair.global_position = world_pos
+		#var relative_pos: Vector3 = own_ship.global_position - target.global_position
+		#var relative_vel: Vector3 = own_ship.linear_velocity - target.linear_velocity
+		#var lead_time: float = Util.calculate_lead(relative_pos,relative_vel,-weapon.bullet_spawner.proj_speed)
+		var lead_pos: Vector3 = Util.calculate_lead(own_ship,target,weapon.bullet_spawner.proj_speed)
+		#var world_pos: Vector3 = target.global_position + (target.linear_velocity * lead_time)
+		lead_crosshair.global_position = lead_pos
 		
 		
 		target_cam.global_position = target.global_position
@@ -98,14 +99,14 @@ func is_within_crosshair(screen_pos: Vector2, mouse_pos: Vector2) -> bool:
 func get_aim_point() -> Vector3:
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	var aim_distance: float = 400
+	var aim_distance: float = 500
 	crosshair_hit = false
 	
-	if target != null:
-		var lead_screen_pos: Vector2 = get_screen_position(lead_crosshair.global_position)
-		
-		if is_within_crosshair(lead_screen_pos, mouse_pos):
-			crosshair_hit = true
-			return lead_crosshair.global_position
+	if target != null && camera.is_position_in_frustum(target.global_position):
+		#var lead_screen_pos: Vector2 = get_screen_position(lead_crosshair.global_position)
+		aim_distance = camera.global_position.distance_to(lead_crosshair.global_position)
+		#if is_within_crosshair(lead_screen_pos, mouse_pos):
+			#crosshair_hit = true
+			#return lead_crosshair.global_position
 			
 	return camera.project_position(mouse_pos, aim_distance)

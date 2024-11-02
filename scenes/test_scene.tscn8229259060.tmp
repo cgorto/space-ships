@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://bsd7eynfdxon4"]
+[gd_scene load_steps=9 format=3 uid="uid://bsd7eynfdxon4"]
 
-[ext_resource type="PackedScene" uid="uid://c8ps4kffu7ucb" path="res://scenes/game_object/ship/player_ship.tscn" id="1_45yrv"]
 [ext_resource type="Script" path="res://scenes/test_scene.gd" id="1_iuwce"]
 [ext_resource type="PackedScene" uid="uid://cxkwdhwvmgfxv" path="res://scenes/game_object/ship/npc_ship.tscn" id="2_fgphr"]
 [ext_resource type="PackedScene" uid="uid://diw52h5jif8v2" path="res://scenes/game_object/ship_camera/camera_rig.tscn" id="2_mr3ih"]
@@ -43,13 +42,10 @@ shadow_enabled = true
 environment = SubResource("Environment_f7duf")
 
 [node name="CameraRig" parent="." node_paths=PackedStringArray("ship") instance=ExtResource("2_mr3ih")]
-ship = NodePath("../Ship")
+ship = NodePath("")
 fancy_cam = true
 
 [node name="CSGMesh3D" parent="." instance=ExtResource("4_u7a81")]
 material = SubResource("StandardMaterial3D_wf82s")
-
-[node name="Ship" parent="." instance=ExtResource("1_45yrv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.26, 0)
 
 [editable path="CameraRig"]

@@ -3,4 +3,7 @@
 [ext_resource type="Script" path="res://scenes/component/target_area.gd" id="1_v27ej"]
 
 [node name="TargetArea" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
 script = ExtResource("1_v27ej")

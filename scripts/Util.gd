@@ -65,18 +65,20 @@ static func qt_look_at(forward: Vector3, up: Vector3) -> Quaternion:
 		return q.normalized()
 		
 
-#static func calculate_lead(from: RigidBody3D, to: RigidBody3D, muzzle_velocity: float) -> Vector3:
-	#var own_predicted_pos: Vector3 = from.global_position + from.linear_velocity
-	#var target_predicted_pos: Vector3 = to.global_position + to.linear_velocity
-	#
-	#var range_to_target: float = own_predicted_pos.distance_to(target_predicted_pos)
-	#var time_to_hit: float = range_to_target / muzzle_velocity
-	#
-	#var lead: Vector3 = (from.linear_velocity - to.linear_velocity) * time_to_hit + to.global_position
-	#return lead
-	#
+static func calculate_lead(from: RigidBody3D, to: RigidBody3D, muzzle_velocity: float) -> Vector3:
+	var relative_pos: Vector3 = to.global_position - from.global_position
+	var relative_vel: Vector3 = to.linear_velocity - from.linear_velocity
+	
+	var time_to_hit: float = solve_intercept(relative_pos,relative_vel,muzzle_velocity)
+	
+	var lead: Vector3 = to.global_position + (to.linear_velocity * time_to_hit)
+	return lead
+	
 
-static func calculate_lead(relative_pos: Vector3, relative_vel: Vector3, projectile_speed: float) -> float:
+
+	
+
+static func solve_intercept(relative_pos: Vector3, relative_vel: Vector3, projectile_speed: float) -> float:
 	var a: float = relative_vel.dot(relative_vel) - (projectile_speed ** 2)
 	var b: float = 2 * relative_vel.dot(relative_pos)
 	var c: float = relative_pos.dot(relative_pos)

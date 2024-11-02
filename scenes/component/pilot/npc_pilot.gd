@@ -2,7 +2,7 @@ class_name NPCPilot extends Pilot
 
 var think_counter: float = 0
 var think_delay: float
-@export var fire_chance: float = 0.4
+@export var fire_chance: float = 0.3
 
 @onready var preferred_avoid: Vector3 = Util.uniform_random_vector() * 200
 @onready var rand_seed: int = randi_range(0,1000)
@@ -37,10 +37,11 @@ func dogfight(delta: float) -> void:
 		throttle = 0.4
 		is_firing = false
 	else:
-		var relative_pos: Vector3 = own_ship.global_position - target.own_ship.global_position
-		var relative_vel: Vector3 = own_ship.linear_velocity - target.own_ship.linear_velocity
-		var lead_time: float = Util.calculate_lead(relative_pos,relative_vel,-weapon.bullet_spawner.proj_speed)
-		var target_point: Vector3 = target.global_position + (target.own_ship.linear_velocity * lead_time)
+		#var relative_pos: Vector3 = own_ship.global_position - target.own_ship.global_position
+		#var relative_vel: Vector3 = own_ship.linear_velocity - target.own_ship.linear_velocity
+		#var lead_time: float = Util.calculate_lead(relative_pos,relative_vel,-weapon.bullet_spawner.proj_speed)
+		#var target_point: Vector3 = target.global_position + (target.own_ship.linear_velocity * lead_time)
+		var target_point: Vector3 = Util.calculate_lead(own_ship,target.own_ship,weapon.bullet_spawner.proj_speed)
 
 		var turn_strength: float = (noise.get_noise_1d(rand_seed + Time.get_ticks_msec()) + 1) / 2
 		turn_towards_point(target_point, delta, turn_strength)

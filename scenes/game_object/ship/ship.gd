@@ -2,7 +2,7 @@ class_name Ship extends RigidBody3D
 
 @onready var ship_physics: ShipPhysics = $ShipPhysics
 @onready var pilot: Pilot = $Pilot
-
+@onready var hp: HealthComponent = $HealthComponent
 
 func _process(_delta: float) -> void:
 	ship_physics.set_physics_input(
