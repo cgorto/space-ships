@@ -1,9 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxkwdhwvmgfxv"]
+[gd_scene load_steps=7 format=3 uid="uid://cxkwdhwvmgfxv"]
 
 [ext_resource type="PackedScene" uid="uid://d2dv0c0hvt7rb" path="res://scenes/game_object/ship/ship.tscn" id="1_rfahr"]
 [ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="3_0kruw"]
 [ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
 [ext_resource type="PackedScene" uid="uid://3bf61opumyhg" path="res://scenes/component/target_area.tscn" id="8_g7kfv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_foa4f"]
+radius = 6.10601
+height = 17.715
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_phmob"]
 radius = 50.0
@@ -12,6 +16,13 @@ radius = 50.0
 
 [node name="MeshInstance3D" parent="Visual" index="1"]
 mesh = ExtResource("3_0kruw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0"]
+transform = Transform3D(1, 0, 0, 0, 0.0138575, 0.999904, 0, -0.999904, 0.0138575, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_foa4f")
+
+[node name="HealthComponent" parent="." index="4"]
+max_health = 100
 
 [node name="Pilot" parent="." index="5" node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("6_abf6t")]
 own_ship = NodePath("..")

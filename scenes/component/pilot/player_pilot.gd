@@ -108,5 +108,6 @@ func get_aim_point() -> Vector3:
 		#if is_within_crosshair(lead_screen_pos, mouse_pos):
 			#crosshair_hit = true
 			#return lead_crosshair.global_position
+		
 			
 	return camera.project_position(mouse_pos, aim_distance)

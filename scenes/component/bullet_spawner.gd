@@ -2,7 +2,7 @@ class_name BulletSpawner extends Node3D
 
 @export var fire_rate: float = 0.1
 @export var spread: float = 0.0
-@export var proj_speed: int = 500
+@export var proj_speed: int = 1000
 @export var projectile_scene: PackedScene
 
 
