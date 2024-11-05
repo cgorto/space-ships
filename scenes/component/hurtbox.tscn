@@ -3,7 +3,11 @@
 [ext_resource type="Script" path="res://scenes/component/hurtbox.gd" id="1_emwd2"]
 
 [node name="Hurtbox" type="Area3D"]
+collision_layer = 8
+collision_mask = 8
+input_ray_pickable = false
 monitorable = false
 script = ExtResource("1_emwd2")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

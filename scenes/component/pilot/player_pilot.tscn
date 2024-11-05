@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://rjscsifxkuxr"]
+[gd_scene load_steps=7 format=3 uid="uid://rjscsifxkuxr"]
 
 [ext_resource type="Script" path="res://scenes/component/pilot/player_pilot.gd" id="1_eqnf8"]
 [ext_resource type="Script" path="res://scenes/component/pilot/label.gd" id="2_t8iha"]
 [ext_resource type="Texture2D" uid="uid://b66y3vyxcj7jd" path="res://assets/MouseCrosshair.png" id="3_tef56"]
+[ext_resource type="Script" path="res://scenes/component/pilot/label_2.gd" id="3_wtqsc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rpb2h"]
 
@@ -117,6 +118,20 @@ offset_right = 40.0
 offset_bottom = 23.0
 text = "FPS:"
 script = ExtResource("2_t8iha")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.059
+anchor_top = 0.103
+anchor_right = 0.205
+anchor_bottom = 0.103
+offset_left = -15.52
+offset_top = 50.6
+offset_right = 24.48
+offset_bottom = 73.6
+text = "Active Projectiles: "
+script = ExtResource("3_wtqsc")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 enabled = false
