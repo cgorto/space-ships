@@ -15,6 +15,10 @@ run/main_scene="res://scenes/test_scene.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ProjectileServer="*res://scenes/game_object/projectile/projectile_server.gd"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=2
@@ -99,6 +103,7 @@ cut_throttle={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Pickup"
+3d_physics/layer_4="Hitboxes"
 
 [physics]
 
