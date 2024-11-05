@@ -34,3 +34,8 @@ func get_health_percent() -> float:
 		return 0
 
 	return min((current_health as float) / (max_health as float),1)
+	
+func set_max_health(new_hp: int) -> void:
+	var current_percent: float = get_health_percent()
+	max_health = new_hp
+	current_health = max_health * current_percent

@@ -45,6 +45,7 @@ environment = SubResource("Environment_f7duf")
 [node name="CameraRig" parent="." node_paths=PackedStringArray("ship") instance=ExtResource("2_mr3ih")]
 ship = NodePath("../Ship")
 fancy_cam = true
+horizontal_turn_angle = 0.65
 
 [node name="CSGMesh3D" parent="." instance=ExtResource("4_u7a81")]
 material = SubResource("StandardMaterial3D_wf82s")

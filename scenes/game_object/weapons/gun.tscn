@@ -12,7 +12,6 @@ firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
 
 [node name="BulletSpawner" parent="." instance=ExtResource("2_whqxq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
-fire_rate = 0.3
 projectile_scene = ExtResource("3_w4j8y")
 
 [node name="AttackCooldown" type="Timer" parent="."]

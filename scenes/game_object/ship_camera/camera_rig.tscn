@@ -1,9 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://diw52h5jif8v2"]
 
 [ext_resource type="Script" path="res://scenes/game_object/ship_camera/camera_rig.gd" id="1_shvuj"]
-[ext_resource type="Texture2D" uid="uid://b66y3vyxcj7jd" path="res://assets/MouseCrosshair.png" id="2_lea66"]
+[ext_resource type="Texture2D" uid="uid://di42dtg83jpy2" path="res://assets/crosshairs_tilesheet_white.png" id="2_4cu4t"]
 [ext_resource type="Script" path="res://scenes/game_object/ship_camera/crosshair.gd" id="3_dvs8i"]
-[ext_resource type="Texture2D" uid="uid://26yo4d5if34g" path="res://assets/Crosshair.png" id="4_blrb5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ve0ii"]
+atlas = ExtResource("2_4cu4t")
+region = Rect2(491, 642, 48, 22)
 
 [node name="CameraRig" type="Node3D"]
 script = ExtResource("1_shvuj")
@@ -22,8 +25,5 @@ far = 10000.0
 [node name="Crosshair" type="CanvasLayer" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="Crosshair"]
-texture = ExtResource("2_lea66")
+texture = SubResource("AtlasTexture_ve0ii")
 script = ExtResource("3_dvs8i")
-
-[node name="Sprite2D" type="Sprite2D" parent="Crosshair/Sprite2D"]
-texture = ExtResource("4_blrb5")

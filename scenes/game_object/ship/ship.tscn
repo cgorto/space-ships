@@ -1,14 +1,45 @@
-[gd_scene load_steps=11 format=3 uid="uid://d2dv0c0hvt7rb"]
+[gd_scene load_steps=16 format=3 uid="uid://d2dv0c0hvt7rb"]
 
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
 [ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="2_fr7ol"]
 [ext_resource type="ArrayMesh" uid="uid://7125osetkoju" path="res://assets/ship2.obj" id="3_ct5re"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
 [ext_resource type="Texture2D" uid="uid://26yo4d5if34g" path="res://assets/Crosshair.png" id="3_mosj5"]
+[ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="5_p4m1f"]
 [ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="7_ysnnw"]
 [ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="8_cpiva"]
 [ext_resource type="PackedScene" uid="uid://42ed8d4svbt3" path="res://scenes/component/on_death_component.tscn" id="8_j4is4"]
 [ext_resource type="PackedScene" uid="uid://jdtu4m2snino" path="res://scenes/game_object/vfx/death_explosion.tscn" id="9_77ib6"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hd7mj"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8kmgx"]
+noise = SubResource("FastNoiseLite_hd7mj")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_42hgy"]
+render_priority = 0
+shader = ExtResource("5_p4m1f")
+shader_parameter/model_height = 3.0
+shader_parameter/dissolve_start = 0.0
+shader_parameter/dissolve_length = 1.0
+shader_parameter/gradient_bias = 1.501
+shader_parameter/noise_direction = Vector2(0.48, 1)
+shader_parameter/noise_speed = 5.38
+shader_parameter/noise_strength = 0.505
+shader_parameter/stretch_factor = 0.895
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_8kmgx")
+shader_parameter/_color = Color(0.820779, 0.151384, 0.895735, 1)
+shader_parameter/power_factor = 0.29
+shader_parameter/alpha_intensity_factor = 2.0
+shader_parameter/fresnel_factor = 3.96
+shader_parameter/fresnel_amplification = 0.16
+shader_parameter/fresnel_power = 0.67
+shader_parameter/enable_fresnel = false
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5mocl"]
+top_radius = 0.1
+bottom_radius = 0.855
+height = 3.01
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1ua5q"]
 radius = 0.636094
@@ -46,6 +77,16 @@ no_depth_test = true
 fixed_size = true
 texture_filter = 0
 texture = ExtResource("3_mosj5")
+
+[node name="RightThrust" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, -0.00342087, -0.999994, 0, 0.999994, -0.00342087, 3.03731, -0.372677, 5.91967)
+material_override = SubResource("ShaderMaterial_42hgy")
+mesh = SubResource("CylinderMesh_5mocl")
+
+[node name="LeftThrust" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, -0.00342087, -0.999994, 0, 0.999994, -0.00342087, -3.037, -0.373, 5.92)
+material_override = SubResource("ShaderMaterial_42hgy")
+mesh = SubResource("CylinderMesh_5mocl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.634606)

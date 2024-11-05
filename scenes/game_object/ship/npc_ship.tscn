@@ -12,7 +12,8 @@ height = 17.715
 [sub_resource type="SphereShape3D" id="SphereShape3D_phmob"]
 radius = 50.0
 
-[node name="Ship" instance=ExtResource("1_rfahr")]
+[node name="Ship" node_paths=PackedStringArray("pilot") instance=ExtResource("1_rfahr")]
+pilot = NodePath("Pilot")
 
 [node name="MeshInstance3D" parent="Visual" index="1"]
 mesh = ExtResource("3_0kruw")

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ShipData" load_steps=2 format=3 uid="uid://di0uchf1ecbij"]
+
+[ext_resource type="Script" path="res://scripts/ship_data.gd" id="1_re55a"]
+
+[resource]
+script = ExtResource("1_re55a")
+health = 100
+mass = 100.0
+speed = Vector3(100, 100, 120)
+torque = Vector3(100, 100, 100)
+linear_drag = 2.0
+ang_drag = 5.0
+accel = 0.5

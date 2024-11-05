@@ -4,3 +4,4 @@
 
 [node name="BulletSpawner" type="Node3D"]
 script = ExtResource("1_syekn")
+proj_speed = 750

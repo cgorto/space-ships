@@ -2,7 +2,7 @@ class_name NPCPilot extends Pilot
 
 var think_counter: float = 0
 var think_delay: float
-@export var fire_chance: float = 0.3
+@export var fire_chance: float = 0.4
 
 @onready var preferred_avoid: Vector3 = Util.uniform_random_vector() * 200
 @onready var rand_seed: int = randi_range(0,1000)
