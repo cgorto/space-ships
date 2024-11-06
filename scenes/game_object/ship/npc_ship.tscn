@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxkwdhwvmgfxv"]
+[gd_scene load_steps=8 format=3 uid="uid://cxkwdhwvmgfxv"]
 
 [ext_resource type="PackedScene" uid="uid://d2dv0c0hvt7rb" path="res://scenes/game_object/ship/ship.tscn" id="1_rfahr"]
+[ext_resource type="BoxMesh" uid="uid://qhcjvnla7u2b" path="res://scenes/game_object/projectile/proj2.tres" id="2_2wxcc"]
 [ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="3_0kruw"]
 [ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
 [ext_resource type="PackedScene" uid="uid://3bf61opumyhg" path="res://scenes/component/target_area.tscn" id="8_g7kfv"]
@@ -14,6 +15,9 @@ radius = 50.0
 
 [node name="Ship" node_paths=PackedStringArray("pilot") instance=ExtResource("1_rfahr")]
 pilot = NodePath("Pilot")
+
+[node name="Gun" parent="Visual" index="0"]
+proj_mesh = ExtResource("2_2wxcc")
 
 [node name="MeshInstance3D" parent="Visual" index="1"]
 mesh = ExtResource("3_0kruw")

@@ -66,7 +66,7 @@ func spawn_projectile(
 	
 	ps.body_add_shape(body,shape)
 	#ps.body_set_collision_layer(body,0b1000)
-	ps.body_set_collision_layer(body,0b100)
+	ps.body_set_collision_layer(body,0b1000)
 
 
 
@@ -104,6 +104,7 @@ func destroy_projectile(body: RID) -> void:
 	ps.free_rid(proj.shape)
 	ps.free_rid(proj.body)
 	proj.multimesh.set_instance_custom_data(proj.instance_id,Color(1,1,1,0))
+	proj.multimesh.set_instance_transform(proj.instance_id,Transform3D())
 	
 	active_projectiles.erase(body)
 	

@@ -1,6 +1,12 @@
 class_name Gun extends Node3D
 
-@onready var bullet_spawner: BulletSpawner = $BulletSpawner
+@export_category("Stats")
+@export var projectile_speed: float = 750
+@export var projectile_damage: float = 10
+@export var attack_speed: float = 0.3
+@export var faction: int = 1
+@export var lifetime: float = 10
+
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var random_sound_player: RandomStreamPlayerComponent = $RandomStreamPlayerComponent
 @export var proj_mesh: Mesh
@@ -9,13 +15,11 @@ class_name Gun extends Node3D
 @export var firing_points: Array[Marker3D]
 var firing_point_counter: int = 0
 
-@export var projectile_speed: float = 750
-@export var projectile_damage: float = 10
-@export var faction: int = 1
-@export var lifetime: float = 10
+
+
 
 func _ready() -> void:
-	attack_cooldown.wait_time = bullet_spawner.fire_rate
+	attack_cooldown.wait_time = attack_speed
 
 func shoot() -> void:
 	if attack_cooldown.is_stopped():

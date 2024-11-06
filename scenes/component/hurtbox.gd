@@ -26,12 +26,13 @@ func _on_body_shape_entered(body_rid: RID, _body: Node3D, _body_shape_index: int
 		return
 	if health_component == null:
 		return
-	if not proj_data.ignored.has(get_rid()):
-		if proj_data.faction != faction:
-			hit.emit()
-			health_component.damage((proj_data.damage as int))
-			if on_hit_effect != null:
-				var new_effect: Node3D = on_hit_effect.instantiate()
-				add_child(new_effect)
-				new_effect.global_position = PhysicsServer3D.body_get_state(proj_data.body, PhysicsServer3D.BODY_STATE_TRANSFORM).origin
-		ProjectileServer.destroy_projectile(body_rid)
+	if proj_data.ignored.has(get_rid()):
+		return
+	if proj_data.faction != faction:
+		hit.emit()
+		health_component.damage((proj_data.damage as int))
+		if on_hit_effect != null:
+			var new_effect: Node3D = on_hit_effect.instantiate()
+			add_child(new_effect)
+			new_effect.global_position = PhysicsServer3D.body_get_state(proj_data.body, PhysicsServer3D.BODY_STATE_TRANSFORM).origin
+	ProjectileServer.destroy_projectile(body_rid)

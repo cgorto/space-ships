@@ -9,6 +9,9 @@ size = Vector3(6.66559, 3.15131, 10.4094)
 [node name="Ship" node_paths=PackedStringArray("pilot") instance=ExtResource("1_7bq24")]
 pilot = NodePath("Pilot")
 
+[node name="Hurtbox" parent="." index="3"]
+faction = 1
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.049469, 0.123444, -0.164917)
 shape = SubResource("BoxShape3D_xcjcx")

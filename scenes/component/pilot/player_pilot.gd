@@ -72,7 +72,7 @@ func update_target_indicator() -> void:
 		#var relative_pos: Vector3 = own_ship.global_position - target.global_position
 		#var relative_vel: Vector3 = own_ship.linear_velocity - target.linear_velocity
 		#var lead_time: float = Util.calculate_lead(relative_pos,relative_vel,-weapon.bullet_spawner.proj_speed)
-		var lead_pos: Vector3 = Util.calculate_lead(own_ship,target,weapon.bullet_spawner.proj_speed)
+		var lead_pos: Vector3 = Util.calculate_lead(own_ship,target,weapon.projectile_speed)
 		#var world_pos: Vector3 = target.global_position + (target.linear_velocity * lead_time)
 		lead_crosshair.global_position = lead_pos
 		

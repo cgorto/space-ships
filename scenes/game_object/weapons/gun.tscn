@@ -9,9 +9,10 @@
 
 [node name="Gun" type="Node3D" node_paths=PackedStringArray("firing_points")]
 script = ExtResource("1_kthce")
+attack_speed = 0.1
+lifetime = 8.0
 proj_mesh = ExtResource("2_0vsqb")
 firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
-lifetime = 8.0
 
 [node name="BulletSpawner" parent="." instance=ExtResource("2_whqxq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
