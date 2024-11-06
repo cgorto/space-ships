@@ -11,7 +11,7 @@ var firing_point_counter: int = 0
 @export var projectile_speed: float = 750
 @export var projectile_damage: float = 10
 @export var faction: int = 1
-@export var max_range: float = 10000
+@export var lifetime: float = 10
 
 func _ready() -> void:
 	attack_cooldown.wait_time = bullet_spawner.fire_rate
@@ -20,16 +20,16 @@ func shoot() -> void:
 	if attack_cooldown.is_stopped():
 		ProjectileServer.spawn_projectile(
 			proj_mesh,
-			transform,
-			transform.basis.z * -100,
+			global_transform,
+			global_transform.basis.z * -100,
 			projectile_speed,
 			projectile_damage,
 			faction,
-			max_range
+			lifetime
 		)
 		#bullet_spawner.spawn_projectile()
 		attack_cooldown.start()
-		random_sound_player.play_random()
+		#random_sound_player.play_random()
 		
 
 func shoot_towards(world_pos: Vector3) -> void:
@@ -45,7 +45,7 @@ func shoot_towards(world_pos: Vector3) -> void:
 			projectile_speed,
 			projectile_damage,
 			faction,
-			max_range
+			lifetime
 		)
 		attack_cooldown.start()
 		random_sound_player.play_random()

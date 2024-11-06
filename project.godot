@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-ProjectileServer="*res://scenes/game_object/projectile/projectile_server.gd"
+ProjectileServer="*res://autoload/projectile_server.gd"
 
 [debug]
 
@@ -107,7 +107,7 @@ cut_throttle={
 
 [physics]
 
-common/physics_interpolation=true
+3d/default_gravity=0.0
 
 [rendering]
 
