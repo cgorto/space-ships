@@ -1,6 +1,6 @@
 class_name Pilot extends Node3D
 
-@export var bank_limit: float = deg_to_rad(50)
+@export var bank_limit: float = deg_to_rad(60)
 
 var pitch: float
 var yaw: float

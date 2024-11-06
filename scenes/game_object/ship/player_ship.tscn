@@ -7,6 +7,7 @@
 size = Vector3(6.66559, 3.15131, 10.4094)
 
 [node name="Ship" node_paths=PackedStringArray("pilot") instance=ExtResource("1_7bq24")]
+mass = 150.0
 pilot = NodePath("Pilot")
 
 [node name="Hurtbox" parent="." index="3"]
