@@ -1,7 +1,7 @@
 class_name NPCPilot extends Pilot
 
 const MIN_ENGAGE_DISTANCE: float = 100.0
-const MAX_FIRING_DISTANCE: float = 800.0
+const MAX_FIRING_DISTANCE: float = 1000.0
 const FIRING_ANGLE_THRESHOLD: float = 0.1
 const CHASE_ANGLE_THRESHOLD: float = 1.5708
 const MIN_THROTTLE: float = 0.33
@@ -10,7 +10,7 @@ const MAX_THROTTLE: float = 0.9
 
 var think_counter: float = 0
 var think_delay: float
-@export var fire_chance: float = 0.8
+@export var fire_chance: float = 1
 
 @onready var preferred_avoid: Vector3 = Util.uniform_random_vector() * 200
 
@@ -111,7 +111,7 @@ func handle_ranged_combat(delta: float) -> void:
 	)
 	
 	var turn_strength: float = get_cached_noise_value()
-	turn_towards_point(target_point, delta, turn_strength)
+	turn_towards_point(target_point, delta)
 	
 	cached_direction = - global_basis.z
 	var angle_to_target: float = cached_direction.angle_to(target_point)
