@@ -107,3 +107,7 @@ func destroy_projectile(body: RID) -> void:
 
 func get_proj_data_from_rid(body: RID) -> ProjectileData:
 	return active_projectiles.get(body)
+
+
+#func free_proj(body:RID) -> ProjectileData:
+	
