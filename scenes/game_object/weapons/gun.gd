@@ -4,6 +4,7 @@ class_name Gun extends Node3D
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var random_sound_player: RandomStreamPlayerComponent = $RandomStreamPlayerComponent
 @export var proj_mesh: Mesh
+@export var own_hurtbox: Hurtbox
 
 @export var firing_points: Array[Marker3D]
 var firing_point_counter: int = 0
@@ -18,14 +19,16 @@ func _ready() -> void:
 
 func shoot() -> void:
 	if attack_cooldown.is_stopped():
+		var target_pos: Vector3 = global_position - global_transform.basis.z * 100
 		ProjectileServer.spawn_projectile(
 			proj_mesh,
 			global_transform,
-			global_transform.basis.z * -100,
+			target_pos,
 			projectile_speed,
 			projectile_damage,
 			faction,
-			lifetime
+			lifetime,
+			own_hurtbox
 		)
 		#bullet_spawner.spawn_projectile()
 		attack_cooldown.start()

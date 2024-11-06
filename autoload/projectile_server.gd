@@ -50,7 +50,7 @@ func find_available_instance_id(multimesh: MultiMesh) -> int:
 
 func spawn_projectile(
 	mesh_resource: Mesh, start_transform: Transform3D, target_pos: Vector3,
-	speed: float, damage: int, faction: int, lifetime: float
+	speed: float, damage: float, faction: int, lifetime: float, from_hurtbox: Hurtbox = null
 	) -> void:
 	var ps:= PhysicsServer3D
 	var mesh_path: String = mesh_resource.resource_path
@@ -62,12 +62,12 @@ func spawn_projectile(
 	ps.body_set_space(body, get_tree().root.world_3d.space)
 
 	var shape: RID = ps.sphere_shape_create()
-	ps.shape_set_data(shape,6)
+	ps.shape_set_data(shape,2)
 	
 	ps.body_add_shape(body,shape)
 	#ps.body_set_collision_layer(body,0b1000)
 	ps.body_set_collision_layer(body,0b100)
-	ps.body_set_collision_mask(body, 0b100)
+
 
 
 	
@@ -76,6 +76,7 @@ func spawn_projectile(
 	
 	var instance_id: int = find_available_instance_id(multimesh_instance.multimesh)
 	if instance_id == -1:
+		print("eek")
 		return
 		
 	var proj_data: ProjectileData = ProjectileData.new()
@@ -88,6 +89,8 @@ func spawn_projectile(
 	proj_data.faction = faction
 	proj_data.start_pos = start_transform.origin
 	proj_data.lifetime = lifetime
+	if from_hurtbox != null:
+		proj_data.ignored.append(from_hurtbox.get_rid())
 	
 	active_projectiles[body] = proj_data
 	
@@ -107,7 +110,3 @@ func destroy_projectile(body: RID) -> void:
 
 func get_proj_data_from_rid(body: RID) -> ProjectileData:
 	return active_projectiles.get(body)
-
-
-#func free_proj(body:RID) -> ProjectileData:
-	

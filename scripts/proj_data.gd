@@ -10,3 +10,4 @@ var faction: int
 var start_pos: Vector3
 var lifetime: float
 var lived: float
+var ignored: Array[RID]

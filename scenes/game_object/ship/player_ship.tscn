@@ -14,6 +14,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.049469, 0.123444, -0.16491
 shape = SubResource("BoxShape3D_xcjcx")
 
 [node name="Pilot" parent="." index="5" node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("7_0qwhp")]
+roll_pid_params = Vector3(3, 0.1, 0.5)
 own_ship = NodePath("..")
 weapon = NodePath("../Visual/Gun")
 
