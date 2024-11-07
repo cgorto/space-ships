@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://fkwckd4h7g1"]
+
+[ext_resource type="Script" path="res://scenes/component/drift_boost.gd" id="1_xxqme"]
+
+[node name="DriftBoost" type="Node"]
+script = ExtResource("1_xxqme")

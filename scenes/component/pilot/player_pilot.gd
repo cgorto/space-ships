@@ -8,22 +8,27 @@ class_name PlayerPilot extends Pilot
 @onready var target_cam: Node3D = $CanvasLayer/Control/Control/SubViewportContainer/SubViewport/TargetCam
 @onready var target_cam_pivot: Node3D = $CanvasLayer/Control/Control/SubViewportContainer/SubViewport/TargetCam/Pivot
 @onready var target_hp_bar: ProgressBar =$CanvasLayer/Control/Control/TargetHPBar
+@onready var drift_boost: DriftBoost = $DriftBoost
+@onready var speed: Label = $CanvasLayer/Control/Label3
+@export var drift_sparks: DriftSparks
+
 
 var target: RigidBody3D = null
-var dash_meter: float = 1
-var dash_rate: float = 0.5
-var dash_speed: float = 2
-enum STATE {BASE,DASHING,DRIFT}
-var current_state: STATE = STATE.BASE
+
 
 @export var crosshair_radius: float = 50
 @export var crosshair_hit: bool = false
+
+func _ready() -> void:
+
+	drift_boost.drift_ended.connect(_on_drift_ended)
 
 func _process(delta: float) -> void:
 	strafe = Input.get_axis("move_left","move_right")
 	
 	auto_pilot(delta)
 	update_throttle(delta)
+	update_drift()
 	update_target_indicator()
 
 
@@ -51,6 +56,7 @@ func update_throttle(delta: float) -> void:
 	if Input.is_action_just_pressed("cut_throttle"):
 		throttle = 0
 	throt.value = throttle
+	speed.text = "Speed: %d" % own_ship.linear_velocity.length()
 
 func find_target(mouse_direction: Vector3) -> void:
 	target_cast.target_position = to_local(mouse_direction)
@@ -111,3 +117,18 @@ func get_aim_point() -> Vector3:
 		
 			
 	return camera.project_position(mouse_pos, aim_distance)
+
+
+func update_drift() -> void:
+	if Input.is_action_just_pressed("drift"):
+		drift_boost.start_drift()
+		drift_sparks.start()
+	if Input.is_action_just_released("drift"):
+		drift_boost.end_drift()
+		
+	speed_multiplier = drift_boost.get_speed_multiplier()
+	turn_multiplier = drift_boost.get_turn_multiplier()
+
+
+func _on_drift_ended(boost_mult:float) -> void:
+	drift_sparks.stop()

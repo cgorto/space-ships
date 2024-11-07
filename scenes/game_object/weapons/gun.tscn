@@ -9,6 +9,7 @@
 
 [node name="Gun" type="Node3D" node_paths=PackedStringArray("firing_points")]
 script = ExtResource("1_kthce")
+projectile_speed = 900.0
 attack_speed = 0.1
 lifetime = 8.0
 proj_mesh = ExtResource("2_0vsqb")

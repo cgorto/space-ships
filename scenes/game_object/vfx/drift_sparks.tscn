@@ -1,0 +1,70 @@
+[gd_scene load_steps=13 format=3 uid="uid://dswa4akyx0q00"]
+
+[ext_resource type="Script" path="res://scenes/game_object/vfx/drift_sparks.gd" id="1_8lili"]
+
+[sub_resource type="Curve" id="Curve_5mb2t"]
+_data = [Vector2(0, 0.116913), 0.0, 0.0, 0, 0, Vector2(0.237864, 0.981978), 0.0, 0.0, 0, 0, Vector2(0.495146, 0.477357), 0.0, 0.0, 0, 0, Vector2(0.752427, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_xvayf"]
+curve = SubResource("Curve_5mb2t")
+
+[sub_resource type="Gradient" id="Gradient_mmocw"]
+colors = PackedColorArray(0, 0.529412, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5wnjo"]
+gradient = SubResource("Gradient_mmocw")
+
+[sub_resource type="Curve" id="Curve_23nev"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.242718, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.507394), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5iu72"]
+curve = SubResource("Curve_23nev")
+
+[sub_resource type="Curve" id="Curve_qtece"]
+_data = [Vector2(0, 0.134935), 0.0, 0.0, 0, 0, Vector2(0.101942, 0.86183), 0.0, 0.0, 0, 0, Vector2(0.182039, 0.405268), 0.0, 0.0, 0, 0, Vector2(0.242718, 1), 0.0, 0.0, 0, 0, Vector2(0.334951, 0.58549), 0.0, 0.0, 0, 0, Vector2(0.429612, 0.807763), 0.0, 0.0, 0, 0, Vector2(0.495146, 0.453327), 0.0, 0.0, 0, 0, Vector2(0.589806, 0.573475), 0.0, 0.0, 0, 0, Vector2(0.703883, 0.28512), 0.0, 0.0, 0, 0, Vector2(0.813107, 0.381238), 0.0, 0.0, 0, 0, Vector2(0.871359, 0.110906), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 12
+
+[sub_resource type="CurveTexture" id="CurveTexture_alrnn"]
+curve = SubResource("Curve_qtece")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wxd5m"]
+particle_flag_align_y = true
+emission_shape_offset = Vector3(0, 0, 1)
+emission_shape_scale = Vector3(1, 0.2, 0.2)
+emission_shape = 2
+emission_sphere_radius = 5.0
+angle_min = 1.07288e-05
+angle_max = 135.0
+direction = Vector3(0, 0, 1)
+spread = 180.0
+initial_velocity_max = 4.0
+radial_velocity_min = -5.00002
+radial_velocity_max = 0.999978
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_alrnn")
+color_ramp = SubResource("GradientTexture1D_5wnjo")
+alpha_curve = SubResource("CurveTexture_xvayf")
+emission_curve = SubResource("CurveTexture_5iu72")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2n45g"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_atcql"]
+material = SubResource("StandardMaterial3D_2n45g")
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="DriftSparks" type="Node3D"]
+script = ExtResource("1_8lili")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 1000
+speed_scale = 2.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_wxd5m")
+draw_pass_1 = SubResource("BoxMesh_atcql")

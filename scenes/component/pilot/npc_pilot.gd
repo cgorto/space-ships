@@ -111,7 +111,7 @@ func handle_ranged_combat(delta: float) -> void:
 	)
 	
 	var turn_strength: float = get_cached_noise_value()
-	turn_towards_point(target_point, delta)
+	turn_towards_point(target_point, delta, turn_strength)
 	
 	cached_direction = - global_basis.z
 	var angle_to_target: float = cached_direction.angle_to(target_point)

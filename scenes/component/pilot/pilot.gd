@@ -8,6 +8,8 @@ var roll: float
 var strafe: float
 var throttle: float
 
+var speed_multiplier: float = 1.0
+var turn_multiplier: float = 1.0
 
 @export var pitch_pid_params: Vector3 = Vector3(1.5, 1, 0.5)
 @export var yaw_pid_params: Vector3 = Vector3(1.5, 1, 0.5)

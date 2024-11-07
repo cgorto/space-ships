@@ -13,11 +13,11 @@ func _process(_delta: float) -> void:
 		Vector3(
 			pilot.strafe, 
 			0, 
-			-pilot.throttle
+			-pilot.throttle * pilot.speed_multiplier
 		),
 		Vector3(
-			pilot.pitch,
-			pilot.yaw,
+			pilot.pitch * pilot.turn_multiplier,
+			pilot.yaw * pilot.turn_multiplier,
 			pilot.roll
 		)
 	)
