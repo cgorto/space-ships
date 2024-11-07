@@ -50,7 +50,7 @@ func find_available_instance_id(multimesh: MultiMesh) -> int:
 
 func spawn_projectile(
 	mesh_resource: Mesh, start_transform: Transform3D, target_pos: Vector3,
-	speed: float, damage: float, faction: int, lifetime: float, from_hurtbox: Hurtbox = null
+	speed: float, damage: float, faction: int, lifetime: float, ignored: Array[CollisionObject3D] = []
 	) -> void:
 	var ps:= PhysicsServer3D
 	var mesh_path: String = mesh_resource.resource_path
@@ -89,8 +89,9 @@ func spawn_projectile(
 	proj_data.faction = faction
 	proj_data.start_pos = start_transform.origin
 	proj_data.lifetime = lifetime
-	if from_hurtbox != null:
-		proj_data.ignored.append(from_hurtbox.get_rid())
+	if ignored.size() > 0:
+		for obj in ignored: 
+			proj_data.ignored.append(obj.get_rid())
 	
 	active_projectiles[body] = proj_data
 	

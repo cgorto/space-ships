@@ -16,8 +16,9 @@ radius = 50.0
 [node name="Ship" node_paths=PackedStringArray("pilot") instance=ExtResource("1_rfahr")]
 pilot = NodePath("Pilot")
 
-[node name="Gun" parent="Visual" index="0"]
+[node name="Gun" parent="Visual" index="0" node_paths=PackedStringArray("own_ship")]
 proj_mesh = ExtResource("2_2wxcc")
+own_ship = NodePath("../..")
 
 [node name="MeshInstance3D" parent="Visual" index="1"]
 mesh = ExtResource("3_0kruw")

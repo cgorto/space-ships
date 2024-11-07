@@ -2,6 +2,7 @@ class_name Ship extends RigidBody3D
 
 @onready var ship_physics: ShipPhysics = $ShipPhysics
 @onready var hp: HealthComponent = $HealthComponent
+@onready var hurtbox: Hurtbox = $Hurtbox
 
 @export var pilot: Pilot
 

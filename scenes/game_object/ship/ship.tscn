@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://d2dv0c0hvt7rb"]
+[gd_scene load_steps=16 format=3 uid="uid://d2dv0c0hvt7rb"]
 
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
 [ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="2_fr7ol"]
 [ext_resource type="ArrayMesh" uid="uid://7125osetkoju" path="res://assets/ship2.obj" id="3_ct5re"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
-[ext_resource type="Texture2D" uid="uid://26yo4d5if34g" path="res://assets/Crosshair.png" id="3_mosj5"]
 [ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="5_p4m1f"]
 [ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="7_ysnnw"]
 [ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="8_cpiva"]
@@ -56,8 +55,7 @@ script = ExtResource("1_i8rlt")
 
 [node name="Visual" type="Node3D" parent="."]
 
-[node name="Gun" parent="Visual" node_paths=PackedStringArray("own_hurtbox") instance=ExtResource("2_fr7ol")]
-own_hurtbox = NodePath("../../Hurtbox")
+[node name="Gun" parent="Visual" instance=ExtResource("2_fr7ol")]
 
 [node name="Marker3D" parent="Visual/Gun" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.88865, 0, 0)
@@ -69,16 +67,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39663, 0, 0)
 transform = Transform3D(-2.97, 0, -2.59646e-07, 0, 2.97, 0, 2.59646e-07, 0, -2.97, 0, -1.445, 0)
 layers = 2
 mesh = ExtResource("3_ct5re")
-
-[node name="Sprite3D" type="Sprite3D" parent="Visual"]
-transform = Transform3D(0.165, 0, 0, 0, 0.165, 0, 0, 0, 0.165, 0, 0, -1000)
-visible = false
-layers = 2
-billboard = 1
-no_depth_test = true
-fixed_size = true
-texture_filter = 0
-texture = ExtResource("3_mosj5")
 
 [node name="RightThrust" type="MeshInstance3D" parent="Visual"]
 transform = Transform3D(1, 0, 0, 0, -0.00342087, -0.999994, 0, 0.999994, -0.00342087, 3.03731, -0.372677, 5.91967)

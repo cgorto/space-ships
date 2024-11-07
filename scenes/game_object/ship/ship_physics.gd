@@ -10,7 +10,7 @@ class_name ShipPhysics extends Node
 @export var steering_torque: Vector3 = Vector3(1200.0, 1200.0, 1200.0)
 @export var thrust_force: float = 80000.0
 @export var booster_force: float = 12000.0
-@export var strafe_force: float = 18000.0
+@export var strafe_force: float = 40000.0
 @export var reverse_fraction: float = 0.5
 @export var bank_limit: float = 80.0
 

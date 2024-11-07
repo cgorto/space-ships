@@ -10,6 +10,10 @@ size = Vector3(6.66559, 3.15131, 10.4094)
 mass = 150.0
 pilot = NodePath("Pilot")
 
+[node name="Gun" parent="Visual" index="0" node_paths=PackedStringArray("own_ship")]
+attack_speed = 0.3
+own_ship = NodePath("../..")
+
 [node name="Hurtbox" parent="." index="3"]
 faction = 1
 
