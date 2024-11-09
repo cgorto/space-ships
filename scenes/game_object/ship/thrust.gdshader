@@ -65,34 +65,34 @@ void fragment() {
     vec2 moving_uv = v_uv + noise_direction * time;
     vec2 stretched_uv = vec2(moving_uv.x, moving_uv.y * stretch_factor);
     float noise_value = texture(noise_texture, stretched_uv).r * noise_strength;
-    
+
     // Overlay noise
     float overlay_time = TIME * overlay_noise_speed;
     vec2 overlay_moving_uv = v_uv + overlay_noise_direction * overlay_time;
     vec2 overlay_stretched_uv = vec2(overlay_moving_uv.x, overlay_moving_uv.y * overlay_stretch_factor);
     float overlay_noise = texture(overlay_noise_texture, overlay_stretched_uv).r * overlay_noise_strength;
-    
+
     // Calculate gradient and base alpha
     float gradient_height = vert_height - dissolve_start;
     gradient_height *= 1.0 / dissolve_length;
     gradient_height = clamp(pow(gradient_height, gradient_bias) + noise_value, 0.0, 1.0);
-    
+
     float base_alpha = mix(1.0, 0.0, gradient_height);
     base_alpha = pow(base_alpha, power_factor);
     base_alpha = max(base_alpha, base_opacity);
-    
+
     // Combine base color with overlay noise
     vec3 base_color = neon(pow(base_alpha, power_factor), _color);
     vec3 final_color = mix(base_color, overlay_color, overlay_noise * 0.5);
-    
+
     ALBEDO = final_color;
     ALPHA = pow(base_alpha, alpha_intensity_factor);
-    
+
     if (enable_fresnel) {
         float fresnel_effect = fresnel(fresnel_factor, NORMAL, VIEW);
         fresnel_effect = pow(fresnel_effect * fresnel_amplification, fresnel_power);
         ALPHA = mix(base_opacity, ALPHA * fresnel_effect, 0.7);
-        
+
         // Add overlay noise contribution to alpha
         ALPHA = mix(ALPHA, 1.0, overlay_noise * 0.3);
     }

@@ -2,6 +2,7 @@ class_name Thrust extends Node3D
 
 @export var pilot: Pilot
 @export_group("Thrust Properties")
+@export var base_radius: float = 1
 @export var min_length: float = 0.1
 @export var max_length: float = 4
 
@@ -11,6 +12,7 @@ func _ready() -> void:
 	if pilot == null:
 		return
 	pilot.throttle_changed.connect(_on_throttle_changed)
+	(thrust_mesh.mesh as CylinderMesh).bottom_radius = base_radius
 
 func _on_throttle_changed(new_throttle: float) -> void:
 	var new_height: float = remap(new_throttle,0,1,min_length,max_length)

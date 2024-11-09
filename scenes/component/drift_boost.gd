@@ -1,5 +1,6 @@
 class_name DriftBoost extends Node
 
+signal drift_started()
 signal drift_stage_changed(stage: int)
 signal drift_ended(boost_power: float)
 signal boost_started(power: float)
@@ -76,6 +77,7 @@ func start_drift() -> bool:
 	if pilot.throttle < min_drift_throttle:
 		return false
 	
+	drift_started.emit()
 	current_state = State.DRIFTING
 	drift_timer = 0.0
 	current_drift_stage = DriftStage.NONE

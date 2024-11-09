@@ -122,8 +122,8 @@ func get_aim_point() -> Vector3:
 
 func update_drift() -> void:
 	if Input.is_action_just_pressed("drift"):
-		if drift_boost.start_drift():
-			drift_sparks.start()
+		drift_boost.start_drift()
+		drift_sparks.start()
 	if Input.is_action_just_released("drift"):
 		drift_boost.end_drift()
 		
@@ -132,4 +132,4 @@ func update_drift() -> void:
 
 
 func _on_drift_ended(boost_mult:float) -> void:
-	drift_sparks.stop()
+	drift_sparks.stop(boost_mult)

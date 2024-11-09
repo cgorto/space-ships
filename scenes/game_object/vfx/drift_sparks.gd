@@ -9,10 +9,12 @@ func _ready() -> void:
 	if drift_boost == null:
 		return
 	drift_boost.drift_stage_changed.connect(_on_drift_stage_changed)
+	drift_boost.drift_started.connect(start)
+	drift_boost.drift_ended.connect(stop)
 
 func start() -> void:
 	sparks0.emitting = true
-func stop() -> void:
+func stop(boost_multiplier: float) -> void:
 	sparks0.emitting = false
 	sparks1.emitting = false
 	sparks2.emitting = false

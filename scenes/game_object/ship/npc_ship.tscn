@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cxkwdhwvmgfxv"]
+[gd_scene load_steps=11 format=3 uid="uid://cxkwdhwvmgfxv"]
 
 [ext_resource type="PackedScene" uid="uid://d2dv0c0hvt7rb" path="res://scenes/game_object/ship/ship.tscn" id="1_rfahr"]
 [ext_resource type="BoxMesh" uid="uid://qhcjvnla7u2b" path="res://scenes/game_object/projectile/proj2.tres" id="2_2wxcc"]
-[ext_resource type="ArrayMesh" uid="uid://fsyy7f8h42iq" path="res://assets/player_ship.obj" id="3_0kruw"]
+[ext_resource type="PackedScene" uid="uid://bm6dd8ghshhsh" path="res://assets/ship/Dispatcher.fbx" id="4_io833"]
+[ext_resource type="PackedScene" uid="uid://dn51i1bxlaggp" path="res://scenes/game_object/vfx/thrust.tscn" id="5_1gjlo"]
+[ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="5_6wahr"]
 [ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
 [ext_resource type="PackedScene" uid="uid://3bf61opumyhg" path="res://scenes/component/target_area.tscn" id="8_g7kfv"]
 
@@ -13,34 +15,52 @@ height = 17.715
 [sub_resource type="SphereShape3D" id="SphereShape3D_phmob"]
 radius = 50.0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_1gjlo"]
+size = Vector3(6.50977, 2.82666, 11.7936)
+
 [node name="Ship" node_paths=PackedStringArray("pilot") instance=ExtResource("1_rfahr")]
 pilot = NodePath("Pilot")
-
-[node name="Gun" parent="Visual" index="0" node_paths=PackedStringArray("own_ship")]
-proj_mesh = ExtResource("2_2wxcc")
-own_ship = NodePath("../..")
-
-[node name="MeshInstance3D" parent="Visual" index="1"]
-mesh = ExtResource("3_0kruw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.0138575, 0.999904, 0, -0.999904, 0.0138575, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_foa4f")
 
-[node name="HealthComponent" parent="." index="4"]
+[node name="HealthComponent" parent="." index="2"]
 max_health = 100
 
-[node name="Pilot" parent="." index="5" node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("6_abf6t")]
+[node name="Pilot" parent="." index="3" node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("6_abf6t")]
 pitch_pid_params = Vector3(2, 0, 0)
 yaw_pid_params = Vector3(2, 0, 0)
 roll_pid_params = Vector3(2, 0, 0)
 own_ship = NodePath("..")
-weapon = NodePath("../Visual/Gun")
+weapon = NodePath("../Gun")
 
-[node name="TargetArea" parent="." index="6" node_paths=PackedStringArray("ship") instance=ExtResource("8_g7kfv")]
+[node name="TargetArea" parent="." index="4" node_paths=PackedStringArray("ship") instance=ExtResource("8_g7kfv")]
 ship = NodePath("..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetArea" index="0"]
 shape = SubResource("SphereShape3D_phmob")
 
-[editable path="Visual/Gun"]
+[node name="Visual" type="Node3D" parent="." index="5"]
+
+[node name="Dispatcher" parent="Visual" index="0" instance=ExtResource("4_io833")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Thrust" parent="Visual" index="1" node_paths=PackedStringArray("pilot") instance=ExtResource("5_1gjlo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24454, 3.4078)
+pilot = NodePath("../../Pilot")
+
+[node name="Gun" parent="." index="6" node_paths=PackedStringArray("own_ship", "firing_points") instance=ExtResource("5_6wahr")]
+proj_mesh = ExtResource("2_2wxcc")
+own_ship = NodePath("..")
+firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
+
+[node name="Marker3D" type="Marker3D" parent="Gun" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.800522, -0.081625, -9.35856)
+
+[node name="Marker3D2" type="Marker3D" parent="Gun" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785678, -0.081625, -9.35856)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0673828, 0.91333, -2.42313)
+shape = SubResource("BoxShape3D_1gjlo")

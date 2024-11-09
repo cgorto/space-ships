@@ -53,8 +53,10 @@ func shoot_towards(world_pos: Vector3) -> void:
 			projectile_speed,
 			projectile_damage,
 			faction,
-			lifetime
+			lifetime,
+			[own_ship,own_ship.hurtbox]
 		)
 		attack_cooldown.start()
 		random_sound_player.play_random()
-		firing_point_counter = (firing_point_counter + 1) % firing_points.size()
+		if not firing_points.is_empty():
+			firing_point_counter = (firing_point_counter + 1) % firing_points.size()

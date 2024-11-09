@@ -1,18 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://d2dv0c0hvt7rb"]
+[gd_scene load_steps=6 format=3 uid="uid://d2dv0c0hvt7rb"]
 
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
-[ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="2_fr7ol"]
-[ext_resource type="ArrayMesh" uid="uid://7125osetkoju" path="res://assets/ship2.obj" id="3_ct5re"]
 [ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
 [ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="7_ysnnw"]
 [ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="8_cpiva"]
-[ext_resource type="PackedScene" uid="uid://42ed8d4svbt3" path="res://scenes/component/on_death_component.tscn" id="8_j4is4"]
 [ext_resource type="PackedScene" uid="uid://bkcrjh66ip304" path="res://scenes/game_object/vfx/hit_explosion.tscn" id="8_pfqnx"]
-[ext_resource type="PackedScene" uid="uid://jdtu4m2snino" path="res://scenes/game_object/vfx/death_explosion.tscn" id="9_77ib6"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1ua5q"]
-radius = 0.636094
-height = 3.5097
 
 [node name="Ship" type="RigidBody3D"]
 mass = 100.0
@@ -21,25 +13,6 @@ freeze_mode = 1
 linear_damp = 2.0
 angular_damp = 5.0
 script = ExtResource("1_i8rlt")
-
-[node name="Visual" type="Node3D" parent="."]
-
-[node name="Gun" parent="Visual" instance=ExtResource("2_fr7ol")]
-
-[node name="Marker3D" parent="Visual/Gun" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.88865, 0, 0)
-
-[node name="Marker3D2" parent="Visual/Gun" index="4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.39663, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual"]
-transform = Transform3D(-2.97, 0, -2.59646e-07, 0, 2.97, 0, 2.59646e-07, 0, -2.97, 0, -1.445, 0)
-layers = 2
-mesh = ExtResource("3_ct5re")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.634606)
-shape = SubResource("CapsuleShape3D_1ua5q")
 
 [node name="ShipPhysics" type="Node" parent="." node_paths=PackedStringArray("rigid_body")]
 script = ExtResource("3_fcr5x")
@@ -51,9 +24,3 @@ on_hit_effect = ExtResource("8_pfqnx")
 
 [node name="HealthComponent" parent="." instance=ExtResource("8_cpiva")]
 max_health = 1000
-
-[node name="OnDeathComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("8_j4is4")]
-health_component = NodePath("../HealthComponent")
-on_death_scene = ExtResource("9_77ib6")
-
-[editable path="Visual/Gun"]
