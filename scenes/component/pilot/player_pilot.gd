@@ -57,6 +57,7 @@ func update_throttle(delta: float) -> void:
 		throttle = 0
 	throt.value = throttle
 	speed.text = "Speed: %d" % own_ship.linear_velocity.length()
+	throttle_changed.emit(throttle)
 
 func find_target(mouse_direction: Vector3) -> void:
 	target_cast.target_position = to_local(mouse_direction)
@@ -121,8 +122,8 @@ func get_aim_point() -> Vector3:
 
 func update_drift() -> void:
 	if Input.is_action_just_pressed("drift"):
-		drift_boost.start_drift()
-		drift_sparks.start()
+		if drift_boost.start_drift():
+			drift_sparks.start()
 	if Input.is_action_just_released("drift"):
 		drift_boost.end_drift()
 		

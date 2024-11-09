@@ -31,6 +31,9 @@ shape = SubResource("CapsuleShape3D_foa4f")
 max_health = 100
 
 [node name="Pilot" parent="." index="5" node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("6_abf6t")]
+pitch_pid_params = Vector3(2, 0, 0)
+yaw_pid_params = Vector3(2, 0, 0)
+roll_pid_params = Vector3(2, 0, 0)
 own_ship = NodePath("..")
 weapon = NodePath("../Visual/Gun")
 

@@ -12,6 +12,7 @@ class_name Gun extends Node3D
 @export var proj_mesh: Mesh
 @export var own_ship: Ship
 
+
 @export var firing_points: Array[Marker3D]
 var firing_point_counter: int = 0
 

@@ -98,6 +98,10 @@ cut_throttle={
 ]
 }
 
+[input_devices]
+
+buffering/agile_event_flushing=true
+
 [layer_names]
 
 2d_physics/layer_2="Player"

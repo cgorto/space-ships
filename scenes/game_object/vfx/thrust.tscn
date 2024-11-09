@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://dn51i1bxlaggp"]
+
+[ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="1_oikcn"]
+[ext_resource type="Script" path="res://scenes/game_object/vfx/thrust.gd" id="2_ecg0i"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_td7wu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8kmgx"]
+seamless = true
+noise = SubResource("FastNoiseLite_td7wu")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6ik1m"]
+noise_type = 4
+frequency = 0.2699
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yds5v"]
+seamless = true
+noise = SubResource("FastNoiseLite_6ik1m")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uy02a"]
+render_priority = 0
+shader = ExtResource("1_oikcn")
+shader_parameter/model_height = 4.0
+shader_parameter/dissolve_start = 0.001
+shader_parameter/dissolve_length = 1.0
+shader_parameter/gradient_bias = 0.976
+shader_parameter/noise_direction = Vector2(0, 1)
+shader_parameter/noise_speed = 2.0
+shader_parameter/noise_strength = 0.505
+shader_parameter/stretch_factor = 0.895
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_8kmgx")
+shader_parameter/overlay_noise_texture = SubResource("NoiseTexture2D_yds5v")
+shader_parameter/overlay_noise_direction = Vector2(0, 1)
+shader_parameter/overlay_noise_speed = 1.5
+shader_parameter/overlay_noise_strength = 1.0
+shader_parameter/overlay_stretch_factor = 0.5
+shader_parameter/_color = Color(0.820779, 0.151384, 0.895735, 1)
+shader_parameter/overlay_color = Color(0.469899, 0.739362, 0.965414, 1)
+shader_parameter/power_factor = 0.35
+shader_parameter/alpha_intensity_factor = 2.0
+shader_parameter/base_opacity = 0.2
+shader_parameter/fresnel_factor = 1.0
+shader_parameter/fresnel_amplification = 2.0
+shader_parameter/fresnel_power = 2.0
+shader_parameter/enable_fresnel = true
+shader_parameter/min_fresnel = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ddte2"]
+top_radius = 0.0
+bottom_radius = 0.855
+height = 4.0
+
+[node name="Thrust" type="Node3D"]
+script = ExtResource("2_ecg0i")
+
+[node name="ThrustMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 2)
+material_override = SubResource("ShaderMaterial_uy02a")
+mesh = SubResource("CylinderMesh_ddte2")
+skeleton = NodePath("")

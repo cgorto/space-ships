@@ -1,5 +1,7 @@
 class_name Pilot extends Node3D
 
+signal throttle_changed(new_throttle: float)
+
 @export var bank_limit: float = deg_to_rad(60)
 
 var pitch: float

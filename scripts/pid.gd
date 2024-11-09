@@ -2,7 +2,7 @@ class_name PID extends RefCounted
 
 var p_factor: float
 var i_factor: float
-var d_factor: float
+var d_factor: float 
 
 var integral: float
 var last_error: float

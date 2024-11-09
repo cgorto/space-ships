@@ -1,0 +1,53 @@
+[gd_scene load_steps=10 format=3 uid="uid://bs3xfeeya3skb"]
+
+[ext_resource type="Shader" path="res://scenes/game_object/vfx/MuzzleFlash.gdshader" id="1_ogjxu"]
+[ext_resource type="Script" path="res://scenes/game_object/vfx/muzzle_flash.gd" id="1_xdrak"]
+[ext_resource type="Texture2D" uid="uid://ofiijbvjmgqw" path="res://assets/vfx/MuzzleFlaash/muzzle.png" id="2_lk41f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2tjx"]
+render_priority = 0
+shader = ExtResource("1_ogjxu")
+shader_parameter/texture_albedo = ExtResource("2_lk41f")
+shader_parameter/particles_anim_h_frames = 2
+shader_parameter/particles_anim_v_frames = 2
+
+[sub_resource type="Curve" id="Curve_k67n7"]
+_data = [Vector2(0.133495, 0.993993), 0.0, 0.0, 0, 0, Vector2(0.601942, 0.249076), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_o6d1o"]
+curve = SubResource("Curve_k67n7")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mgbfo"]
+particle_flag_align_y = true
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 0, -1)
+spread = 0.0
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+color = Color(0, 0.901961, 0.490196, 1)
+emission_curve = SubResource("CurveTexture_o6d1o")
+anim_offset_max = 1.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_itps2"]
+size = Vector2(10, 10)
+orientation = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_7mds0"]
+size = Vector2(10, 10)
+
+[node name="MuzzleFlash" type="Node3D"]
+script = ExtResource("1_xdrak")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(0.737006, 0.675886, 0, -0.675886, 0.737006, 0, 0, 0, 1, -0.00685814, -0.0122826, -0.409767)
+material_override = SubResource("ShaderMaterial_j2tjx")
+emitting = false
+amount = 1
+lifetime = 0.05
+interp_to_end = 0.99
+process_material = SubResource("ParticleProcessMaterial_mgbfo")
+draw_passes = 2
+draw_pass_1 = SubResource("QuadMesh_itps2")
+draw_pass_2 = SubResource("QuadMesh_7mds0")

@@ -13,9 +13,9 @@ bg_color = Color(1, 0, 0, 1)
 
 [node name="PlayerPilot" type="Node3D" groups=["target"]]
 script = ExtResource("1_eqnf8")
-pitch_pid_params = Vector3(1.5, 0.75, 0.5)
-yaw_pid_params = Vector3(1.5, 0.75, 0.5)
-roll_pid_params = Vector3(3, 0.5, 0.5)
+pitch_pid_params = Vector3(2, 0.5, 0.5)
+yaw_pid_params = Vector3(2, 0.5, 0.5)
+roll_pid_params = Vector3(1, 0.2, 0.2)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
