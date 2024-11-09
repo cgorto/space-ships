@@ -16,6 +16,8 @@ script = ExtResource("1_i8rlt")
 
 [node name="ShipPhysics" type="Node" parent="." node_paths=PackedStringArray("rigid_body")]
 script = ExtResource("3_fcr5x")
+steering_torque = Vector3(6000, 6000, 6000)
+thrust_force = 70000.0
 rigid_body = NodePath("..")
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("7_ysnnw")]

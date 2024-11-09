@@ -18,6 +18,9 @@ height = 8.13253
 mass = 150.0
 pilot = NodePath("Pilot")
 
+[node name="ShipPhysics" parent="." index="0"]
+thrust_force = 100000.0
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.193674, 0.123444, -0.394447)
 shape = SubResource("BoxShape3D_xcjcx")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cxkwdhwvmgfxv"]
+[gd_scene load_steps=13 format=3 uid="uid://cxkwdhwvmgfxv"]
 
 [ext_resource type="PackedScene" uid="uid://d2dv0c0hvt7rb" path="res://scenes/game_object/ship/ship.tscn" id="1_rfahr"]
 [ext_resource type="BoxMesh" uid="uid://qhcjvnla7u2b" path="res://scenes/game_object/projectile/proj2.tres" id="2_2wxcc"]
@@ -7,10 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="5_6wahr"]
 [ext_resource type="PackedScene" uid="uid://skf788cyrcng" path="res://scenes/component/pilot/npc_pilot.tscn" id="6_abf6t"]
 [ext_resource type="PackedScene" uid="uid://3bf61opumyhg" path="res://scenes/component/target_area.tscn" id="8_g7kfv"]
+[ext_resource type="PackedScene" uid="uid://42ed8d4svbt3" path="res://scenes/component/on_death_component.tscn" id="8_i6yqv"]
+[ext_resource type="PackedScene" uid="uid://jdtu4m2snino" path="res://scenes/game_object/vfx/death_explosion.tscn" id="9_yfua1"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_foa4f"]
-radius = 6.10601
-height = 17.715
+radius = 5.30083
+height = 17.2931
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_phmob"]
 radius = 50.0
@@ -19,6 +21,7 @@ radius = 50.0
 size = Vector3(6.50977, 2.82666, 11.7936)
 
 [node name="Ship" node_paths=PackedStringArray("pilot") instance=ExtResource("1_rfahr")]
+center_of_mass_mode = 1
 pilot = NodePath("Pilot")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0"]
@@ -44,23 +47,29 @@ shape = SubResource("SphereShape3D_phmob")
 [node name="Visual" type="Node3D" parent="." index="5"]
 
 [node name="Dispatcher" parent="Visual" index="0" instance=ExtResource("4_io833")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 4.21577)
 
 [node name="Thrust" parent="Visual" index="1" node_paths=PackedStringArray("pilot") instance=ExtResource("5_1gjlo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24454, 3.4078)
 pilot = NodePath("../../Pilot")
 
 [node name="Gun" parent="." index="6" node_paths=PackedStringArray("own_ship", "firing_points") instance=ExtResource("5_6wahr")]
+projectile_speed = 600.0
+attack_speed = 0.2
 proj_mesh = ExtResource("2_2wxcc")
 own_ship = NodePath("..")
 firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
 
 [node name="Marker3D" type="Marker3D" parent="Gun" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.800522, -0.081625, -9.35856)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.800522, -0.081625, -5.86569)
 
 [node name="Marker3D2" type="Marker3D" parent="Gun" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785678, -0.081625, -9.35856)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785678, -0.081625, -5.86569)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0673828, 0.91333, -2.42313)
 shape = SubResource("BoxShape3D_1gjlo")
+
+[node name="OnDeathComponent" parent="." index="8" node_paths=PackedStringArray("health_component") instance=ExtResource("8_i6yqv")]
+health_component = NodePath("../HealthComponent")
+on_death_scene = ExtResource("9_yfua1")

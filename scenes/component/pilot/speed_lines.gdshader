@@ -53,21 +53,21 @@ void fragment() {
     // Sample the noise texture with the moving UVs
     vec4 noise_color1 = texture(noise_texture, uv_movement);
     vec4 noise_color2 = texture(noise_texture, uv_movement + vec2(0.50));
-    
+
     vec3 normal_map_rgb = texture(normal_map, uv_movement).rgb;
 
     // Apply noise color to the fragment
     ALBEDO = calculate_neon_effect(0.50 + noise_color1.a, color1.rgb);
     ALBEDO += calculate_neon_effect(0.50 + noise_color2.a, color2.rgb);
-    
+
     float alpha_blend = noise_color1.a + noise_color2.a;
-    
+
     ALBEDO = mix(ALBEDO, texture(screen_texture, refract_uv(SCREEN_UV, refraction_strength, normal_map_rgb)).rgb, 1.0 - alpha_blend);
 
     // Fading effects fragment part
     float gradient_height = abs(vertex_height - (dissolve_start + dissolve_length * 0.5));
     gradient_height *= 1.0 / dissolve_length;
     gradient_height = clamp(pow(gradient_height, gradient_bias), 0.0, 1.0);
-    
+
     ALPHA = mix(1.0, 0.0, gradient_height);
 }

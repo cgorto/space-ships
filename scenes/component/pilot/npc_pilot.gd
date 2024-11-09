@@ -24,7 +24,7 @@ const NOISE_UPDATE_INTERVAL: int = 50
 
 var cached_direction: Vector3
 var cached_distance: float
-
+var cached_target_point: Vector3
 
 
 func _ready() -> void:
@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 			update_targeting()
 	update_combat(delta)
 	if is_firing:
-		weapon.shoot()
+		weapon.shoot_towards(cached_target_point)
 	
 
 
@@ -104,17 +104,17 @@ func handle_close_combat(delta:float) -> void:
 	is_firing = false
 	
 func handle_ranged_combat(delta: float) -> void:
-	var target_point: Vector3 = Util.calculate_lead(
+	cached_target_point = Util.calculate_lead(
 		own_ship,
 		target.own_ship,
 		weapon.projectile_speed
 	)
 	
 	var turn_strength: float = get_cached_noise_value()
-	turn_towards_point(target_point, delta, turn_strength)
+	turn_towards_point(target.global_position, delta, turn_strength)
 	
 	cached_direction = - global_basis.z
-	var angle_to_target: float = cached_direction.angle_to(target_point)
+	var angle_to_target: float = cached_direction.angle_to(cached_target_point)
 	
 	is_firing = (
 		angle_to_target < FIRING_ANGLE_THRESHOLD &&

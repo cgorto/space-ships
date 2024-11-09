@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://diw52h5jif8v2"]
+[gd_scene load_steps=6 format=3 uid="uid://diw52h5jif8v2"]
 
 [ext_resource type="Script" path="res://scenes/game_object/ship_camera/camera_rig.gd" id="1_shvuj"]
 [ext_resource type="Texture2D" uid="uid://di42dtg83jpy2" path="res://assets/crosshairs_tilesheet_white.png" id="2_4cu4t"]
 [ext_resource type="Script" path="res://scenes/game_object/ship_camera/crosshair.gd" id="3_dvs8i"]
+[ext_resource type="PackedScene" uid="uid://boka0gfrs0cfc" path="res://scenes/game_object/ship_camera/camera_debug.tscn" id="4_rfupd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ve0ii"]
 atlas = ExtResource("2_4cu4t")
@@ -27,3 +28,6 @@ far = 10000.0
 [node name="Sprite2D" type="Sprite2D" parent="Crosshair"]
 texture = SubResource("AtlasTexture_ve0ii")
 script = ExtResource("3_dvs8i")
+
+[node name="CameraDebug" parent="." node_paths=PackedStringArray("camera_rig") instance=ExtResource("4_rfupd")]
+camera_rig = NodePath("..")
