@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dn51i1bxlaggp"]
+[gd_scene load_steps=13 format=3 uid="uid://dn51i1bxlaggp"]
 
 [ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="1_oikcn"]
 [ext_resource type="Script" path="res://scenes/game_object/vfx/thrust.gd" id="2_ecg0i"]
+[ext_resource type="Script" path="res://scenes/component/trail.gd" id="3_6rkt8"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_td7wu"]
 
@@ -50,6 +51,23 @@ top_radius = 0.0
 bottom_radius = 0.855
 height = 4.0
 
+[sub_resource type="Curve" id="Curve_0woqp"]
+_data = [Vector2(0, 0.02291), 0.0, 0.0, 0, 0, Vector2(0.0132159, 0.195338), 0.0, 0.0, 0, 0, Vector2(0.251101, 0.504967), 0.0, 0.0, 0, 0, Vector2(1, 0.195338), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_cagok"]
+_data = [Vector2(0, 0.0960611), 0.0, 0.0, 0, 0, Vector2(0.753304, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -13.6942, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7wsd6"]
+transparency = 1
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+vertex_color_use_as_albedo = true
+
 [node name="Thrust" type="Node3D"]
 script = ExtResource("2_ecg0i")
 
@@ -58,3 +76,19 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 material_override = SubResource("ShaderMaterial_uy02a")
 mesh = SubResource("CylinderMesh_ddte2")
 skeleton = NodePath("")
+
+[node name="TrailPoint" type="Node3D" parent="."]
+
+[node name="Trail" type="MeshInstance3D" parent="TrailPoint"]
+top_level = true
+script = ExtResource("3_6rkt8")
+is_emitting = true
+lifetime = 1.0
+resolution = 1.0
+max_points = 150
+base_width = 2.0
+target_path = NodePath("..")
+update_frequency = 5.0
+transparency_curve = SubResource("Curve_0woqp")
+width_curve = SubResource("Curve_cagok")
+trail_material = SubResource("StandardMaterial3D_7wsd6")

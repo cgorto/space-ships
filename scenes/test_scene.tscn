@@ -25,8 +25,12 @@ sky = SubResource("Sky_a213p")
 reflected_light_source = 1
 tonemap_mode = 2
 sdfgi_use_occlusion = true
+sdfgi_energy = 2.0
+glow_enabled = true
 fog_mode = 1
 fog_density = 1.0
+adjustment_enabled = true
+adjustment_brightness = 2.17
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wf82s"]
 resource_local_to_scene = true

@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dmt8tjioehqg1"]
+
+[node name="OnHurt" type="Node3D"]

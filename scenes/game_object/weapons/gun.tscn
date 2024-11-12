@@ -7,10 +7,10 @@
 
 [node name="Gun" type="Node3D"]
 script = ExtResource("1_kthce")
-projectile_speed = 900.0
-attack_speed = 0.1
-lifetime = 8.0
 proj_mesh = ExtResource("2_0vsqb")
+projectile_speed = 900.0
+attack_speed = 0.2
+lifetime = 8.0
 
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true

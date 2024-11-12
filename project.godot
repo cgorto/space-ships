@@ -123,8 +123,11 @@ buffering/agile_event_flushing=true
 [physics]
 
 3d/default_gravity=0.0
+3d/solver/solver_iterations=4
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+anti_aliasing/quality/msaa_3d=2
 viewport/hdr_2d=true
+anti_aliasing/quality/screen_space_aa=1

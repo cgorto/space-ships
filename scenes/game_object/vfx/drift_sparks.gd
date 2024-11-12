@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func start() -> void:
 	sparks0.emitting = true
-func stop(boost_multiplier: float) -> void:
+func stop(_boost_multiplier: float) -> void:
 	sparks0.emitting = false
 	sparks1.emitting = false
 	sparks2.emitting = false

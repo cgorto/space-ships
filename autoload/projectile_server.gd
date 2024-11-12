@@ -3,10 +3,24 @@ extends Node3D
 var multimesh_pools: Dictionary[String,MultiMeshInstance3D] = {}
 var active_projectiles: Dictionary[RID,ProjectileData]
 
-const MAX_PROJECTILES_PER_POOL = 10000
-	
+var shader_material: ShaderMaterial
+var interp_delta: float = 0.0
 
+@onready var interp_shader: Shader = preload("res://autoload/proj_interp.gdshader")
+
+const MAX_PROJECTILES_PER_POOL = 10000
+
+func _ready() -> void:
+	shader_material = ShaderMaterial.new()
+	shader_material.shader = interp_shader
+
+func _process(delta: float) -> void:
+	interp_delta += delta
+	shader_material.set_shader_parameter("engine_delta", interp_delta)
+	
 func _physics_process(delta: float) -> void:
+	interp_delta = 0.0
+	shader_material.set_shader_parameter("engine_delta", interp_delta)
 	for key: RID in active_projectiles.keys():
 		active_projectiles[key].lived += delta
 		var proj: ProjectileData = active_projectiles[key]
@@ -15,8 +29,16 @@ func _physics_process(delta: float) -> void:
 			destroy_projectile(proj.body)
 			continue
 		var current_transform: Transform3D = PhysicsServer3D.body_get_state(proj.body, PhysicsServer3D.BODY_STATE_TRANSFORM)
+		
+		proj.multimesh.set_instance_custom_data(proj.instance_id, Color(
+			proj.velocity.x,
+			proj.velocity.y,
+			proj.velocity.z,
+			1.0
+		))
 		var new_position: Vector3 = current_transform.origin + proj.velocity * delta
 		current_transform.origin = new_position
+		proj.positon = new_position
 		
 		PhysicsServer3D.body_set_state(proj.body, PhysicsServer3D.BODY_STATE_TRANSFORM, current_transform)
 		proj.multimesh.set_instance_transform(proj.instance_id, current_transform)
@@ -29,7 +51,18 @@ func get_or_create_multimesh_pool(mesh_path:String, mesh: Mesh) -> MultiMeshInst
 	multimesh.transform_format = MultiMesh.TRANSFORM_3D
 	multimesh.use_custom_data = true
 	multimesh.instance_count = MAX_PROJECTILES_PER_POOL
-	multimesh.mesh = mesh
+	
+	var mesh_with_shader: Mesh = mesh.duplicate()
+	
+	if mesh_with_shader.surface_get_material(0) != null:
+		var original_material: Material = mesh_with_shader.surface_get_material(0)
+		var new_material: Material = original_material.duplicate()
+		new_material.next_pass = shader_material
+		mesh_with_shader.surface_set_material(0,new_material)
+	else:
+		mesh_with_shader.surface_set_material(0,shader_material)
+
+	multimesh.mesh = mesh_with_shader
 	
 	var multimesh_instance: MultiMeshInstance3D = MultiMeshInstance3D.new()
 	multimesh_instance.multimesh = multimesh
@@ -43,7 +76,7 @@ func get_or_create_multimesh_pool(mesh_path:String, mesh: Mesh) -> MultiMeshInst
 
 func find_available_instance_id(multimesh: MultiMesh) -> int:
 	for i in MAX_PROJECTILES_PER_POOL: #THIS MAY BE AWFUL
-		if multimesh.get_instance_custom_data(i).a < 0.5:
+		if is_zero_approx(multimesh.get_instance_custom_data(i).a):
 			return i
 	print("no projs :(")
 	return -1
@@ -89,6 +122,7 @@ func spawn_projectile(
 	proj_data.faction = faction
 	proj_data.start_pos = start_transform.origin
 	proj_data.lifetime = lifetime
+	proj_data.positon = start_transform.origin
 	if ignored.size() > 0:
 		for obj in ignored: 
 			proj_data.ignored.append(obj.get_rid())

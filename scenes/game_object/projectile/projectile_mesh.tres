@@ -4,7 +4,8 @@
 transparency = 1
 shading_mode = 0
 diffuse_mode = 3
-specular_mode = 2
+specular_mode = 1
+vertex_color_use_as_albedo = true
 albedo_color = Color(0, 1, 0, 1)
 
 [resource]

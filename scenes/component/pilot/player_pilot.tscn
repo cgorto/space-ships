@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://rjscsifxkuxr"]
+[gd_scene load_steps=9 format=3 uid="uid://rjscsifxkuxr"]
 
 [ext_resource type="Script" path="res://scenes/component/pilot/player_pilot.gd" id="1_eqnf8"]
 [ext_resource type="Script" path="res://scenes/component/pilot/label.gd" id="2_t8iha"]
 [ext_resource type="Texture2D" uid="uid://b66y3vyxcj7jd" path="res://assets/MouseCrosshair.png" id="3_tef56"]
 [ext_resource type="Script" path="res://scenes/component/pilot/label_2.gd" id="3_wtqsc"]
 [ext_resource type="PackedScene" uid="uid://fkwckd4h7g1" path="res://scenes/component/drift_boost.tscn" id="4_kaqdq"]
+[ext_resource type="PackedScene" uid="uid://dp3ouf5e4fqhk" path="res://scenes/component/target_reticles.tscn" id="6_xnu23"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rpb2h"]
 
@@ -166,3 +167,6 @@ pixel_size = 0.005
 billboard = 1
 fixed_size = true
 texture = ExtResource("3_tef56")
+
+[node name="TargetReticles" parent="TargetIndicator/LeadCrosshair" instance=ExtResource("6_xnu23")]
+transform = Transform3D(333.333, 0, 0, 0, 333.333, 0, 0, 0, 333.333, 0, 0, 0)

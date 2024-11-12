@@ -24,6 +24,12 @@ size = Vector3(6.50977, 2.82666, 11.7936)
 center_of_mass_mode = 1
 pilot = NodePath("Pilot")
 
+[node name="ShipPhysics" parent="." index="0"]
+steering_torque = Vector3(10000, 10000, 10000)
+
+[node name="Hurtbox" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.55074)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 0.0138575, 0.999904, 0, -0.999904, 0.0138575, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_foa4f")
@@ -32,9 +38,9 @@ shape = SubResource("CapsuleShape3D_foa4f")
 max_health = 100
 
 [node name="Pilot" parent="." index="3" node_paths=PackedStringArray("own_ship", "weapon") instance=ExtResource("6_abf6t")]
-pitch_pid_params = Vector3(2, 0, 0)
-yaw_pid_params = Vector3(2, 0, 0)
-roll_pid_params = Vector3(2, 0, 0)
+pitch_pid_params = Vector3(10, 0, 0)
+yaw_pid_params = Vector3(10, 0, 0)
+roll_pid_params = Vector3(10, 0, 0)
 own_ship = NodePath("..")
 weapon = NodePath("../Gun")
 
@@ -49,16 +55,14 @@ shape = SubResource("SphereShape3D_phmob")
 [node name="Dispatcher" parent="Visual" index="0" instance=ExtResource("4_io833")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 4.21577)
 
-[node name="Thrust" parent="Visual" index="1" node_paths=PackedStringArray("pilot") instance=ExtResource("5_1gjlo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24454, 3.4078)
-pilot = NodePath("../../Pilot")
+[node name="Thrust" parent="Visual" index="1" instance=ExtResource("5_1gjlo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24454, 7.5461)
 
 [node name="Gun" parent="." index="6" node_paths=PackedStringArray("own_ship", "firing_points") instance=ExtResource("5_6wahr")]
-projectile_speed = 600.0
-attack_speed = 0.2
 proj_mesh = ExtResource("2_2wxcc")
 own_ship = NodePath("..")
 firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
+projectile_speed = 600.0
 
 [node name="Marker3D" type="Marker3D" parent="Gun" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.800522, -0.081625, -5.86569)
@@ -67,7 +71,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.800522, -0.081625, -5.86569
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.785678, -0.081625, -5.86569)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="7"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0673828, 0.91333, -2.42313)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0673828, 0.91333, 1.62871)
 shape = SubResource("BoxShape3D_1gjlo")
 
 [node name="OnDeathComponent" parent="." index="8" node_paths=PackedStringArray("health_component") instance=ExtResource("8_i6yqv")]

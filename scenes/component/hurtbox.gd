@@ -34,5 +34,5 @@ func _on_body_shape_entered(body_rid: RID, _body: Node3D, _body_shape_index: int
 		if on_hit_effect != null:
 			var new_effect: Node3D = on_hit_effect.instantiate()
 			add_child(new_effect)
-			new_effect.global_position = PhysicsServer3D.body_get_state(proj_data.body, PhysicsServer3D.BODY_STATE_TRANSFORM).origin
+			new_effect.position = global_position.direction_to(proj_data.positon).normalized() * randf_range(3,6)
 	ProjectileServer.destroy_projectile(body_rid)
