@@ -11,4 +11,4 @@ var start_pos: Vector3
 var lifetime: float
 var lived: float
 var ignored: Array[RID]
-var positon: Vector3
+var position: Vector3

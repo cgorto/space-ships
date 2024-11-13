@@ -4,6 +4,7 @@ class_name LaserGun extends Node3D
 @onready var attack_cooldown: Timer = $AttackCooldown
 @onready var random_sound_player: RandomStreamPlayerComponent = $RandomStreamPlayerComponent
 @onready var laser: MeshInstance3D = $MeshInstance3D
+var projectile_speed: float = 100000
 
 @export var firing_points: Array[Marker3D]
 var firing_point_counter: int = 0
@@ -29,10 +30,11 @@ func shoot_towards(world_pos: Vector3) -> void:
 		if ray_cast_3d.is_colliding():
 			var hurtbox: Hurtbox = ray_cast_3d.get_collider() as Hurtbox
 			if hurtbox != null:
-				hurtbox.health_component.damage(10)
+				hurtbox.handle_hit(damage,world_pos,0)
 		attack_cooldown.start()
 		random_sound_player.play_random()
-		firing_point_counter = (firing_point_counter + 1) % firing_points.size()
+		if firing_points.size() > 0:
+			firing_point_counter = (firing_point_counter + 1) % firing_points.size()
 
 func draw_laser(from: Vector3, to: Vector3) -> void:
 	laser.global_position = from

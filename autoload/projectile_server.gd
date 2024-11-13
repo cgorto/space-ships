@@ -38,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		))
 		var new_position: Vector3 = current_transform.origin + proj.velocity * delta
 		current_transform.origin = new_position
-		proj.positon = new_position
+		proj.position = new_position
 		
 		PhysicsServer3D.body_set_state(proj.body, PhysicsServer3D.BODY_STATE_TRANSFORM, current_transform)
 		proj.multimesh.set_instance_transform(proj.instance_id, current_transform)
@@ -122,7 +122,7 @@ func spawn_projectile(
 	proj_data.faction = faction
 	proj_data.start_pos = start_transform.origin
 	proj_data.lifetime = lifetime
-	proj_data.positon = start_transform.origin
+	proj_data.position = start_transform.origin
 	if ignored.size() > 0:
 		for obj in ignored: 
 			proj_data.ignored.append(obj.get_rid())
