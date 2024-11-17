@@ -2,33 +2,25 @@
 
 [ext_resource type="PackedScene" uid="uid://cpto3ymq6nwb4" path="res://scenes/component/random_stream_player_component.tscn" id="1_2hknl"]
 [ext_resource type="Script" path="res://scenes/game_object/weapons/laser_gun.gd" id="1_ltrqp"]
-[ext_resource type="AudioStream" uid="uid://4ejbwm66smx0" path="res://assets/sounds/gun1.mp3" id="2_ofq0j"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_adcf2"]
+[ext_resource type="PackedScene" uid="uid://bvr4gvm0po0yg" path="res://scenes/game_object/vfx/laser_beam.tscn" id="2_q6odl"]
+[ext_resource type="AudioStream" uid="uid://hkapd2neaq7h" path="res://assets/sounds/zapsplat_science_fiction_weapon_cannon_shoot_blast_89849.mp3" id="3_adcf2"]
 
 [node name="LaserGun" type="Node3D"]
 script = ExtResource("1_ltrqp")
+laser_beam = ExtResource("2_q6odl")
 
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
 
 [node name="RandomStreamPlayerComponent" parent="." instance=ExtResource("1_2hknl")]
 doppler_tracking = 0
-streams = Array[AudioStream]([ExtResource("2_ofq0j")])
+streams = Array[AudioStream]([ExtResource("3_adcf2")])
 min_pitch = 0.8
 max_pitch = 1.2
-
-[node name="Marker3D" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.51015, 0, 0)
-
-[node name="Marker3D2" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51, 0, 0)
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 enabled = false
 target_position = Vector3(0, 0, -500)
+collision_mask = 8
 collide_with_areas = true
 collide_with_bodies = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_adcf2")

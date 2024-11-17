@@ -1,5 +1,5 @@
 @tool
-class_name Trail3D
+class_name Trail
 extends MeshInstance3D
 
 signal point_added(point: Vector3)

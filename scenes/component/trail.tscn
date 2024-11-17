@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjm5d55day2j5"]
+[gd_scene load_steps=4 format=3 uid="uid://bjm5d55day2j5"]
 
 [ext_resource type="Script" path="res://scenes/component/trail.gd" id="1_x8p8f"]
 
+[sub_resource type="Curve" id="Curve_x8p8f"]
+_data = [Vector2(0, 1), 0.0, 0.0, 1, 0, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_2cuq2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 1, 0, Vector2(1, 0), -1.0, 0.0, 1, 0]
+point_count = 2
+
 [node name="trail" type="MeshInstance3D"]
 script = ExtResource("1_x8p8f")
+transparency_curve = SubResource("Curve_x8p8f")
+width_curve = SubResource("Curve_2cuq2")
