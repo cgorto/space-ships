@@ -9,12 +9,12 @@ var projectile_speed: float = 100000
 
 @export var firing_points: Array[Marker3D]
 var firing_point_counter: int = 0
-var fire_rate: float = 0.5
+@export var attack_speed: float = 0.3
 var damage: float = 10
 var laser_range: float = 1000
 
 func _ready() -> void:
-	attack_cooldown.wait_time = fire_rate
+	attack_cooldown.wait_time = attack_speed
 
 func shoot() -> void:
 	if attack_cooldown.is_stopped():
@@ -40,7 +40,7 @@ func shoot_towards(world_pos: Vector3) -> void:
 		random_sound_player.play_random()
 		var new_beam: LaserBeam = laser_beam.instantiate()
 		new_beam.offset = fire_from
-		new_beam.target_pos = target_pos
+		new_beam.target_pos = world_pos
 		add_child(new_beam)
 
 		if firing_points.size() > 0:
