@@ -84,7 +84,7 @@ func find_available_instance_id(multimesh: MultiMesh) -> int:
 func spawn_projectile(
 	mesh_resource: Mesh, start_transform: Transform3D, target_pos: Vector3,
 	speed: float, damage: float, faction: int, lifetime: float, ignored: Array[CollisionObject3D] = []
-	) -> void:
+	) -> ProjectileData:
 	var ps:= PhysicsServer3D
 	var mesh_path: String = mesh_resource.resource_path
 	var multimesh_instance: MultiMeshInstance3D = get_or_create_multimesh_pool(mesh_path,mesh_resource)
@@ -131,6 +131,7 @@ func spawn_projectile(
 	
 	multimesh_instance.multimesh.set_instance_transform(instance_id,start_transform)
 	multimesh_instance.multimesh.set_instance_custom_data(instance_id, Color(1,1,1,1))
+	return proj_data
 	
 func destroy_projectile(body: RID) -> void:
 	var ps:= PhysicsServer3D

@@ -36,6 +36,10 @@ project/assembly_name="Space"
 
 movie_writer/movie_file="F:/GameDev/fleetsurvivors/movie/test.avi"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/lines_and_trails_3d/plugin.cfg")
+
 [global_group]
 
 target="Every Pilot belongs to this group"
@@ -129,6 +133,7 @@ buffering/agile_event_flushing=true
 
 textures/canvas_textures/default_texture_filter=0
 scaling_3d/mode=1
+anti_aliasing/quality/msaa_2d=3
 anti_aliasing/quality/msaa_3d=3
 viewport/hdr_2d=true
 anti_aliasing/quality/screen_space_aa=1

@@ -1,15 +1,75 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8ps4kffu7ucb"]
+[gd_scene load_steps=18 format=3 uid="uid://c8ps4kffu7ucb"]
 
 [ext_resource type="PackedScene" uid="uid://d2dv0c0hvt7rb" path="res://scenes/game_object/ship/ship.tscn" id="1_7bq24"]
 [ext_resource type="PackedScene" uid="uid://dn51i1bxlaggp" path="res://scenes/game_object/vfx/thrust.tscn" id="3_56g6w"]
 [ext_resource type="PackedScene" uid="uid://dswa4akyx0q00" path="res://scenes/game_object/vfx/drift_sparks.tscn" id="3_ro1r6"]
 [ext_resource type="PackedScene" uid="uid://cyagck654dgiu" path="res://assets/ship/Sonne.fbx" id="4_rxd0q"]
 [ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="6_telmj"]
+[ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="6_yyls1"]
 [ext_resource type="PackedScene" uid="uid://rjscsifxkuxr" path="res://scenes/component/pilot/player_pilot.tscn" id="7_0qwhp"]
 [ext_resource type="PackedScene" uid="uid://dq0r4hdmnq3yr" path="res://scenes/game_object/weapons/laser_gun.tscn" id="7_0siq1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xcjcx"]
 size = Vector3(6.80295, 3.15131, 10.8685)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_td7wu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8kmgx"]
+seamless = true
+noise = SubResource("FastNoiseLite_td7wu")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6ik1m"]
+noise_type = 4
+frequency = 0.2699
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yds5v"]
+seamless = true
+noise = SubResource("FastNoiseLite_6ik1m")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_th7mj"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("6_yyls1")
+shader_parameter/model_height = 4.0
+shader_parameter/dissolve_start = 0.001
+shader_parameter/dissolve_length = 1.0
+shader_parameter/gradient_bias = 0.976
+shader_parameter/noise_direction = Vector2(0, 1)
+shader_parameter/noise_speed = 2.0
+shader_parameter/noise_strength = 0.505
+shader_parameter/stretch_factor = 0.895
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_8kmgx")
+shader_parameter/overlay_noise_texture = SubResource("NoiseTexture2D_yds5v")
+shader_parameter/overlay_noise_direction = Vector2(0, 1)
+shader_parameter/overlay_noise_speed = 1.5
+shader_parameter/overlay_noise_strength = 1.0
+shader_parameter/overlay_stretch_factor = 0.5
+shader_parameter/_color = Color(0.820779, 0.151384, 0.895735, 1)
+shader_parameter/overlay_color = Color(0.469899, 0.739362, 0.965414, 1)
+shader_parameter/power_factor = 0.35
+shader_parameter/alpha_intensity_factor = 2.0
+shader_parameter/base_opacity = 0.2
+shader_parameter/fresnel_factor = 1.0
+shader_parameter/fresnel_amplification = 2.0
+shader_parameter/fresnel_power = 2.0
+shader_parameter/enable_fresnel = true
+shader_parameter/min_fresnel = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fc1bf"]
+resource_local_to_scene = true
+top_radius = 0.0
+bottom_radius = 0.855
+height = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_712yo"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+disable_ambient_light = true
+disable_fog = true
+vertex_color_use_as_albedo = true
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_telmj"]
 radius = 2.57887
@@ -20,7 +80,7 @@ mass = 150.0
 pilot = NodePath("Pilot")
 
 [node name="ShipPhysics" parent="." index="0"]
-thrust_force = 100000.0
+thrust_force = 120000.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.193674, 0.123444, -0.394447)
@@ -44,17 +104,36 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.488677, 3.36019)
 pilot = NodePath("../../Pilot")
 
+[node name="ThrustMesh" parent="Visual/Thrust" index="0"]
+material_override = SubResource("ShaderMaterial_th7mj")
+mesh = SubResource("CylinderMesh_fc1bf")
+
 [node name="Trail" parent="Visual/Thrust/TrailPoint" index="0"]
 update_frequency = 120.0
+trail_material = SubResource("StandardMaterial3D_712yo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_telmj")
 
-[node name="Gun" parent="." index="6" node_paths=PackedStringArray("own_ship") instance=ExtResource("6_telmj")]
+[node name="Gun" parent="." index="6" node_paths=PackedStringArray("own_ship", "firing_points") instance=ExtResource("6_telmj")]
 own_ship = NodePath("..")
+firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
 
-[node name="LaserGun" parent="." index="7" instance=ExtResource("7_0siq1")]
+[node name="Marker3D" type="Marker3D" parent="Gun" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06138, 2.4973, -2.97509)
+
+[node name="Marker3D2" type="Marker3D" parent="Gun" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 2.497, -2.975)
+
+[node name="LaserGun" parent="." index="7" node_paths=PackedStringArray("firing_points") instance=ExtResource("7_0siq1")]
+firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]
+
+[node name="Marker3D" type="Marker3D" parent="LaserGun" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06138, 2.4973, -2.97509)
+
+[node name="Marker3D2" type="Marker3D" parent="LaserGun" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 2.497, -2.975)
 
 [editable path="Pilot"]
 [editable path="Visual/Thrust"]

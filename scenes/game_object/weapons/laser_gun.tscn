@@ -1,20 +1,30 @@
-[gd_scene load_steps=5 format=3 uid="uid://dq0r4hdmnq3yr"]
+[gd_scene load_steps=6 format=3 uid="uid://dq0r4hdmnq3yr"]
 
 [ext_resource type="PackedScene" uid="uid://cpto3ymq6nwb4" path="res://scenes/component/random_stream_player_component.tscn" id="1_2hknl"]
 [ext_resource type="Script" path="res://scenes/game_object/weapons/laser_gun.gd" id="1_ltrqp"]
 [ext_resource type="PackedScene" uid="uid://bvr4gvm0po0yg" path="res://scenes/game_object/vfx/laser_beam.tscn" id="2_q6odl"]
-[ext_resource type="AudioStream" uid="uid://hkapd2neaq7h" path="res://assets/sounds/zapsplat_science_fiction_weapon_cannon_shoot_blast_89849.mp3" id="3_adcf2"]
+[ext_resource type="AudioStream" uid="uid://4ejbwm66smx0" path="res://assets/sounds/gun1.mp3" id="4_q6odl"]
+[ext_resource type="AudioStream" uid="uid://ckkg510k6na7l" path="res://assets/sounds/zapsplat_foley_paper_sheet_a4_flat_hit_impact_003_99124.mp3" id="5_v4fss"]
 
 [node name="LaserGun" type="Node3D"]
 script = ExtResource("1_ltrqp")
 laser_beam = ExtResource("2_q6odl")
+attack_speed = 0.1
+shot_heat = 0.0
+cool_rate = 0.0
 
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
 
 [node name="RandomStreamPlayerComponent" parent="." instance=ExtResource("1_2hknl")]
 doppler_tracking = 0
-streams = Array[AudioStream]([ExtResource("3_adcf2")])
+streams = Array[AudioStream]([ExtResource("4_q6odl")])
+min_pitch = 0.8
+max_pitch = 1.2
+
+[node name="RandomStreamPlayerComponent2" parent="." instance=ExtResource("1_2hknl")]
+doppler_tracking = 0
+streams = Array[AudioStream]([ExtResource("5_v4fss")])
 min_pitch = 0.8
 max_pitch = 1.2
 

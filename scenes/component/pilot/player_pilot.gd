@@ -11,6 +11,8 @@ class_name PlayerPilot extends Pilot
 @onready var drift_boost: DriftBoost = $DriftBoost
 @onready var speed: Label = $CanvasLayer/Control/Label3
 @export var drift_sparks: DriftSparks
+@onready var crosshair: Crosshair = $CanvasLayer/Crosshair
+@onready var progress_bar_3: ProgressBar = $CanvasLayer/ProgressBar3
 
 
 var target: RigidBody3D = null
@@ -22,7 +24,7 @@ var target: RigidBody3D = null
 func _ready() -> void:
 
 	drift_boost.drift_ended.connect(_on_drift_ended)
-
+	weapon.hit.connect(crosshair.handle_hitmarker)
 func _process(delta: float) -> void:
 	strafe = Input.get_axis("move_left","move_right")
 	
@@ -30,6 +32,7 @@ func _process(delta: float) -> void:
 	update_throttle(delta)
 	update_drift()
 	update_target_indicator()
+	progress_bar_3.value = weapon.heat_meter
 
 
 

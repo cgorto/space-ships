@@ -1,5 +1,7 @@
 class_name ProjectileData extends RefCounted
 
+signal hit(thing_hit: Hurtbox)
+
 var body: RID
 var shape: RID
 var multimesh: MultiMesh

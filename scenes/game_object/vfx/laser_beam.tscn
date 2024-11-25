@@ -4,23 +4,23 @@
 [ext_resource type="Script" path="res://addons/lines_and_trails_3d/line_3d.gd" id="2_iwcia"]
 
 [sub_resource type="Curve" id="Curve_yxjdu"]
-_data = [Vector2(0, 1), 0.0, 0.0, 1, 0, Vector2(1, 1), 0.0, 0.0, 1, 0]
+_data = [Vector2(0, 0.497266), 0.0, 0.0, 1, 0, Vector2(1, 1), 0.502734, 0.0, 1, 0]
 point_count = 2
 
-[sub_resource type="Gradient" id="Gradient_qxatv"]
-colors = PackedColorArray(0, 1, 0, 1, 1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_yxjdu"]
+colors = PackedColorArray(0, 1, 0, 1, 0, 1, 0, 1)
 
 [node name="LaserBeam" type="Node3D"]
 script = ExtResource("1_yq1il")
 
 [node name="Line3D" type="MeshInstance3D" parent="."]
 script = ExtResource("2_iwcia")
-width = 0.5
+width = 1.0
 width_curve = SubResource("Curve_yxjdu")
-gradient = SubResource("Gradient_qxatv")
+gradient = SubResource("Gradient_yxjdu")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.05
 one_shot = true
 autostart = true
 

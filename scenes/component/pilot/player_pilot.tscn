@@ -1,16 +1,26 @@
-[gd_scene load_steps=9 format=3 uid="uid://rjscsifxkuxr"]
+[gd_scene load_steps=13 format=3 uid="uid://rjscsifxkuxr"]
 
 [ext_resource type="Script" path="res://scenes/component/pilot/player_pilot.gd" id="1_eqnf8"]
 [ext_resource type="Script" path="res://scenes/component/pilot/label.gd" id="2_t8iha"]
 [ext_resource type="Texture2D" uid="uid://b66y3vyxcj7jd" path="res://assets/MouseCrosshair.png" id="3_tef56"]
 [ext_resource type="Script" path="res://scenes/component/pilot/label_2.gd" id="3_wtqsc"]
+[ext_resource type="Texture2D" uid="uid://di42dtg83jpy2" path="res://assets/crosshairs_tilesheet_white.png" id="4_8cpnb"]
 [ext_resource type="PackedScene" uid="uid://fkwckd4h7g1" path="res://scenes/component/drift_boost.tscn" id="4_kaqdq"]
+[ext_resource type="Script" path="res://scenes/game_object/ship_camera/crosshair.gd" id="5_7wewj"]
 [ext_resource type="PackedScene" uid="uid://dp3ouf5e4fqhk" path="res://scenes/component/target_reticles.tscn" id="6_xnu23"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rpb2h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17b7h"]
 bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dd5jf"]
+atlas = ExtResource("4_8cpnb")
+region = Rect2(491, 642, 48, 22)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8cpnb"]
+atlas = ExtResource("4_8cpnb")
+region = Rect2(1189, 85, 32, 32)
 
 [node name="PlayerPilot" type="Node3D" groups=["player", "target"]]
 script = ExtResource("1_eqnf8")
@@ -145,6 +155,24 @@ offset_right = 24.48
 offset_bottom = 73.6
 text = "Active Projectiles: "
 script = ExtResource("3_wtqsc")
+
+[node name="Crosshair" type="Sprite2D" parent="CanvasLayer"]
+texture = SubResource("AtlasTexture_dd5jf")
+script = ExtResource("5_7wewj")
+
+[node name="Hitmarker" type="Sprite2D" parent="CanvasLayer/Crosshair"]
+visible = false
+texture = SubResource("AtlasTexture_8cpnb")
+
+[node name="ProgressBar3" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = -0.201562
+offset_left = 1213.0
+offset_top = 580.0
+offset_right = 1217.0
+offset_bottom = 607.0
+max_value = 1.0
+metadata/_edit_use_anchors_ = true
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 enabled = false

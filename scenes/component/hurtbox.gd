@@ -38,5 +38,6 @@ func _on_body_shape_entered(body_rid: RID, _body: Node3D, _body_shape_index: int
 		return
 	if proj_data.ignored.has(get_rid()):
 		return
+	proj_data.hit.emit(self)
 	handle_hit(proj_data.damage,proj_data.position,proj_data.faction)
 	ProjectileServer.destroy_projectile(body_rid)
