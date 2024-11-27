@@ -17,6 +17,9 @@ static func move_vector2(from: Vector2, to: Vector2, speed: float, dt: float) ->
 static func move_float(from: float, to: float, speed: float, dt: float) -> float:
 	return lerp(from, to, 1.0 - exp(-speed * dt))
 
+static func move_angle(from: float, to: float, speed: float, dt: float) -> float:
+	return lerp_angle(from, to, 1.0 - exp(-speed * dt))
+
 static func qt_look_at(forward: Vector3, up: Vector3) -> Quaternion:
 	var f: Vector3 = forward.normalized()
 	var r: Vector3 = up.cross(forward)

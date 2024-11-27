@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c8ps4kffu7ucb"]
+[gd_scene load_steps=18 format=3 uid="uid://c8ps4kffu7ucb"]
 
 [ext_resource type="PackedScene" uid="uid://d2dv0c0hvt7rb" path="res://scenes/game_object/ship/ship.tscn" id="1_7bq24"]
 [ext_resource type="PackedScene" uid="uid://dn51i1bxlaggp" path="res://scenes/game_object/vfx/thrust.tscn" id="3_56g6w"]
@@ -8,7 +8,6 @@
 [ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="6_yyls1"]
 [ext_resource type="PackedScene" uid="uid://rjscsifxkuxr" path="res://scenes/component/pilot/player_pilot.tscn" id="7_0qwhp"]
 [ext_resource type="PackedScene" uid="uid://dq0r4hdmnq3yr" path="res://scenes/game_object/weapons/laser_gun.tscn" id="7_0siq1"]
-[ext_resource type="ArrayMesh" uid="uid://cs6tphapacxk4" path="res://assets/ship/GTB Artemis/High Poly.obj" id="7_th7mj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xcjcx"]
 size = Vector3(6.80295, 3.15131, 10.8685)
@@ -102,7 +101,7 @@ drift_boost = NodePath("../../Pilot/DriftBoost")
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Thrust" parent="Visual" index="2" node_paths=PackedStringArray("pilot") instance=ExtResource("3_56g6w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.353299, 3.20258)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.488677, 3.36019)
 pilot = NodePath("../../Pilot")
 
 [node name="ThrustMesh" parent="Visual/Thrust" index="0"]
@@ -112,11 +111,6 @@ mesh = SubResource("CylinderMesh_fc1bf")
 [node name="Trail" parent="Visual/Thrust/TrailPoint" index="0"]
 update_frequency = 120.0
 trail_material = SubResource("StandardMaterial3D_712yo")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Visual" index="3"]
-transform = Transform3D(-0.53, 0, -4.63341e-08, 0, 0.53, 0, 4.63341e-08, 0, -0.53, 0, 1.12549, 0)
-visible = false
-mesh = ExtResource("7_th7mj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." index="5"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
@@ -129,10 +123,10 @@ shot_heat = 0.0
 cool_rate = 0.0
 
 [node name="Marker3D" type="Marker3D" parent="Gun" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06138, 2.4973, -4.12818)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06138, 2.4973, -2.97509)
 
 [node name="Marker3D2" type="Marker3D" parent="Gun" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 2.497, -4.12809)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.061, 2.497, -2.975)
 
 [node name="LaserGun" parent="." index="7" node_paths=PackedStringArray("firing_points") instance=ExtResource("7_0siq1")]
 firing_points = [NodePath("Marker3D"), NodePath("Marker3D2")]

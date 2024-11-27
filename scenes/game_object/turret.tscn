@@ -1,22 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4lg4qn2wki6m"]
+[gd_scene load_steps=5 format=3 uid="uid://b4lg4qn2wki6m"]
 
 [ext_resource type="Script" path="res://turret.gd" id="1_nn4m3"]
+[ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="2_0krmu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0krmu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_nn4m3"]
 size = Vector3(0.22, 0.235, 4.845)
 
-[sub_resource type="BoxMesh" id="BoxMesh_0krmu"]
-
-[node name="Turret" type="Node3D"]
+[node name="Turret" type="Node3D" node_paths=PackedStringArray("weapon")]
 script = ExtResource("1_nn4m3")
+weapon = NodePath("TurretBase/Barrels/Gun")
 
 [node name="TurretBase" type="Node3D" parent="."]
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase"]
+mesh = SubResource("BoxMesh_0krmu")
+
 [node name="Barrels" type="Node3D" parent="TurretBase"]
+
+[node name="Gun" parent="TurretBase/Barrels" node_paths=PackedStringArray("firing_points") instance=ExtResource("2_0krmu")]
+firing_points = [NodePath("../Marker3D")]
+shot_heat = 0.0
+cool_rate = 0.0
+
+[node name="RayCast3D" type="RayCast3D" parent="TurretBase/Barrels"]
+target_position = Vector3(0, 0, -50)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase/Barrels"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00155085, -1.99795)
 mesh = SubResource("BoxMesh_nn4m3")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="TurretBase"]
-mesh = SubResource("BoxMesh_0krmu")
+[node name="Marker3D" type="Marker3D" parent="TurretBase/Barrels"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.47241)

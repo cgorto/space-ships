@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bsd7eynfdxon4"]
+[gd_scene load_steps=9 format=3 uid="uid://bsd7eynfdxon4"]
 
 [ext_resource type="PackedScene" uid="uid://c8ps4kffu7ucb" path="res://scenes/game_object/ship/player_ship.tscn" id="1_45yrv"]
 [ext_resource type="Script" path="res://scenes/test_scene.gd" id="1_iuwce"]
 [ext_resource type="PackedScene" uid="uid://cxkwdhwvmgfxv" path="res://scenes/game_object/ship/npc_ship.tscn" id="2_fgphr"]
 [ext_resource type="PackedScene" uid="uid://diw52h5jif8v2" path="res://scenes/game_object/ship_camera/camera_rig.tscn" id="2_mr3ih"]
-[ext_resource type="PackedScene" uid="uid://yl7uwjkjbml" path="res://scenes/csg_mesh_3d.tscn" id="4_u7a81"]
 [ext_resource type="PackedScene" uid="uid://b4lg4qn2wki6m" path="res://scenes/game_object/turret.tscn" id="6_3qnke"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wpg4i"]
@@ -33,12 +32,11 @@ fog_density = 1.0
 adjustment_enabled = true
 adjustment_brightness = 2.17
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wf82s"]
-resource_local_to_scene = true
-
 [node name="TestScene" type="Node3D"]
 script = ExtResource("1_iuwce")
 enemy = ExtResource("2_fgphr")
+turret = ExtResource("6_3qnke")
+ship_number = 100
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -52,16 +50,7 @@ ship = NodePath("../Ship")
 smooth_speed = 5.0
 fancy_cam = true
 
-[node name="CSGMesh3D" parent="." instance=ExtResource("4_u7a81")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.4542, 0, 0)
-material = SubResource("StandardMaterial3D_wf82s")
-
 [node name="Ship" parent="." instance=ExtResource("1_45yrv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.26, 0)
-
-[node name="Turret" parent="." node_paths=PackedStringArray("target") instance=ExtResource("6_3qnke")]
-elevation_speed = 100.0
-traverse_speed = 100.0
-target = NodePath("../Ship")
 
 [editable path="CameraRig"]

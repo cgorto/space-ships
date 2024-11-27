@@ -12,7 +12,7 @@ vertical_turn_down_angle = 0.3
 [node name="LookAheadRig" type="Node3D" parent="."]
 
 [node name="MainCamera" type="Node3D" parent="LookAheadRig"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.73, 26.42)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 50)
 
 [node name="Camera3D" type="Camera3D" parent="LookAheadRig/MainCamera"]
 current = true

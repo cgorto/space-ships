@@ -1,0 +1,62 @@
+[gd_scene load_steps=12 format=3 uid="uid://brneon7rkdhtm"]
+
+[ext_resource type="Script" path="res://scenes/game_object/vfx/space_dust.gd" id="1_rqrxm"]
+
+[sub_resource type="Curve" id="Curve_ia4p6"]
+_data = [Vector2(0, 0.0142463), 0.0, 0.0, 0, 0, Vector2(0.504831, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.498162), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kkdur"]
+curve = SubResource("Curve_ia4p6")
+
+[sub_resource type="Curve" id="Curve_rqrxm"]
+_data = [Vector2(0, 0.109835), 0.0, 0.0, 0, 0, Vector2(0.157005, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.492188), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ia4p6"]
+curve = SubResource("Curve_rqrxm")
+
+[sub_resource type="CurveTexture" id="CurveTexture_5epu1"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qndwt"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 28.15
+emission_ring_radius = 123.35
+emission_ring_inner_radius = 30.0
+emission_ring_cone_angle = 90.0
+inherit_velocity_ratio = 0.01
+gravity = Vector3(0, 0, 0)
+scale_min = 0.9
+scale_max = 1.1
+scale_curve = SubResource("CurveTexture_ia4p6")
+scale_over_velocity_curve = SubResource("CurveTexture_5epu1")
+alpha_curve = SubResource("CurveTexture_kkdur")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qndwt"]
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_rqrxm"]
+material = SubResource("StandardMaterial3D_qndwt")
+size = Vector3(0.3, 0.3, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ia4p6"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_5epu1"]
+material = SubResource("StandardMaterial3D_ia4p6")
+size = Vector3(0.3, 0.3, 1.2)
+
+[node name="SpaceDust" type="Node3D"]
+script = ExtResource("1_rqrxm")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 200
+lifetime = 0.5
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_qndwt")
+draw_pass_1 = SubResource("BoxMesh_rqrxm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_5epu1")

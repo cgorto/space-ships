@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cem4oq3ipf6kh"
-path.s3tc="res://.godot/imported/selector.png-0b1540b1432614e8750b69967e377448.s3tc.ctex"
+uid="uid://bdmgp58823nxx"
+path.s3tc="res://.godot/imported/bomber2T-03c.png-fcc1e9455a72160b1c89547970a3265f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/selector.png"
-dest_files=["res://.godot/imported/selector.png-0b1540b1432614e8750b69967e377448.s3tc.ctex"]
+source_file="res://assets/ship/GTB Artemis/bomber2T-03c.png"
+dest_files=["res://.godot/imported/bomber2T-03c.png-fcc1e9455a72160b1c89547970a3265f.s3tc.ctex"]
 
 [params]
 

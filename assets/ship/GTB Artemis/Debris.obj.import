@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dg651ry5c1whn"
+path="res://.godot/imported/Debris.obj-698beaaafd508e10e7721dfeb6915196.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Debris.obj-698beaaafd508e10e7721dfeb6915196.mesh"]
+
+source_file="res://assets/ship/GTB Artemis/Debris.obj"
+dest_files=["res://.godot/imported/Debris.obj-698beaaafd508e10e7721dfeb6915196.mesh", "res://.godot/imported/Debris.obj-698beaaafd508e10e7721dfeb6915196.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

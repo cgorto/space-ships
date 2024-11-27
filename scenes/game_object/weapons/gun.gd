@@ -38,6 +38,9 @@ func _process(delta: float) -> void:
 func shoot() -> void:
 	if attack_cooldown.is_stopped():
 		var target_pos: Vector3 = global_position - global_transform.basis.z * 100
+		var ignored: Array[CollisionObject3D] = []
+		if own_ship != null:
+			ignored = [own_ship, own_ship.hurtbox]
 		ProjectileServer.spawn_projectile(
 			proj_mesh,
 			global_transform,
@@ -46,7 +49,7 @@ func shoot() -> void:
 			projectile_damage,
 			faction,
 			lifetime,
-			[own_ship,own_ship.hurtbox]
+			ignored
 		)
 		#bullet_spawner.spawn_projectile()
 		attack_cooldown.start()

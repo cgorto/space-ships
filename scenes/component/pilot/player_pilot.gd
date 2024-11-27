@@ -1,5 +1,7 @@
 class_name PlayerPilot extends Pilot
 
+signal is_aimed(aimed: bool)
+
 @onready var throt: ProgressBar = $CanvasLayer/ProgressBar
 @onready var dash_bar: ProgressBar = $CanvasLayer/ProgressBar2
 @onready var target_cast: RayCast3D = $RayCast3D
@@ -18,13 +20,14 @@ class_name PlayerPilot extends Pilot
 var target: RigidBody3D = null
 
 
-@export var crosshair_radius: float = 50
+@export var crosshair_radius: float = 20
 @export var crosshair_hit: bool = false
 
 func _ready() -> void:
 
 	drift_boost.drift_ended.connect(_on_drift_ended)
 	weapon.hit.connect(crosshair.handle_hitmarker)
+	is_aimed.connect(crosshair.while_aimed)
 func _process(delta: float) -> void:
 	strafe = Input.get_axis("move_left","move_right")
 	
@@ -85,13 +88,14 @@ func update_target_indicator() -> void:
 		var lead_pos: Vector3 = Util.calculate_lead(own_ship,target,weapon.projectile_speed)
 		#var world_pos: Vector3 = target.global_position + (target.linear_velocity * lead_time)
 		lead_crosshair.global_position = lead_pos
-		
+		is_within_crosshair(get_viewport().get_mouse_position())
 		
 		target_cam.global_position = target.global_position
 		var camera: Camera3D = get_viewport().get_camera_3d()
 		target_cam_pivot.position = (camera.global_position - target_cam.global_position).normalized() * 20
 		target_cam_pivot.look_at(target_cam.global_position,camera.global_basis.y)
 	else:
+		is_aimed.emit(false)
 		target_hp_bar.value = 0
 		target_indicator.visible = false
 
@@ -103,8 +107,11 @@ func get_screen_position(world_pos: Vector3) -> Vector2:
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	return camera.unproject_position(world_pos)
 	
-func is_within_crosshair(screen_pos: Vector2, mouse_pos: Vector2) -> bool:
-	return screen_pos.distance_to(mouse_pos) < crosshair_radius
+func is_within_crosshair(mouse_pos: Vector2) -> bool:
+	var screen_pos: Vector2= get_screen_position(lead_crosshair.global_position)
+	var is_within: bool = screen_pos.distance_to(mouse_pos) < crosshair_radius
+	is_aimed.emit(is_within)
+	return is_within
 	
 func get_aim_point() -> Vector3:
 	var camera: Camera3D = get_viewport().get_camera_3d()
