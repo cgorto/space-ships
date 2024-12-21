@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bvr4gvm0po0yg"]
 
-[ext_resource type="Script" path="res://scenes/game_object/vfx/laser_beam.gd" id="1_yq1il"]
-[ext_resource type="Script" path="res://addons/lines_and_trails_3d/line_3d.gd" id="2_iwcia"]
+[ext_resource type="Script" uid="uid://bm8nwffsoqqw1" path="res://scenes/game_object/vfx/laser_beam.gd" id="1_yq1il"]
+[ext_resource type="Script" uid="uid://bokexyh3hiicl" path="res://addons/lines_and_trails_3d/line_3d.gd" id="2_iwcia"]
 
 [sub_resource type="Curve" id="Curve_yxjdu"]
 _data = [Vector2(0, 0.497266), 0.0, 0.0, 1, 0, Vector2(1, 1), 0.502734, 0.0, 1, 0]

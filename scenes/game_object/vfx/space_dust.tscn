@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://brneon7rkdhtm"]
+[gd_scene load_steps=9 format=3 uid="uid://brneon7rkdhtm"]
 
-[ext_resource type="Script" path="res://scenes/game_object/vfx/space_dust.gd" id="1_rqrxm"]
+[ext_resource type="Script" uid="uid://cuqsxr0xp3rmi" path="res://scenes/game_object/vfx/space_dust.gd" id="1_rqrxm"]
+
+[sub_resource type="Curve" id="Curve_rqrxm"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_5epu1"]
+curve = SubResource("Curve_rqrxm")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qndwt"]
 emission_shape = 6

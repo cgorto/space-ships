@@ -1,18 +1,17 @@
 [gd_scene load_steps=9 format=3 uid="uid://bsd7eynfdxon4"]
 
 [ext_resource type="PackedScene" uid="uid://c8ps4kffu7ucb" path="res://scenes/game_object/ship/player_ship.tscn" id="1_45yrv"]
-[ext_resource type="Script" path="res://scenes/test_scene.gd" id="1_iuwce"]
+[ext_resource type="Script" uid="uid://c6q77b2wtvm63" path="res://scenes/test_scene.gd" id="1_iuwce"]
 [ext_resource type="PackedScene" uid="uid://cxkwdhwvmgfxv" path="res://scenes/game_object/ship/npc_ship.tscn" id="2_fgphr"]
 [ext_resource type="PackedScene" uid="uid://diw52h5jif8v2" path="res://scenes/game_object/ship_camera/camera_rig.tscn" id="2_mr3ih"]
 [ext_resource type="PackedScene" uid="uid://b4lg4qn2wki6m" path="res://scenes/game_object/turret.tscn" id="6_3qnke"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wpg4i"]
-sky_top_color = Color(0.0627451, 0.0470588, 0.109804, 1)
-sky_horizon_color = Color(0.0627451, 0.0470588, 0.109804, 1)
+sky_top_color = Color(0.105882, 0.0941176, 0.152941, 1)
+sky_horizon_color = Color(0.105882, 0.0941176, 0.152941, 1)
 sky_curve = 0.15529
-ground_bottom_color = Color(0.0627451, 0.0470588, 0.109804, 1)
-ground_horizon_color = Color(0.0627451, 0.0470588, 0.109804, 1)
-ground_curve = 223.812
+ground_bottom_color = Color(0.105882, 0.0941176, 0.152941, 1)
+ground_horizon_color = Color(0.104582, 0.0942965, 0.153205, 1)
 sun_angle_max = 32.02
 sun_curve = 0.197926
 

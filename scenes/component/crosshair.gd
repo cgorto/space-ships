@@ -9,8 +9,6 @@ func _process(_delta: float) -> void:
 	if is_aimed:
 		crosshair.self_modulate = Color.RED
 		crosshair.rotation = Util.move_angle(crosshair.rotation, crosshair.rotation + PI / 2, rotate_speed,_delta)
-
-		print(rotation)
 	else:
 		crosshair.self_modulate = Color.WHITE
 		crosshair.rotation = 0

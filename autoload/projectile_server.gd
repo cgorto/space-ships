@@ -95,7 +95,7 @@ func spawn_projectile(
 	ps.body_set_space(body, get_tree().root.world_3d.space)
 
 	var shape: RID = ps.sphere_shape_create()
-	ps.shape_set_data(shape,2)
+	ps.shape_set_data(shape,2.0)
 	
 	ps.body_add_shape(body,shape)
 	#ps.body_set_collision_layer(body,0b1000)

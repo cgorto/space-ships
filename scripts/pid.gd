@@ -3,6 +3,7 @@ class_name PID extends RefCounted
 var p_factor: float
 var i_factor: float
 var d_factor: float 
+var integral_saturation: float = 1
 
 var integral: float
 var last_error: float
@@ -24,7 +25,7 @@ func update(set_point: float, actual: float, delta: float) -> float:
 		present = 0
 	if !(last_error * present > 1):
 		integral *= 0.5
-	integral += present * delta
+	integral = clampf(integral + (present * delta), -integral_saturation,integral_saturation)
 	var deriv: float = (present - last_error) / delta
 	last_error = present
 	return present * p_factor + integral * i_factor + deriv * d_factor

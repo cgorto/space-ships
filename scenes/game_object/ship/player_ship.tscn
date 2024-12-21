@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dswa4akyx0q00" path="res://scenes/game_object/vfx/drift_sparks.tscn" id="3_ro1r6"]
 [ext_resource type="PackedScene" uid="uid://cyagck654dgiu" path="res://assets/ship/Sonne.fbx" id="4_rxd0q"]
 [ext_resource type="PackedScene" uid="uid://duhryesqv6mm8" path="res://scenes/game_object/weapons/gun.tscn" id="6_telmj"]
-[ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="6_yyls1"]
+[ext_resource type="Shader" uid="uid://b4vbrcyhg0hvr" path="res://scenes/game_object/ship/thrust.gdshader" id="6_yyls1"]
 [ext_resource type="PackedScene" uid="uid://rjscsifxkuxr" path="res://scenes/component/pilot/player_pilot.tscn" id="7_0qwhp"]
 [ext_resource type="PackedScene" uid="uid://dq0r4hdmnq3yr" path="res://scenes/game_object/weapons/laser_gun.tscn" id="7_0siq1"]
 [ext_resource type="ArrayMesh" uid="uid://cs6tphapacxk4" path="res://assets/ship/GTB Artemis/High Poly.obj" id="7_th7mj"]
@@ -89,7 +89,7 @@ shape = SubResource("BoxShape3D_xcjcx")
 
 [node name="Pilot" parent="." index="2" node_paths=PackedStringArray("drift_sparks", "own_ship", "weapon") instance=ExtResource("7_0qwhp")]
 drift_sparks = NodePath("../Visual/DriftSparks")
-roll_pid_params = Vector3(3, 0.1, 0.5)
+roll_pid_params = Vector3(2, 0.1, 1.5)
 own_ship = NodePath("..")
 weapon = NodePath("../Gun")
 

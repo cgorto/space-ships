@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://diw52h5jif8v2"]
 
-[ext_resource type="Script" path="res://scenes/game_object/ship_camera/camera_rig.gd" id="1_shvuj"]
+[ext_resource type="Script" uid="uid://dh2ur80oj7q50" path="res://scenes/game_object/ship_camera/camera_rig.gd" id="1_shvuj"]
 [ext_resource type="PackedScene" uid="uid://boka0gfrs0cfc" path="res://scenes/game_object/ship_camera/camera_debug.tscn" id="4_rfupd"]
 
 [node name="CameraRig" type="Node3D"]
@@ -12,7 +12,7 @@ vertical_turn_down_angle = 0.3
 [node name="LookAheadRig" type="Node3D" parent="."]
 
 [node name="MainCamera" type="Node3D" parent="LookAheadRig"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 50)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.73, 26.42)
 
 [node name="Camera3D" type="Camera3D" parent="LookAheadRig/MainCamera"]
 current = true

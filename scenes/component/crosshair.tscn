@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bdxl2h52unsbt"]
 
-[ext_resource type="Script" path="res://scenes/component/crosshair.gd" id="1_6a315"]
+[ext_resource type="Script" uid="uid://cre0qwumbb8iv" path="res://scenes/component/crosshair.gd" id="1_6a315"]
 [ext_resource type="Texture2D" uid="uid://di42dtg83jpy2" path="res://assets/crosshairs_tilesheet_white.png" id="1_vpbvi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8cpnb"]

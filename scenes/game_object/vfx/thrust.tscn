@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://dn51i1bxlaggp"]
 
-[ext_resource type="Shader" path="res://scenes/game_object/ship/thrust.gdshader" id="1_oikcn"]
-[ext_resource type="Script" path="res://scenes/game_object/vfx/thrust.gd" id="2_ecg0i"]
-[ext_resource type="Script" path="res://scenes/component/trail.gd" id="3_6rkt8"]
+[ext_resource type="Shader" uid="uid://b4vbrcyhg0hvr" path="res://scenes/game_object/ship/thrust.gdshader" id="1_oikcn"]
+[ext_resource type="Script" uid="uid://cs006hi81sete" path="res://scenes/game_object/vfx/thrust.gd" id="2_ecg0i"]
+[ext_resource type="Script" uid="uid://2dddrjdhfkwp" path="res://scenes/component/trail.gd" id="3_6rkt8"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_td7wu"]
 

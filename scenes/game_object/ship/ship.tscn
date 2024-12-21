@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d2dv0c0hvt7rb"]
 
-[ext_resource type="Script" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
-[ext_resource type="Script" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
+[ext_resource type="Script" uid="uid://cuy6pqd7j00vs" path="res://scenes/game_object/ship/ship.gd" id="1_i8rlt"]
+[ext_resource type="Script" uid="uid://dubfc71i2th36" path="res://scenes/game_object/ship/ship_physics.gd" id="3_fcr5x"]
 [ext_resource type="PackedScene" uid="uid://b8ha4ultrkxnb" path="res://scenes/component/hurtbox.tscn" id="7_ysnnw"]
 [ext_resource type="PackedScene" uid="uid://dmtst8fnji83l" path="res://scenes/component/health_component.tscn" id="8_cpiva"]
 [ext_resource type="PackedScene" uid="uid://bkcrjh66ip304" path="res://scenes/game_object/vfx/hit_explosion.tscn" id="8_pfqnx"]
